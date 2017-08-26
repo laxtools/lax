@@ -1,6 +1,3 @@
-# Prerequisites
-*.d
-
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +27,34 @@
 *.exe
 *.out
 *.app
+
+# Visual C++ files 
+.vs 
+ipch 
+*.opendb 
+*.sdf 
+Debug
+Release
+*.db
+*.user
+*.pdb
+*.idb
+*.ilk
+
+# External library directory 
+
+/bin/*.iobj
+/bin/*.ipdb
+
+# Log
+logs/
+log*
+
+# TeX temp files
+*.aux
+*.fls
+*.log
+*.tex
+*.synctex.gz
+*.toc
+/doc/design/*.fdb_latexmk

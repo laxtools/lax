@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{5f53c353-4852-444c-a9c5-e74cdb0a4feb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{bf91ff16-8554-4b2b-a42a-51a30979f051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\detail">
+      <UniqueIdentifier>{58231595-8a71-4d37-8d12-c5837ba75d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol">
+      <UniqueIdentifier>{faee6350-41f8-4457-b09c-c0f4a9263b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol\json">
+      <UniqueIdentifier>{50b1ad2f-a18f-4856-8d6f-46ac4de779da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol\msgpack">
+      <UniqueIdentifier>{bc7fcc5a-6b19-41b2-b367-adae6cdccad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol\local">
+      <UniqueIdentifier>{a6b50688-3e49-4071-81c3-63dd1bbe18b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\state_machine.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\state.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\macros.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\config.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\state_lambda.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\service.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\session.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\result.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\msg.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\detail\acceptor.h">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\detail\connector.h">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\detail\addr.h">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\detail\service_impl.h">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\simple_timer.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\null_mutex.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\sequence.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\reason.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\exception.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\logger.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\concurrent_queue.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\object_pool.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\detail\segment.h">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\detail\segment_buffer.h">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\json.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\json\session_json.h">
+      <Filter>net\protocol\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\json\msg_json.h">
+      <Filter>net\protocol\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\msgpack\session_pack.h">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\msgpack\msg_pack.h">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\protocol.h">
+      <Filter>net\protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\msgpack\msg_pack_factory.h">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\net\protocol\local\msg_local.h">
+      <Filter>net\protocol\local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lax\util\platform.h">
+      <Filter>util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\state_machine.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\state.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\service.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\session.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\msg.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\detail\connector.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\detail\acceptor.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\macros.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\detail\addr.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\detail\service_impl.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\simple_timer.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\sequence.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\logger.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\object_pool.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\json.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\protocol\json\session_json.cpp">
+      <Filter>net\protocol\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\protocol\json\msg_json.cpp">
+      <Filter>net\protocol\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\protocol\msgpack\session_pack.cpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\protocol\msgpack\msg_pack.cpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\protocol\msgpack\msg_pack_factory.cpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\net\protocol\local\msg_local.cpp">
+      <Filter>net\protocol\local</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lax\util\platform.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\lax\net\session.inl">
+      <Filter>net</Filter>
+    </None>
+    <None Include="..\..\lax\util\concurrent_queue.inl">
+      <Filter>util</Filter>
+    </None>
+  </ItemGroup>
+</Project>

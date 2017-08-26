@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="pub_sub_setup.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path4595"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="381.64259"
+     inkscape:cy="525.49332"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.53267241px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.16331682"
+       x="15.662899"
+       y="12.994791"
+       id="text3701"
+       transform="scale(1.0123071,0.98784249)"><tspan
+         sodipodi:role="line"
+         id="tspan3699"
+         x="15.662899"
+         y="12.994791"
+         style="stroke-width:0.16331682">pub/sub setup </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="76.729164"
+       y="213.08928"
+       id="text3881"><tspan
+         sodipodi:role="line"
+         id="tspan3879"
+         x="76.729164"
+         y="222.87886"
+         style="stroke-width:0.26458332" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.15306664px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10382667"
+       x="28.131479"
+       y="44.836918"
+       id="text4906"
+       transform="scale(0.91961355,1.0874133)"><tspan
+         sodipodi:role="line"
+         id="tspan4904"
+         x="28.131479"
+         y="44.836918"
+         style="stroke-width:0.10382667">announce / query</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.15306664px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10382667"
+       x="28.824675"
+       y="24.246849"
+       id="text4906-5"
+       transform="scale(0.91961355,1.0874133)"><tspan
+         sodipodi:role="line"
+         id="tspan4904-2"
+         x="28.824675"
+         y="24.246849"
+         style="stroke-width:0.10382667">connect</tspan></text>
+    <ellipse
+       style="fill:#e3e2db;stroke-width:0.17495969;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path5112"
+       cx="21.26116"
+       cy="25.046131"
+       rx="1.6063989"
+       ry="1.7008929" />
+    <ellipse
+       style="fill:#e3e2db;stroke-width:0.17495969;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path5112-8"
+       cx="20.599699"
+       cy="47.157738"
+       rx="1.6063989"
+       ry="1.7008929" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.15306664px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10382667"
+       x="80.605209"
+       y="24.111771"
+       id="text4906-5-5"
+       transform="scale(0.91961354,1.0874133)"><tspan
+         sodipodi:role="line"
+         x="80.605209"
+         y="24.111771"
+         style="stroke-width:0.10382667"
+         id="tspan5185">one way</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.15306664px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10382667"
+       x="80.461609"
+       y="33.163998"
+       id="text4906-5-5-4"
+       transform="scale(0.91961354,1.0874133)"><tspan
+         sodipodi:role="line"
+         x="80.461609"
+         y="33.163998"
+         style="stroke-width:0.10382667"
+         id="tspan5185-1">well kown ip:port</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.15306664px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10382667"
+       x="80.667114"
+       y="44.286945"
+       id="text4906-5-5-7"
+       transform="scale(0.91961354,1.0874133)"><tspan
+         sodipodi:role="line"
+         x="80.667114"
+         y="44.286945"
+         style="stroke-width:0.10382667"
+         id="tspan5238">서버 노드 간에는 주기적인 전송으로 알림</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.15306664px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10382667"
+       x="80.836319"
+       y="52.332516"
+       id="text4906-5-5-7-9"
+       transform="scale(0.91961354,1.0874133)"><tspan
+         sodipodi:role="line"
+         x="80.836319"
+         y="52.332516"
+         style="stroke-width:0.10382667"
+         id="tspan5238-9">클라이언트 노드는 명시적인 쿼리를 서버로 전송</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.94577551px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.07364438"
+       x="21.900085"
+       y="67.179512"
+       id="text874"
+       transform="scale(0.9928986,1.0071522)"><tspan
+         sodipodi:role="line"
+         x="21.900085"
+         y="67.179512"
+         style="stroke-width:0.07364438"
+         id="tspan876">현실에서 주소 기반 통신은 announce / query로 충분하다.</tspan><tspan
+         sodipodi:role="line"
+         x="21.900085"
+         y="70.899055"
+         style="stroke-width:0.07364438"
+         id="tspan880">join/leave는 의미 없다. 그런 건 자기만 의미 있는 행위이다.. </tspan><tspan
+         sodipodi:role="line"
+         x="21.900085"
+         y="74.618591"
+         style="stroke-width:0.07364438"
+         id="tspan884" /><tspan
+         sodipodi:role="line"
+         x="21.900085"
+         y="78.300812"
+         style="stroke-width:0.07364438"
+         id="tspan892">아는 것 만으로 변화시킬 수 있다. 이 후의 관계는 둘의 문제이다. </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.76184607px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.16904615"
+       x="16.825302"
+       y="90.311081"
+       id="text900"
+       transform="scale(0.84242797,1.1870451)"><tspan
+         sodipodi:role="line"
+         id="tspan898"
+         x="16.825302"
+         y="90.311081"
+         style="stroke-width:0.16904615">use case</tspan></text>
+    <rect
+       style="fill:#e3e2db;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect902"
+       width="64.066963"
+       height="0.75595242"
+       x="15.308036"
+       y="108.31429" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.7480135px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.16870034"
+       x="21.19908"
+       y="111.41972"
+       id="text906"
+       transform="scale(0.92966827,1.0756525)"><tspan
+         sodipodi:role="line"
+         id="tspan904"
+         x="21.19908"
+         y="111.41972"
+         style="stroke-width:0.16870034">login</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.69182301px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.11729556"
+       x="32.697781"
+       y="127.36957"
+       id="text906-7"
+       transform="scale(0.99487094,1.0051555)"><tspan
+         sodipodi:role="line"
+         id="tspan904-8"
+         x="32.697781"
+         y="127.36957"
+         style="stroke-width:0.11729556">1) connect a gate through a haproxy after dns lookup</tspan><tspan
+         sodipodi:role="line"
+         x="32.697781"
+         y="133.29379"
+         style="stroke-width:0.11729556"
+         id="tspan926">2) ask any login actor </tspan><tspan
+         sodipodi:role="line"
+         x="32.697781"
+         y="139.21802"
+         style="stroke-width:0.11729556"
+         id="tspan928">3) send to the login actor asking authentication </tspan><tspan
+         sodipodi:role="line"
+         x="32.697781"
+         y="145.14224"
+         style="stroke-width:0.11729556"
+         id="tspan930">4) get response </tspan><tspan
+         sodipodi:role="line"
+         x="32.697781"
+         y="151.06645"
+         style="stroke-width:0.11729556"
+         id="tspan932" /></text>
+    <rect
+       style="opacity:0.31499999;fill:#e3e2db;stroke-width:0.26584798;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect934"
+       width="148.35567"
+       height="43.845242"
+       x="15.308036"
+       y="113.30357" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.7480135px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.16870034"
+       x="20.7925"
+       y="157.97923"
+       id="text906-4"
+       transform="scale(0.92966827,1.0756525)"><tspan
+         sodipodi:role="line"
+         id="tspan904-1"
+         x="20.7925"
+         y="157.97923"
+         style="stroke-width:0.16870034">match</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.69182301px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.11729556"
+       x="32.317848"
+       y="177.19453"
+       id="text906-7-1"
+       transform="scale(0.99487094,1.0051555)"><tspan
+         sodipodi:role="line"
+         x="32.317848"
+         y="177.19453"
+         style="stroke-width:0.11729556"
+         id="tspan991">1) send a match request to my home actor</tspan><tspan
+         sodipodi:role="line"
+         x="32.317848"
+         y="183.11876"
+         style="stroke-width:0.11729556"
+         id="tspan995">2) the home actor reserves a match to the match actor</tspan><tspan
+         sodipodi:role="line"
+         x="32.317848"
+         y="189.04298"
+         style="stroke-width:0.11729556"
+         id="tspan997">3) the match actor matches through the home actor</tspan></text>
+    <rect
+       style="opacity:0.31499999;fill:#e3e2db;stroke-width:0.2315505;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect934-4"
+       width="148.35567"
+       height="33.261909"
+       x="15.308036"
+       y="163.00743" />
+    <rect
+       style="opacity:0.31499999;fill:#e3e2db;stroke-width:0.31279758;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect934-2"
+       width="147.97769"
+       height="60.854172"
+       x="16.630949"
+       y="19.754461" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.7480135px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.16870034"
+       x="20.182638"
+       y="193.99696"
+       id="text906-4-8"
+       transform="scale(0.92966827,1.0756525)"><tspan
+         sodipodi:role="line"
+         id="tspan904-1-6"
+         x="20.182638"
+         y="193.99696"
+         style="stroke-width:0.16870034">session &amp; actor presence</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.69182301px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.11729556"
+       x="31.747957"
+       y="215.73839"
+       id="text906-7-1-0"
+       transform="scale(0.99487094,1.0051555)"><tspan
+         sodipodi:role="line"
+         x="31.747957"
+         y="215.73839"
+         style="stroke-width:0.11729556"
+         id="tspan997-5">1) a session to an actor is closed</tspan><tspan
+         sodipodi:role="line"
+         x="31.747957"
+         y="221.66261"
+         style="stroke-width:0.11729556"
+         id="tspan1056">2) the actor state is closed</tspan><tspan
+         sodipodi:role="line"
+         x="31.747957"
+         y="227.58684"
+         style="stroke-width:0.11729556"
+         id="tspan1064">3) how do we see the closed state?</tspan><tspan
+         sodipodi:role="line"
+         x="31.747957"
+         y="233.51106"
+         style="stroke-width:0.11729556"
+         id="tspan1068">     - 마음의 친구로 남겨둔다. </tspan></text>
+    <rect
+       style="opacity:0.31499999;fill:#e3e2db;stroke-width:0.25575954;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect934-4-4"
+       width="148.16667"
+       height="40.632442"
+       x="15.119042"
+       y="200.99406" />
+    <rect
+       style="fill:#e3e2db;stroke-width:0.27346364;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect902-9"
+       width="68.224701"
+       height="0.75595242"
+       x="16.819937"
+       y="15.218748" />
+  </g>
+</svg>

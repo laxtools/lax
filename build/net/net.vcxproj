@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3A05B5E7-B816-4F30-BAAD-603125377721}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>net</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>ASIO_STANDALONE;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>ASIO_STANDALONE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>ASIO_STANDALONE;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>ASIO_STANDALONE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\lax\net\detail\acceptor.h" />
+    <ClInclude Include="..\..\lax\net\detail\addr.h" />
+    <ClInclude Include="..\..\lax\net\detail\connector.h" />
+    <ClInclude Include="..\..\lax\net\detail\segment.h" />
+    <ClInclude Include="..\..\lax\net\detail\segment_buffer.h" />
+    <ClInclude Include="..\..\lax\net\detail\service_impl.h" />
+    <ClInclude Include="..\..\lax\net\exception.h" />
+    <ClInclude Include="..\..\lax\net\msg.h" />
+    <ClInclude Include="..\..\lax\net\protocol\json\msg_json.h" />
+    <ClInclude Include="..\..\lax\net\protocol\json\session_json.h" />
+    <ClInclude Include="..\..\lax\net\protocol\local\msg_local.h" />
+    <ClInclude Include="..\..\lax\net\protocol\msgpack\msg_pack.h" />
+    <ClInclude Include="..\..\lax\net\protocol\msgpack\msg_pack_factory.h" />
+    <ClInclude Include="..\..\lax\net\protocol\msgpack\session_pack.h" />
+    <ClInclude Include="..\..\lax\net\protocol\protocol.h" />
+    <ClInclude Include="..\..\lax\net\reason.h" />
+    <ClInclude Include="..\..\lax\net\service.h" />
+    <ClInclude Include="..\..\lax\net\session.h" />
+    <ClInclude Include="..\..\lax\util\concurrent_queue.h" />
+    <ClInclude Include="..\..\lax\util\config.h" />
+    <ClInclude Include="..\..\lax\util\json.hpp" />
+    <ClInclude Include="..\..\lax\util\logger.h" />
+    <ClInclude Include="..\..\lax\util\macros.h" />
+    <ClInclude Include="..\..\lax\util\null_mutex.h" />
+    <ClInclude Include="..\..\lax\util\object_pool.h" />
+    <ClInclude Include="..\..\lax\util\platform.h" />
+    <ClInclude Include="..\..\lax\util\result.h" />
+    <ClInclude Include="..\..\lax\util\sequence.h" />
+    <ClInclude Include="..\..\lax\util\simple_timer.h" />
+    <ClInclude Include="..\..\lax\util\state.h" />
+    <ClInclude Include="..\..\lax\util\state_lambda.h" />
+    <ClInclude Include="..\..\lax\util\state_machine.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\lax\net\detail\acceptor.cpp" />
+    <ClCompile Include="..\..\lax\net\detail\addr.cpp" />
+    <ClCompile Include="..\..\lax\net\detail\connector.cpp" />
+    <ClCompile Include="..\..\lax\net\detail\service_impl.cpp" />
+    <ClCompile Include="..\..\lax\net\msg.cpp" />
+    <ClCompile Include="..\..\lax\net\protocol\json\msg_json.cpp" />
+    <ClCompile Include="..\..\lax\net\protocol\json\session_json.cpp" />
+    <ClCompile Include="..\..\lax\net\protocol\local\msg_local.cpp" />
+    <ClCompile Include="..\..\lax\net\protocol\msgpack\msg_pack.cpp" />
+    <ClCompile Include="..\..\lax\net\protocol\msgpack\msg_pack_factory.cpp" />
+    <ClCompile Include="..\..\lax\net\protocol\msgpack\session_pack.cpp" />
+    <ClCompile Include="..\..\lax\net\service.cpp" />
+    <ClCompile Include="..\..\lax\net\session.cpp" />
+    <ClCompile Include="..\..\lax\util\json.cpp" />
+    <ClCompile Include="..\..\lax\util\logger.cpp" />
+    <ClCompile Include="..\..\lax\util\macros.cpp" />
+    <ClCompile Include="..\..\lax\util\object_pool.cpp" />
+    <ClCompile Include="..\..\lax\util\platform.cpp" />
+    <ClCompile Include="..\..\lax\util\sequence.cpp" />
+    <ClCompile Include="..\..\lax\util\simple_timer.cpp" />
+    <ClCompile Include="..\..\lax\util\state.cpp" />
+    <ClCompile Include="..\..\lax\util\state_machine.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\lax\net\session.inl" />
+    <None Include="..\..\lax\util\concurrent_queue.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
