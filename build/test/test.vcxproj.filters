@@ -5,8 +5,17 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="tests">
-      <UniqueIdentifier>{d6eea208-ce24-4482-aa2e-8a93e34eadad}</UniqueIdentifier>
+    <Filter Include="util">
+      <UniqueIdentifier>{f96d01ba-009c-43f0-85c2-d3d079abd0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{ff4a8d60-bd1c-44eb-8950-453519238cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task">
+      <UniqueIdentifier>{78032bdb-33b3-4fd4-bb38-13a8d64d333c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="db">
+      <UniqueIdentifier>{bdee515e-b9ff-4cec-99cb-2766e9f49383}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -16,9 +25,6 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="tests\test_app.h">
-      <Filter>tests</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -27,113 +33,11 @@
     <ClCompile Include="test.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="tests\test_macros.cpp">
-      <Filter>tests</Filter>
+    <ClCompile Include="..\..\test\task\test_scheduler.cpp">
+      <Filter>task</Filter>
     </ClCompile>
-    <ClCompile Include="tests\test_index_search.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_shared_ptr_conversion.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_asio_echo_example.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_asio_session.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_net_basic_flow.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_cplus.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_sequence.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_result.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_addr.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_logger.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_simple_timer.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_concurrent_queue.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_object_pool.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_segment.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_state_machine.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_segment_buffer.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_json11.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_object_design.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_json_session.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_msgpack_idl.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_msgpack_session.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_msgpack.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_id.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_ref.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_timer.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_cluster.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_component.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_sub_post.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_cluster_directory.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_index.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_send.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_runner.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_actor_session_binding.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_net_encryption.cpp">
-      <Filter>tests</Filter>
-    </ClCompile>
-    <ClCompile Include="tests\test_platform.cpp">
-      <Filter>tests</Filter>
+    <ClCompile Include="..\..\test\task\test_task.cpp">
+      <Filter>task</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

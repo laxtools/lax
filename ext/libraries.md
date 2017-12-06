@@ -7,9 +7,6 @@
  - msgpack 
    - parser 
    - generator C++ / C#
- - caf 
-   - 공부용. 
-   - thread 구성. 
 
    
 

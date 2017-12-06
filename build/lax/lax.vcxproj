@@ -19,35 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B8AB8921-53E6-4056-9C12-AEFB67BC0483}</ProjectGuid>
+    <ProjectGuid>{3A05B5E7-B816-4F30-BAAD-603125377721}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test</RootNamespace>
+    <RootNamespace>net</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <ProjectName>lax</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -69,51 +71,40 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)..\..\bin\</OutDir>
-    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
-    <LibraryPath>$(SolutionDir)..\..\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
-    <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
-    <LibraryPath>$(SolutionDir)..\..\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)..\..\bin\</OutDir>
-    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
-    <LibraryPath>$(SolutionDir)..\..\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <OutDir>$(SolutionDir)..\..\lib\</OutDir>
+    <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)..\..\bin\</OutDir>
-    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
-    <LibraryPath>$(SolutionDir)..\..\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ASIO_STANDALONE;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>lax_$(Configuration)_$(Platform).lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,15 +112,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>ASIO_STANDALONE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ASIO_STANDALONE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>lax_$(Configuration)_$(Platform).lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,17 +127,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ASIO_STANDALONE;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>lax_$(Configuration)_$(Platform).lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -159,33 +144,42 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>ASIO_STANDALONE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ASIO_STANDALONE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>lax_$(Configuration)_$(Platform).lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\lax\net\channel.h" />
+    <ClInclude Include="..\..\include\lax\net\detail\service.h" />
+    <ClInclude Include="..\..\include\lax\net\msg.h" />
+    <ClInclude Include="..\..\include\lax\net\pipe.h" />
+    <ClInclude Include="..\..\include\lax\net\proto.h" />
+    <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
+    <ClInclude Include="..\..\include\lax\task\task.hpp" />
+    <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
+    <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
+    <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
+    <ClInclude Include="..\..\include\lax\util\simple_timer.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
-    <ClCompile Include="..\..\test\task\test_task.cpp" />
+    <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
+    <ClCompile Include="..\..\src\task\task.cpp" />
+    <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
+    <ClCompile Include="..\..\src\util\macros.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
