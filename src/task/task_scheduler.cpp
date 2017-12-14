@@ -51,7 +51,14 @@ void task_scheduler::schedule(task::ptr task)
 		}
 	}
 
-	queue_.push(task);
+	if (task->get_state() == task::state::ready)
+	{
+		queue_.push(task);
+	}
+	else
+	{
+		// task finished. what to do?
+	}
 
 	if (config_.run_schedule_when_schedule_called)
 	{
@@ -91,6 +98,8 @@ void task_scheduler::run_schedule()
 
 	while (queue_.pop(task))
 	{
+		check(task->get_state() == task::state::ready);
+
 		if (task->is_affinity_set())
 		{
 			auto id = task->get_last_runner_id();
@@ -126,11 +135,7 @@ std::size_t task_scheduler::get_task_count() const
 
 uint32_t task_scheduler::get_target_runner_id() const
 {
-	// 가장 태스크 개수가 작은 runner에 다음 태스크 할당 
-	// TODO: 예상 실행 시간으로 할당하는 알고리즘 고려
-
 	bool schedule_policy_min_task_count = true;
-	// schedule_policy_min_task_run_time
 
 	uint32_t min_task_count = UINT32_MAX;
 	unsigned int cand_id = rand() % runners_.size();
@@ -147,6 +152,11 @@ uint32_t task_scheduler::get_target_runner_id() const
 	}
 
 	return cand_id;
+}
+
+void task_scheduler::pass(task::ptr task)
+{
+	queue_.push(task);
 }
 
 } // task 

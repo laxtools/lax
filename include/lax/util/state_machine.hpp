@@ -1,6 +1,6 @@
 ﻿#pragma once 
 
-#include "state.h"
+#include <lax/util/state.hpp>
 #include <deque>
 
 namespace lax

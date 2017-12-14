@@ -1,5 +1,8 @@
 #include "stdafx.h"
-#include "platform.h"
+#include <lax/util/platform.hpp>
+
+#define WINDOWS_LEAN_AND_MEAN
+#include <windows.h>
 
 namespace lax {
 namespace util {

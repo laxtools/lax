@@ -1,4 +1,4 @@
 #include "stdafx.h"
-#include "sequence.h"
+#include <lax/util/sequence.hpp>
 
 // empty

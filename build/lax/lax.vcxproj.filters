@@ -20,6 +20,12 @@
     <Filter Include="task\detail">
       <UniqueIdentifier>{88c0034a-9cee-4781-b821-9c729415bc2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="channel">
+      <UniqueIdentifier>{bc900827-fc88-475d-a133-13a19afba22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="channel\detail">
+      <UniqueIdentifier>{e166d91f-f1df-49c7-a2d3-f985f5b604ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -27,21 +33,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\msg.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\pipe.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\proto.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\channel.h">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\service.h">
-      <Filter>net\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp">
       <Filter>task</Filter>
@@ -61,6 +52,33 @@
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\bundle.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\fiber.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\service.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\message.hpp">
+      <Filter>channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\channel.hpp">
+      <Filter>channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\sub.hpp">
+      <Filter>channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp">
+      <Filter>channel\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp">
+      <Filter>channel\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\detail\use_lock.hpp">
+      <Filter>channel\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -77,6 +95,30 @@
     </ClCompile>
     <ClCompile Include="..\..\src\util\macros.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\state.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\state_machine.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\object_pool.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\platform.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\sequence.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\channel\channel.cpp">
+      <Filter>channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\channel\detail\sub_map.cpp">
+      <Filter>channel\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\channel\detail\channel_map.cpp">
+      <Filter>channel\detail</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

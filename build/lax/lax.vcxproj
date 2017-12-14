@@ -155,11 +155,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\lax\net\channel.h" />
-    <ClInclude Include="..\..\include\lax\net\detail\service.h" />
-    <ClInclude Include="..\..\include\lax\net\msg.h" />
-    <ClInclude Include="..\..\include\lax\net\pipe.h" />
-    <ClInclude Include="..\..\include\lax\net\proto.h" />
+    <ClInclude Include="..\..\include\lax\channel\channel.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\detail\use_lock.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\message.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\sub.hpp" />
+    <ClInclude Include="..\..\include\lax\net\bundle.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\service.hpp" />
+    <ClInclude Include="..\..\include\lax\net\fiber.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
@@ -170,10 +174,18 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\channel\channel.cpp" />
+    <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
+    <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
     <ClCompile Include="..\..\src\util\macros.cpp" />
+    <ClCompile Include="..\..\src\util\object_pool.cpp" />
+    <ClCompile Include="..\..\src\util\platform.cpp" />
+    <ClCompile Include="..\..\src\util\sequence.cpp" />
+    <ClCompile Include="..\..\src\util\state.cpp" />
+    <ClCompile Include="..\..\src\util\state_machine.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

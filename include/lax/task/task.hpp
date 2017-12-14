@@ -18,7 +18,8 @@ namespace task
  * 사용법: 
  *   - task의 하위 클래스를 만듦. 
  *   - task_scheduler에 등록 
- *   - 필요할 때 자체 종료
+ *   - on_start, on_execute, on_finish 재정의 처리 
+ *   - 필요할 때 자체 finish() 호출 
  *   
  * 정책: 
  *   - affinity : 지정되면 동일 쓰레드에서 실행
@@ -33,7 +34,6 @@ public:
 	{
 		constructed,
 		ready,
-		suspended,
 		finished,	
 	};
 
@@ -45,10 +45,6 @@ public:
 	bool start();
 
 	void execute(uint32_t runner_id);
-
-	void suspend();
-	
-	void resume();
 
 	void finish();
 
@@ -82,10 +78,17 @@ public:
 		return execution_count_;
 	}
 
+	float get_total_execution_time() const
+	{
+		return total_execution_time_;
+	}
+
 private:
 	virtual bool on_start();
 
 	virtual void on_execute();
+
+	virtual void on_finish();
 
 	bool has_right_affinity(uint32_t runner_id) const;
 

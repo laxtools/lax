@@ -177,6 +177,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\test\channel\test_channel.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -17,6 +17,9 @@
     <Filter Include="db">
       <UniqueIdentifier>{bdee515e-b9ff-4cec-99cb-2766e9f49383}</UniqueIdentifier>
     </Filter>
+    <Filter Include="channel">
+      <UniqueIdentifier>{f91170f0-e996-4b2a-be77-5d5572a2387e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="..\..\test\task\test_task.cpp">
       <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\channel\test_channel.cpp">
+      <Filter>channel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

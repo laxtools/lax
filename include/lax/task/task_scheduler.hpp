@@ -36,7 +36,7 @@ public:
 		bool start_task_when_schedule_called = true;
 
 		/// schedule() 호출 시 스케줄 할 지 여부
-		bool run_schedule_when_schedule_called = false;
+		bool run_schedule_when_schedule_called = true;
 
 		/// finish 중에 ready인 태스크들을 종료 시킴 
 		bool finish_ready_task_during_finish = true;
@@ -62,6 +62,9 @@ public:
 
 	/// 전체 태스크 개수 (thread unsafe)
 	std::size_t get_task_count() const;
+
+	/// 내부용. task_runner만 사용 
+	void pass(task::ptr task);
 
 private: 
 	using task_queue = util::concurrent_queue<task::ptr>;

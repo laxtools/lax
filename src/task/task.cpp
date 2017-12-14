@@ -33,7 +33,7 @@ void task::execute(uint32_t runner_id)
 
 	if (affinity_ && !has_right_affinity(runner_id))
 	{
-		throw new exception_task_invalid_affinity("invalid runner id");
+		throw new exception_task_invalid_affinity("invalid runner affinity");
 	}
 
 	last_runner_id_ = runner_id;
@@ -42,24 +42,16 @@ void task::execute(uint32_t runner_id)
 
 	on_execute();
 
-	execution_count_++;
+	++execution_count_;
 	last_execution_time_ = execution_timer_.elapsed();
 	total_execution_time_ += last_execution_time_;
 	average_execution_time_ = (average_execution_time_ + last_execution_time_) / 2;
 }
 
-void task::suspend()
-{
-	state_ = state::suspended;
-}
-
-void task::resume()
-{
-	state_ = state::ready;
-}
-
 void task::finish()
 {
+	on_finish();
+
 	state_ = state::finished;
 }
 
@@ -69,6 +61,10 @@ bool task::on_start()
 }
 
 void task::on_execute()
+{
+}
+
+void task::on_finish()
 {
 }
 

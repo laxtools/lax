@@ -1,7 +1,7 @@
 #pragma once 
 
-#include <lax/util/macros.h>
-#include <lax/util/null_mutex.h>
+#include <lax/util/macros.hpp>
+#include <lax/util/null_mutex.hpp>
 
 #include <deque>
 #include <exception>

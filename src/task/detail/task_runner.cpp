@@ -53,7 +53,7 @@ void task_runner::finish()
 
 	while (queue_.pop(task))
 	{
-		scheduler_.schedule(task);
+		scheduler_.pass(task);
 	}
 }
 
@@ -63,7 +63,7 @@ void task_runner::run()
 
 	while (!stop_)
 	{
-		int loop_count = 0;
+		unsigned int loop_count = 0;
 		loop_timer_.reset();
 		
 		task::ptr task; 
@@ -72,10 +72,16 @@ void task_runner::run()
 		{
 			task->execute(id_);
 
-			scheduler_.schedule(task);
+			if (!stop_)
+			{
+				scheduler_.schedule(task);
+			}
+			else
+			{
+				scheduler_.pass(task);
+			}
 
 			++loop_count;
-
 			++task_run_count_;
 
 			if (config_.single_loop_run_limit > 0 && 

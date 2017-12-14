@@ -1,4 +1,4 @@
 ﻿#include "stdafx.h"
-#include "state.h"
+#include <lax/util/state.hpp>
 
 // empty. compile time syntax check only
