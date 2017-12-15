@@ -27,20 +27,20 @@
    - json 
 
  - simple abstractions: 
-   - pipe for protocol stack
-   - channel for communication on pipe
-   - key based subscription 
+   - bundle for protocol stack of fibers
+
+## Messaging 
+
+ - channel based messaging 
+   - subscription management
+   - immediate or delayed posting
 
 ## Task 
 
  - task scheduler 
    - use a pool of threads
    - thread affinity 
-   - task group 
-
- - channel binding  
-   - application task binds with channel(s) 
-   - use channel for communication
+   - load based scheduling
 
 ## Database 
 
