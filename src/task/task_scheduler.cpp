@@ -100,7 +100,7 @@ void task_scheduler::run_schedule()
 	{
 		check(task->get_state() == task::state::ready);
 
-		if (task->is_affinity_set())
+		if (task->is_runner_affinity_set())
 		{
 			auto id = task->get_last_runner_id();
 

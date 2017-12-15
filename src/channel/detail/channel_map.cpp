@@ -30,7 +30,9 @@ channel_map::ptr channel_map::create(const key_t& key, const config& cfg)
 
 		auto iter = map_.find(key);
 		check(iter == map_.end());
-		return_if(iter != map_.end(), iter->second);
+
+		// 중복되면 에러로 처리
+		return_if(iter != map_.end(), channel::ptr());
 	}
 
 	auto cp = std::make_shared<channel>(key, cfg);
@@ -54,15 +56,17 @@ channel_map::ptr channel_map::find(const key_t& key)
 	return iter->second;
 }
 
-void channel_map::destroy(const key_t& key)
+bool channel_map::destroy(const key_t& key)
 {
 	std::unique_lock<std::shared_timed_mutex> lock(mutex_);
 
 	auto iter = map_.find(key);
 	check(iter != map_.end());
-	return_if(iter == map_.end());
+	return_if(iter == map_.end(), false);
 
 	map_.erase(iter);
+
+	return true;
 }
 
 } // channel 

@@ -23,7 +23,7 @@ public:
 
 	ptr find(const key_t& key);
 
-	void destroy(const key_t& key);
+	bool destroy(const key_t& key);
 
 private: 
 	using map = std::map<key_t, ptr>;

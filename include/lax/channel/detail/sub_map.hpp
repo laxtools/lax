@@ -20,8 +20,10 @@ namespace channel
 class sub_map
 {
 public: 
+	/// 생성자
 	sub_map(bool use_lock);
 
+	/// 소멸자
 	~sub_map();
 
 	/// subscribe to topic. locked with unique_lock
@@ -36,13 +38,16 @@ public:
 	sub::key_t subscribe(message::topic_t topic, sub::cb_t cb, sub::mode mode);
 
 	/// unsubscribe to topic. locked with unique_lock
-	void unsubscribe(sub::key_t key);
+	bool unsubscribe(sub::key_t key);
 
 	/// post a topic and message topic. locked with shared_lock
 	std::size_t post(message::topic_t topic, message::ptr m, sub::mode mode);
 
 	/// post a message topic. locked with shared_lock
 	std::size_t post(message::ptr m, sub::mode mode);
+
+	/// topic에 대해 나중 처리할 항목이 있는 지 확인
+	bool has_delayed_sub(message::topic_t topic);
 
 	/// 디버깅 용. topic에 등록된 개수
 	std::size_t get_subscription_count(message::topic_t topic) const;
@@ -81,7 +86,7 @@ private:
 		sub::mode mode
 	);
 
-	sub::key_t unsubscribe(entry_map& em, sub::key_t key);
+	bool unsubscribe(entry_map& em, sub::key_t key);
 
 	std::size_t post(entry_map& em, message::topic_t topic, message::ptr m);
 

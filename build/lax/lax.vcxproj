@@ -161,6 +161,7 @@
     <ClInclude Include="..\..\include\lax\channel\detail\use_lock.hpp" />
     <ClInclude Include="..\..\include\lax\channel\message.hpp" />
     <ClInclude Include="..\..\include\lax\channel\sub.hpp" />
+    <ClInclude Include="..\..\include\lax\db\nanodbc.h" />
     <ClInclude Include="..\..\include\lax\net\bundle.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\service.hpp" />
     <ClInclude Include="..\..\include\lax\net\fiber.hpp" />
@@ -169,7 +170,17 @@
     <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
+    <ClInclude Include="..\..\include\lax\util\config.hpp" />
+    <ClInclude Include="..\..\include\lax\util\json.hpp" />
+    <ClInclude Include="..\..\include\lax\util\null_mutex.hpp" />
+    <ClInclude Include="..\..\include\lax\util\object_pool.hpp" />
+    <ClInclude Include="..\..\include\lax\util\platform.hpp" />
+    <ClInclude Include="..\..\include\lax\util\result.hpp" />
+    <ClInclude Include="..\..\include\lax\util\sequence.hpp" />
     <ClInclude Include="..\..\include\lax\util\simple_timer.hpp" />
+    <ClInclude Include="..\..\include\lax\util\state.hpp" />
+    <ClInclude Include="..\..\include\lax\util\state_lambda.hpp" />
+    <ClInclude Include="..\..\include\lax\util\state_machine.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -177,11 +188,11 @@
     <ClCompile Include="..\..\src\channel\channel.cpp" />
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />
+    <ClCompile Include="..\..\src\db\nanodbc.cpp" />
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
     <ClCompile Include="..\..\src\util\macros.cpp" />
-    <ClCompile Include="..\..\src\util\object_pool.cpp" />
     <ClCompile Include="..\..\src\util\platform.cpp" />
     <ClCompile Include="..\..\src\util\sequence.cpp" />
     <ClCompile Include="..\..\src\util\state.cpp" />
@@ -192,6 +203,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\include\lax\util\concurrent_queue.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,7 +17,7 @@ TEST_CASE("task")
 
 		REQUIRE(task1.get_last_runner_id() == 1);
 
-		task1.set_affinity();
+		task1.set_runner_affinity();
 
 		CHECK_THROWS(task1.execute(2)); // exception_task_invalid_affinity
 

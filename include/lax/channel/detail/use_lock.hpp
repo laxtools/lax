@@ -8,6 +8,7 @@ namespace lax
 namespace channel
 {
 
+/// unique lock with optional flag. 
 class use_lock_unique
 {
 public:
@@ -34,6 +35,7 @@ private:
 	std::shared_timed_mutex& mutex_;
 };
 
+/// shared lock with optional flag. 
 class use_lock_shared
 {
 public:

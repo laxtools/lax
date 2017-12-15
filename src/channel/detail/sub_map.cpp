@@ -53,21 +53,21 @@ sub::key_t sub_map::subscribe(message::topic_t topic, sub::cb_t cb, sub::mode mo
 	);
 }
 
-void sub_map::unsubscribe(sub::key_t key)
+bool sub_map::unsubscribe(sub::key_t key)
 {
 	use_lock_unique lock(use_lock_, mutex_);
 
 	auto iter = keys_.find(key);
 	check(iter != keys_.end());
-	return_if(iter == keys_.end());
+	return_if(iter == keys_.end(),false);
 
 	if (iter->second.mode == sub::mode::immediate)
 	{
-		unsubscribe(entries_immediate_, key);
+		return unsubscribe(entries_immediate_, key);
 	}
 	else
 	{
-		unsubscribe(entries_delayed_, key);
+		return unsubscribe(entries_delayed_, key);
 	}
 }
 
@@ -99,11 +99,20 @@ std::size_t sub_map::post(message::ptr m, sub::mode mode)
 	}
 }
 
+bool sub_map::has_delayed_sub(message::topic_t topic)
+{
+	use_lock_shared lock(use_lock_, mutex_);
+
+	auto iter = entries_delayed_.find(topic);
+
+	return iter != entries_delayed_.end();
+}
+
 std::size_t sub_map::get_subscription_count(message::topic_t topic) const
 {
 	use_lock_shared lock(use_lock_, mutex_);
 
-	int count = 0; 
+	std::size_t count = 0; 
 	
 	count += get_subscription_count(topic, sub::mode::immediate);
 	count += get_subscription_count(topic, sub::mode::delayed);
@@ -174,28 +183,38 @@ sub::key_t sub_map::subscribe(
 	return key;
 }
 
-sub::key_t sub_map::unsubscribe(entry_map& em, sub::key_t key)
+bool sub_map::unsubscribe(entry_map& em, sub::key_t key)
 {
 	auto iter = keys_.find(key);
 	check(iter != keys_.end());
-	return_if(iter == keys_.end());
+	return_if(iter == keys_.end(), false);
 
-	auto topic = iter->second;
+	auto topic = iter->second.topic;
 
 	keys_.erase(iter);
 	seq_.release(key);
 
-	auto ei = em.find(key);
+	auto ei = em.find(topic);
 	check(ei != em.end());
-	return_if(ei == em.end());
+	return_if(ei == em.end(), false);
 
 	auto& subs = ei->second.subs;
 
-	subs.erase(
-		std::remove_if(subs.begin(), subs.end(),
-			[key](const sub& s) { return s.get_key() == key;}),
-		subs.end()
+	auto si = std::find_if(
+		subs.begin(), subs.end(), 
+		[key](const sub& s) {return s.get_key() == key;}
 	);
+
+	if ( si == subs.end())
+	{
+		return false;
+	}
+
+	// 등록할 때 동일 키는 추가되지 않도록 검증
+
+	subs.erase(si);
+
+	return true;
 }
 
 std::size_t sub_map::post(entry_map& em, message::topic_t topic, message::ptr m)

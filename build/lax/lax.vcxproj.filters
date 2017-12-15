@@ -26,6 +26,9 @@
     <Filter Include="channel\detail">
       <UniqueIdentifier>{e166d91f-f1df-49c7-a2d3-f985f5b604ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="db">
+      <UniqueIdentifier>{16dfa1f6-15f5-4545-9693-c42a03b97740}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -79,6 +82,39 @@
     <ClInclude Include="..\..\include\lax\channel\detail\use_lock.hpp">
       <Filter>channel\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\state_machine.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\config.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\json.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\null_mutex.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\object_pool.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\platform.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\result.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\sequence.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\state.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\state_lambda.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\nanodbc.h">
+      <Filter>db</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,9 +138,6 @@
     <ClCompile Include="..\..\src\util\state_machine.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\util\object_pool.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\util\platform.cpp">
       <Filter>util</Filter>
     </ClCompile>
@@ -120,5 +153,13 @@
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp">
       <Filter>channel\detail</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\db\nanodbc.cpp">
+      <Filter>db</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\include\lax\util\concurrent_queue.inl">
+      <Filter>util</Filter>
+    </None>
   </ItemGroup>
 </Project>

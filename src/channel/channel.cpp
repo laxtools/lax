@@ -17,7 +17,7 @@ channel::ptr channel::find(const key_t& key)
 	return channel_map::get().find(key);
 }
 
-void channel::destroy(const key_t& key)
+bool channel::destroy(const key_t& key)
 {
 	return channel_map::get().destroy(key);
 }
@@ -42,7 +42,7 @@ channel::~channel()
 
 std::size_t channel::push(message::ptr m)
 {
-	q_.push(m);
+	enqueue_checked(m->get_topic(), m);
 	
 	auto count = map_.post(m, sub::mode::immediate);
 
@@ -53,7 +53,7 @@ std::size_t channel::push(message::ptr m)
 
 std::size_t channel::push(message::topic_t topic, message::ptr m)
 {
-	q_.push(m);
+	enqueue_checked(topic, m);
 
 	auto count = map_.post(topic, m, sub::mode::immediate);
 
@@ -72,9 +72,9 @@ sub::key_t channel::subscribe(message::topic_t topic, cb_t cb, sub::mode mode)
 	return map_.subscribe(topic, cb, mode);
 }
 
-void channel::unsubscribe(sub::key_t key)
+bool channel::unsubscribe(sub::key_t key)
 {
-	map_.unsubscribe(key);
+	return map_.unsubscribe(key);
 }
 
 std::size_t channel::post()
@@ -97,6 +97,22 @@ std::size_t channel::post()
 std::size_t channel::get_queue_size() const
 {
 	return q_.unsafe_size();
+}
+
+void channel::enqueue_checked(message::topic_t topic, message::ptr m)
+{
+	if (config_.check_delayed_sub_before_enqueue)
+	{
+		if (map_.has_delayed_sub(topic))
+		{
+			q_.push(m);
+		}
+		// else - no delayed posting for the topic
+	}
+	else
+	{
+		q_.push(m);
+	}
 }
 
 } // channel

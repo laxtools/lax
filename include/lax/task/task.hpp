@@ -38,22 +38,28 @@ public:
 	};
 
 public:
+	/// 생성자
 	explicit task(); 
 
+	/// 소멸자
 	virtual ~task();
 
+	/// 시작. on_start() 호출. 실패 시 false
 	bool start();
 
+	/// 특정 runner에서 실행. on_execute() 호출
 	void execute(uint32_t runner_id);
 
+	/// 종료. on_finish() 호출. 
 	void finish();
 
-	void set_affinity()
+	/// 
+	void set_runner_affinity()
 	{
 		affinity_ = true;
 	}
 
-	bool is_affinity_set() const
+	bool is_runner_affinity_set() const
 	{
 		return affinity_;
 	}
@@ -84,10 +90,13 @@ public:
 	}
 
 private:
+	/// 하위 클래스 구현. start()에서 호출
 	virtual bool on_start();
 
+	/// 하위 클래스 구현. execute()에서 호출
 	virtual void on_execute();
 
+	/// 하위 클래스 구현. finish()에서 호출
 	virtual void on_finish();
 
 	bool has_right_affinity(uint32_t runner_id) const;
