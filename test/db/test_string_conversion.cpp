@@ -56,6 +56,22 @@ inline void convert(const std::string& in, std::wstring& out)
 }
 } // win
 
+
+namespace win2
+{
+
+// c style code page based conversion
+
+inline void convert(const std::wstring& in, std::string& out)
+{
+}
+
+inline void convert(const std::string& in, std::wstring& out)
+{
+}
+
+} // win2
+
 TEST_CASE("test string conversion")
 {
 	SECTION("unx")
@@ -115,6 +131,35 @@ TEST_CASE("test string conversion")
 
 			std::wstring ow;
 			win::convert(os, ow);
+
+			REQUIRE(ow == ws);
+		}
+	}
+
+	SECTION("win2")
+	{
+		SECTION("korean")
+		{
+			std::wstring ws(L"ÇÑ±Û");
+
+			std::string os;
+			win2::convert(ws, os);
+
+			std::wstring ow;
+			win2::convert(os, ow);
+
+			REQUIRE(ow == ws);
+		}
+
+		SECTION("english")
+		{
+			std::wstring ws(L"hello");
+
+			std::string os;
+			win2::convert(ws, os);
+
+			std::wstring ow;
+			win2::convert(os, ow);
 
 			REQUIRE(ow == ws);
 		}
