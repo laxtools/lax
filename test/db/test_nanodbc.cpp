@@ -82,9 +82,17 @@ TEST_CASE("test nanodbc")
 			//  - 필요한 곳에서는 변환해서 사용 
 			//  
 
-			// nanodbc를 재작성 
+			// nanodbc를 수정
 			//  - std::wstring 또는 std::string을 사용하도록 변경 
 			//  - DB 결과 값에 대한 처리 확인
+		}
+
+		SECTION("setup")
+		{
+			// db setup
+
+			// 
+
 		}
 	}
 
