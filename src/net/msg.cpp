@@ -1,10 +1,11 @@
 #include "stdafx.h"
-#include <lax/net/msg.hpp>
+#include "msg.h"
 
 namespace lax
 {
 namespace net
 {
+
 
 } // net
 } // lax

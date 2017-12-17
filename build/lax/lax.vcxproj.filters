@@ -14,9 +14,6 @@
     <Filter Include="task">
       <UniqueIdentifier>{c5849820-c475-471f-8713-90201f776a0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\detail">
-      <UniqueIdentifier>{c6765723-089a-4092-9051-4c895438dcb8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="task\detail">
       <UniqueIdentifier>{88c0034a-9cee-4781-b821-9c729415bc2e}</UniqueIdentifier>
     </Filter>
@@ -57,15 +54,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp">
       <Filter>util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\bundle.hpp">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\fiber.hpp">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\service.hpp">
-      <Filter>net\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\channel\message.hpp">
       <Filter>channel</Filter>

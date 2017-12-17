@@ -168,9 +168,6 @@
     <ClInclude Include="..\..\include\lax\db\nanodbc.h" />
     <ClInclude Include="..\..\include\lax\db\query.hpp" />
     <ClInclude Include="..\..\include\lax\db\query_scheduler.hpp" />
-    <ClInclude Include="..\..\include\lax\net\bundle.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\service.hpp" />
-    <ClInclude Include="..\..\include\lax\net\fiber.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
