@@ -161,7 +161,13 @@
     <ClInclude Include="..\..\include\lax\channel\detail\use_lock.hpp" />
     <ClInclude Include="..\..\include\lax\channel\message.hpp" />
     <ClInclude Include="..\..\include\lax\channel\sub.hpp" />
+    <ClInclude Include="..\..\include\lax\db\detail\db_connection.hpp" />
+    <ClInclude Include="..\..\include\lax\db\detail\db_connection_pool.hpp" />
+    <ClInclude Include="..\..\include\lax\db\detail\db_manager.hpp" />
+    <ClInclude Include="..\..\include\lax\db\detail\query_task.hpp" />
     <ClInclude Include="..\..\include\lax\db\nanodbc.h" />
+    <ClInclude Include="..\..\include\lax\db\query.hpp" />
+    <ClInclude Include="..\..\include\lax\db\query_scheduler.hpp" />
     <ClInclude Include="..\..\include\lax\net\bundle.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\service.hpp" />
     <ClInclude Include="..\..\include\lax\net\fiber.hpp" />

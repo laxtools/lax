@@ -13,7 +13,7 @@ class sub
 {
 public: 
 	using key_t = uint32_t;
-	using channel_key_t = std::string;
+	using channel_key_t = message::channel_key_t;
 	using cond_t = std::function<bool(message::ptr)>;
 	using cb_t = std::function<void(message::ptr)>;
 

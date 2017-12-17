@@ -39,7 +39,7 @@ public:
 
 public:
 	/// 持失切
-	explicit task(); 
+	task(); 
 
 	/// 社瑚切
 	virtual ~task();

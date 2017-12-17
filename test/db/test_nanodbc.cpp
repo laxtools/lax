@@ -87,48 +87,155 @@ TEST_CASE("test nanodbc")
 			//  - DB 결과 값에 대한 처리 확인
 		}
 
-		SECTION("setup")
+		SECTION("dsn")
 		{
-			// db setup
+			// odbc setup
+			// sqlserver native client로 정상
+			// odbc driver로 했을 경우 안 됨 
+			SECTION("odbc driver")
+			{
+				connection c1;
 
-			// 
+				c1.connect(
+					L"test_native",
+					L"sa",
+					L"nw4$anyAny",
+					5
+				);
 
+				// ok
+
+				c1.disconnect();
+			}
+
+			SECTION("direct execution")
+			{
+				connection c1;
+
+				c1.connect(
+					L"test_native",
+					L"sa",
+					L"nw4$anyAny",
+					5
+				);
+
+				statement stmt;
+
+				stmt.execute_direct(c1, L"select 1");
+
+				c1.disconnect();
+			}
 		}
 	}
 
+	// queries work on  test_simple( id : unqiueidentifier, value : nvarchar(50)); 
+
 	SECTION("statement")
 	{
-		// 성능과 안정성 테스트를 충분히 많이해야 한다. 
-	}
+		SECTION("execute")
+		{
+			connection c1;
 
-	SECTION("unicode")
-	{
-		// https://stackoverflow.com/questions/4804298/how-to-convert-wstring-into-string
-		// wstring <--> string conversion
+			c1.connect(
+				L"test_native",
+				L"sa",
+				L"nw4$anyAny",
+				5
+			);
 
-		
+			//
+			// 옵션 지정을 위해서는 DSN 문자열을 직접 사용하는 게 좋다. 
+			// - database를 지정할 수 있는 유일한 방법이다.
+			// - 아니면 datasource에서 지정해야 함
+
+			statement stmt;
+
+			stmt.open(c1);
+
+			stmt.prepare(L"insert into test_simple values( NEWID(), 'd1')");
+
+			auto result = stmt.execute();
+
+			c1.disconnect();
+		}
+
+		SECTION("fetch")
+		{
+			connection c1;
+
+			c1.connect(
+				L"test_native",
+				L"sa",
+				L"nw4$anyAny",
+				5
+			);
+
+			statement stmt;
+
+			stmt.open(c1);
+
+			stmt.prepare(L"select * from test_simple");
+
+			auto result = stmt.execute();
+
+			for (int i = 0; result.next(); ++i)
+			{
+				auto c1 = result.get<std::wstring>(0);
+				auto c2 = result.get<std::wstring>(1);
+			}
+
+			// 한글 읽는데도 문제가 없다. 왜 동작하지?
+			// - wstring을 사용하므로 convert를 실행하지 않음
+			// - 따라서, 변환 없이 그대로 사용됨
+
+			c1.disconnect();
+		}
+
+		SECTION("bind")
+		{
+			connection c1;
+
+			c1.connect(
+				L"test_native",
+				L"sa",
+				L"nw4$anyAny",
+				5
+			);
+
+			statement stmt;
+
+			stmt.open(c1);
+
+			stmt.prepare(L"select * from test_simple where value = ?");
+			stmt.bind(0, L"d1");
+
+			auto result = stmt.execute();
+
+			for (int i = 0; result.next(); ++i)
+			{
+				auto c1 = result.get<std::wstring>(0);
+				auto c2 = result.get<std::wstring>(1);
+			}
+
+			// 한글 읽는데도 문제가 없다. 왜 동작하지?
+			// - wstring을 사용하므로 convert를 실행하지 않음
+			// - 따라서, 변환 없이 그대로 사용됨
+
+			c1.disconnect();
+		}
 	}
 
 	SECTION("transaction")
 	{
+		SECTION("concepts")
+		{
+			// isolation level
+
+			// 
+		}
 	}
 
 	SECTION("error handling")
 	{
-	}
-
-	SECTION("performance")
-	{
-		SECTION("populate")
-		{
-		}
-
-		SECTION("query")
-		{
-		}
-
-		SECTION("delete")
-		{
-		}
 	}
 }

@@ -29,6 +29,9 @@
     <Filter Include="db">
       <UniqueIdentifier>{16dfa1f6-15f5-4545-9693-c42a03b97740}</UniqueIdentifier>
     </Filter>
+    <Filter Include="db\detail">
+      <UniqueIdentifier>{08855888-fd53-4a25-8e18-6dae162db3cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -114,6 +117,24 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\db\nanodbc.h">
       <Filter>db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\query.hpp">
+      <Filter>db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\query_scheduler.hpp">
+      <Filter>db</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\detail\query_task.hpp">
+      <Filter>db\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\detail\db_connection.hpp">
+      <Filter>db\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\detail\db_connection_pool.hpp">
+      <Filter>db\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\db\detail\db_manager.hpp">
+      <Filter>db\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

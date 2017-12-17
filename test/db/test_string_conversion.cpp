@@ -164,11 +164,4 @@ TEST_CASE("test string conversion")
 			REQUIRE(ow == ws);
 		}
 	}
-
-	SECTION("code page")
-	{
-		// http://www.ucancode.net/Converting-ANSI-to-Unicode-with_MSC_VER-MBCS-Multiple-Byte-VC.htm
-
-
-	}
 }

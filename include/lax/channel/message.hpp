@@ -14,6 +14,7 @@ public:
 	using ptr = std::shared_ptr<message>;
 	using proto_t = uint8_t;
 	using topic_t = uint32_t;
+	using channel_key_t = std::string;
 
 public:
 	message()
