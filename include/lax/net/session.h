@@ -35,6 +35,10 @@ public:
 	using result = util::result<bool, reason>;
 
 public:
+
+	//
+	// XXX: id must be unique for very long time.
+	// 
 	union id
 	{
 		uint32_t value_ = 0;
