@@ -27,7 +27,7 @@
    - json 
 
  - simple abstractions: 
-   - bundle for protocol stack of fibers
+   - session and protocol
 
 ## Messaging 
 
@@ -46,7 +46,7 @@
 
  - nanodbc 
  - database task and task scheduler 
-   - integrated with blocking task feature 
+ - result processing
 
 ## Game Data Model 
 
