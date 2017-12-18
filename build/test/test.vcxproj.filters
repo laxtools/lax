@@ -54,5 +54,8 @@
     <ClCompile Include="..\..\test\db\test_string_conversion.cpp">
       <Filter>db</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\channel\test_dispatcher.cpp">
+      <Filter>channel</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

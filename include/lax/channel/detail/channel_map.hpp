@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <lax/channel/channel.hpp>
+#include <map>
 
 namespace lax
 {

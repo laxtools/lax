@@ -2,7 +2,7 @@
 
 #include <lax/channel/sub.hpp>
 #include <lax/util/sequence.hpp>
-#include <map>
+#include <unordered_map>
 #include <shared_mutex>
 #include <vector>
 
@@ -62,14 +62,14 @@ private:
 		std::size_t			post_count = 0;
 		std::vector<sub>	subs;
 	};
-	using entry_map = std::map<message::topic_t, entry>;
+	using entry_map = std::unordered_map<message::topic_t, entry>;
 
 	struct entry_link
 	{
 		message::topic_t	topic;
 		sub::mode			mode;
 	};
-	using key_map = std::map<sub::key_t, entry_link>;
+	using key_map = std::unordered_map<sub::key_t, entry_link>;
 
 	sub::key_t subscribe(
 		entry_map& em, 

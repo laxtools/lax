@@ -29,6 +29,9 @@
     <Filter Include="db\detail">
       <UniqueIdentifier>{08855888-fd53-4a25-8e18-6dae162db3cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="node">
+      <UniqueIdentifier>{fbebb2fd-ebee-4599-a613-742562355cbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

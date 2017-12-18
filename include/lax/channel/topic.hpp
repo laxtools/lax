@@ -121,8 +121,24 @@ private:
 	key_t key_;
 };
 
-// TODO: 
-//  - add hash function for topic
-
 } // channel
 } // lax
+
+// TODO: 
+//  - add hash function for topic
+#include <unordered_map>
+
+namespace std {
+
+template <>
+struct hash<::lax::channel::topic>
+{
+	std::size_t operator()(const ::lax::channel::topic& k) const
+	{
+		auto key = static_cast<uint32_t>(k.get_key());
+
+		return std::hash<uint32_t>()(key);
+	}
+};
+
+} // std

@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\channel\test_channel.cpp" />
+    <ClCompile Include="..\..\test\channel\test_dispatcher.cpp" />
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
     <ClCompile Include="..\..\test\db\test_string_conversion.cpp" />

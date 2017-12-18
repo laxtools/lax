@@ -242,7 +242,6 @@ std::size_t sub_map::post(entry_map& em, message::ptr m)
 std::size_t sub_map::post_on_topic(entry_map& em, const message::topic_t& topic, message::ptr m)
 {
 	// 테스트 용도 등으로 valid 하지 않은 경우 발생 
-	
 	return_if(!topic.is_valid(), 0);
 
 	auto iter = em.find(topic);
