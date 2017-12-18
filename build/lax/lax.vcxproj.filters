@@ -124,6 +124,12 @@
     <ClInclude Include="..\..\include\lax\db\detail\db_manager.hpp">
       <Filter>db\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\topic.hpp">
+      <Filter>channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\dispatcher.hpp">
+      <Filter>channel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

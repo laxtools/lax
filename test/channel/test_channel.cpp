@@ -17,10 +17,10 @@ TEST_CASE("test channel")
 			auto cb = [&value](message::ptr m) { value++; };
 			auto true_ = [](message::ptr m) { return true; };
 
-			sub s1( 1, 1, true_, cb, sub::mode::delayed);
+			sub s1( 1, topic(1), true_, cb, sub::mode::delayed);
 
 			auto mp = std::make_shared<message>();
-			mp->set_topic(1);
+			mp->set_topic(topic(1));
 
 			REQUIRE(s1.post(mp));
 			REQUIRE(value == 1);
@@ -38,11 +38,11 @@ TEST_CASE("test channel")
 				int value = 0;
 				auto cb = [&value](message::ptr m) { value++; };
 
-				auto sk = sm.subscribe(1, cb, sub::mode::delayed);
+				auto sk = sm.subscribe(topic(1), cb, sub::mode::delayed);
 				REQUIRE(sk > 0);
 
 				auto mp = std::make_shared<message>();
-				mp->set_topic(1);
+				mp->set_topic(topic(1));
 
 				auto cnt = sm.post(mp, sub::mode::delayed);
 				REQUIRE(cnt == 1);
@@ -56,11 +56,11 @@ TEST_CASE("test channel")
 				int value = 0;
 				auto cb = [&value](message::ptr m) { value++; };
 
-				auto sk = sm.subscribe(1, cb, sub::mode::immediate);
+				auto sk = sm.subscribe(topic(1), cb, sub::mode::immediate);
 				REQUIRE(sk > 0);
 
 				auto mp = std::make_shared<message>();
-				mp->set_topic(1);
+				mp->set_topic(topic(1));
 
 				auto cnt1 = sm.post(mp, sub::mode::delayed);
 				REQUIRE(cnt1 == 0);
@@ -78,14 +78,14 @@ TEST_CASE("test channel")
 				int value = 0;
 				auto cb = [&value](message::ptr m) { value++; };
 
-				auto sk1 = sm.subscribe(1, cb, sub::mode::immediate);
+				auto sk1 = sm.subscribe(topic(1), cb, sub::mode::immediate);
 				REQUIRE(sk1 > 0);
 
-				auto sk2 = sm.subscribe(1, cb, sub::mode::immediate);
+				auto sk2 = sm.subscribe(topic(1), cb, sub::mode::immediate);
 				REQUIRE(sk2 > 0);
 
 				auto mp = std::make_shared<message>();
-				mp->set_topic(1);
+				mp->set_topic(topic(1));
 
 				auto cnt1 = sm.post(mp, sub::mode::delayed);
 				REQUIRE(cnt1 == 0);
@@ -103,14 +103,14 @@ TEST_CASE("test channel")
 				int value = 0;
 				auto cb = [&value](message::ptr m) { value++; };
 
-				auto sk1 = sm.subscribe(1, cb, sub::mode::immediate);
+				auto sk1 = sm.subscribe(topic(1), cb, sub::mode::immediate);
 				REQUIRE(sk1 > 0);
 
-				auto sk2 = sm.subscribe(1, cb, sub::mode::immediate);
+				auto sk2 = sm.subscribe(topic(1), cb, sub::mode::immediate);
 				REQUIRE(sk2 > 0);
 
 				auto mp = std::make_shared<message>();
-				mp->set_topic(1);
+				mp->set_topic(topic(1));
 
 				auto cnt1 = sm.post(mp, sub::mode::delayed);
 				REQUIRE(cnt1 == 0);
@@ -146,12 +146,12 @@ TEST_CASE("test channel")
 			int value = 0;
 			auto cb = [&value](message::ptr m) { value++; };
 
-			auto sk1 = cp->subscribe(1, cb, sub::mode::delayed);
+			auto sk1 = cp->subscribe(topic(1), cb, sub::mode::delayed);
 			REQUIRE(sk1 > 0);
 
 			// push 
 			auto mp = std::make_shared<message>();
-			mp->set_topic(1);
+			mp->set_topic(topic(1));
 
 			REQUIRE(cp->push(mp) == 0);
 
@@ -190,12 +190,12 @@ TEST_CASE("test channel")
 
 		for (int i = 0; i < 1000; ++i)
 		{
-			auto sk1 = cp->subscribe(i, cb, sub::mode::delayed);
+			auto sk1 = cp->subscribe(topic(i), cb, sub::mode::delayed);
 			REQUIRE(sk1 > 0);
 		}
 
 		auto mp = std::make_shared<message>();
-		mp->set_topic(1);
+		mp->set_topic(topic(1));
 
 		for (int i = 0; i < TEST_COUNT; ++i)
 		{
@@ -217,4 +217,5 @@ TEST_CASE("test channel")
 		// 프로파일러로 보면 catch의 오버헤드가 크다. 
 		// 따라서, 별도 프로그램으로 최적화를 진행한다.
 	}
+
 }

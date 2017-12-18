@@ -51,7 +51,7 @@ std::size_t channel::push(message::ptr m)
 	return count;
 }
 
-std::size_t channel::push(message::topic_t topic, message::ptr m)
+std::size_t channel::push(const message::topic_t& topic, message::ptr m)
 {
 	enqueue_checked(topic, m);
 
@@ -62,12 +62,12 @@ std::size_t channel::push(message::topic_t topic, message::ptr m)
 	return count;
 }
 
-sub::key_t channel::subscribe(message::topic_t topic, cond_t cond, cb_t cb, sub::mode mode)
+sub::key_t channel::subscribe(const message::topic_t& topic, cond_t cond, cb_t cb, sub::mode mode)
 {
 	return map_.subscribe(topic, cond, cb, mode);
 }
 
-sub::key_t channel::subscribe(message::topic_t topic, cb_t cb, sub::mode mode)
+sub::key_t channel::subscribe(const message::topic_t& topic, cb_t cb, sub::mode mode)
 {
 	return map_.subscribe(topic, cb, mode);
 }
@@ -99,11 +99,11 @@ std::size_t channel::get_queue_size() const
 	return q_.unsafe_size();
 }
 
-void channel::enqueue_checked(message::topic_t topic, message::ptr m)
+void channel::enqueue_checked(const message::topic_t& topic, message::ptr m)
 {
 	if (config_.check_delayed_sub_before_enqueue)
 	{
-		if (map_.has_delayed_sub(topic))
+		if (map_.has_delayed_sub(topic) || map_.has_delayed_sub(topic.get_group_topic()))
 		{
 			q_.push(m);
 		}

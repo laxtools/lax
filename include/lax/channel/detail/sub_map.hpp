@@ -28,32 +28,32 @@ public:
 
 	/// subscribe to topic. locked with unique_lock
 	sub::key_t subscribe(
-		message::topic_t topic, 
+		const message::topic_t& topic, 
 		sub::cond_t cond, 
 		sub::cb_t cb, 
 		sub::mode mode
 	);
 
 	/// subscribe to topic. locked with unique_lock
-	sub::key_t subscribe(message::topic_t topic, sub::cb_t cb, sub::mode mode);
+	sub::key_t subscribe(const message::topic_t& topic, sub::cb_t cb, sub::mode mode);
 
 	/// unsubscribe to topic. locked with unique_lock
 	bool unsubscribe(sub::key_t key);
 
 	/// post a topic and message topic. locked with shared_lock
-	std::size_t post(message::topic_t topic, message::ptr m, sub::mode mode);
+	std::size_t post(const message::topic_t& topic, message::ptr m, sub::mode mode);
 
 	/// post a message topic. locked with shared_lock
 	std::size_t post(message::ptr m, sub::mode mode);
 
 	/// topic에 대해 나중 처리할 항목이 있는 지 확인
-	bool has_delayed_sub(message::topic_t topic);
+	bool has_delayed_sub(const message::topic_t& topic);
 
 	/// 디버깅 용. topic에 등록된 개수
-	std::size_t get_subscription_count(message::topic_t topic) const;
+	std::size_t get_subscription_count(const message::topic_t& topic) const;
 
 	/// 모드별 등록된 개수
-	std::size_t get_subscription_count(message::topic_t topic, sub::mode mode) const;
+	std::size_t get_subscription_count(const message::topic_t& topic, sub::mode mode) const;
 
 private: 
 	struct entry
@@ -73,14 +73,14 @@ private:
 
 	sub::key_t subscribe(
 		entry_map& em, 
-		message::topic_t topic, 
+		const message::topic_t& topic, 
 		sub::cond_t cond, 
 		sub::cb_t cb, 
 		sub::mode mode);
 
 	sub::key_t subscribe(
 		entry& e, 
-		message::topic_t topic, 
+		const message::topic_t& topic, 
 		sub::cond_t cond, 
 		sub::cb_t cb, 
 		sub::mode mode
@@ -88,9 +88,11 @@ private:
 
 	bool unsubscribe(entry_map& em, sub::key_t key);
 
-	std::size_t post(entry_map& em, message::topic_t topic, message::ptr m);
+	std::size_t post(entry_map& em, const message::topic_t& topic, message::ptr m);
 
 	std::size_t post(entry_map& em, message::ptr m);
+
+	std::size_t post_on_topic(entry_map& em, const message::topic_t& topic, message::ptr m);
 
 private:
 	mutable std::shared_timed_mutex		mutex_;

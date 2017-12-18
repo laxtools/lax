@@ -159,8 +159,10 @@
     <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\use_lock.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\dispatcher.hpp" />
     <ClInclude Include="..\..\include\lax\channel\message.hpp" />
     <ClInclude Include="..\..\include\lax\channel\sub.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\topic.hpp" />
     <ClInclude Include="..\..\include\lax\db\detail\db_connection.hpp" />
     <ClInclude Include="..\..\include\lax\db\detail\db_connection_pool.hpp" />
     <ClInclude Include="..\..\include\lax\db\detail\db_manager.hpp" />

@@ -19,7 +19,7 @@ sub_map::~sub_map()
 
 }
 
-sub::key_t sub_map::subscribe(message::topic_t topic, sub::cond_t cond, sub::cb_t cb, sub::mode mode)
+sub::key_t sub_map::subscribe(const message::topic_t& topic, sub::cond_t cond, sub::cb_t cb, sub::mode mode)
 {
 	use_lock_unique lock(use_lock_, mutex_);
 
@@ -43,7 +43,7 @@ sub::key_t sub_map::subscribe(message::topic_t topic, sub::cond_t cond, sub::cb_
 	}
 }
 
-sub::key_t sub_map::subscribe(message::topic_t topic, sub::cb_t cb, sub::mode mode)
+sub::key_t sub_map::subscribe(const message::topic_t& topic, sub::cb_t cb, sub::mode mode)
 {
 	return subscribe(
 		topic,
@@ -71,7 +71,7 @@ bool sub_map::unsubscribe(sub::key_t key)
 	}
 }
 
-std::size_t sub_map::post(message::topic_t topic, message::ptr m, sub::mode mode)
+std::size_t sub_map::post(const message::topic_t& topic, message::ptr m, sub::mode mode)
 {
 	use_lock_shared lock(use_lock_, mutex_);
 
@@ -99,7 +99,7 @@ std::size_t sub_map::post(message::ptr m, sub::mode mode)
 	}
 }
 
-bool sub_map::has_delayed_sub(message::topic_t topic)
+bool sub_map::has_delayed_sub(const message::topic_t& topic)
 {
 	use_lock_shared lock(use_lock_, mutex_);
 
@@ -108,7 +108,7 @@ bool sub_map::has_delayed_sub(message::topic_t topic)
 	return iter != entries_delayed_.end();
 }
 
-std::size_t sub_map::get_subscription_count(message::topic_t topic) const
+std::size_t sub_map::get_subscription_count(const message::topic_t& topic) const
 {
 	use_lock_shared lock(use_lock_, mutex_);
 
@@ -120,7 +120,7 @@ std::size_t sub_map::get_subscription_count(message::topic_t topic) const
 	return count;
 }
 
-std::size_t sub_map::get_subscription_count(message::topic_t topic, sub::mode mode) const
+std::size_t sub_map::get_subscription_count(const message::topic_t& topic, sub::mode mode) const
 {
 	use_lock_shared lock(use_lock_, mutex_);
 
@@ -139,7 +139,7 @@ std::size_t sub_map::get_subscription_count(message::topic_t topic, sub::mode mo
 
 sub::key_t sub_map::subscribe(
 	entry_map& em,
-	message::topic_t topic,
+	const message::topic_t& topic,
 	sub::cond_t cond,
 	sub::cb_t cb,
 	sub::mode mode)
@@ -163,7 +163,7 @@ sub::key_t sub_map::subscribe(
 
 sub::key_t sub_map::subscribe(
 	entry& e,
-	message::topic_t topic,
+	const message::topic_t& topic,
 	sub::cond_t cond,
 	sub::cb_t cb,
 	sub::mode mode
@@ -217,29 +217,35 @@ bool sub_map::unsubscribe(entry_map& em, sub::key_t key)
 	return true;
 }
 
-std::size_t sub_map::post(entry_map& em, message::topic_t topic, message::ptr m)
+std::size_t sub_map::post(entry_map& em, const message::topic_t&topic, message::ptr m)
 {
-	auto iter = em.find(topic);
-	return_if(iter == em.end(), 0);
+	std::size_t count = 0; 
 
-	int count = 0;
+	count += post_on_topic(em, topic, m);
+	count += post_on_topic(em, topic.get_group_topic(), m);
+	count += post_on_topic(em, m->get_topic(), m);
+	count += post_on_topic(em, m->get_topic().get_group_topic(), m);
 
-	auto& subs = iter->second.subs;
-
-	for (auto& sub : subs)
-	{
-		if (sub.post(m))
-		{
-			++count;
-		}
-	}
-
-	return count + post(em, m);
+	return count;
 }
 
 std::size_t sub_map::post(entry_map& em, message::ptr m)
 {
-	auto iter = em.find(m->get_topic());
+	std::size_t count = 0; 
+
+	count += post_on_topic(em, m->get_topic(), m);
+	count += post_on_topic(em, m->get_topic().get_group_topic(), m);
+
+	return count;
+}
+
+std::size_t sub_map::post_on_topic(entry_map& em, const message::topic_t& topic, message::ptr m)
+{
+	// 테스트 용도 등으로 valid 하지 않은 경우 발생 
+	
+	return_if(!topic.is_valid(), 0);
+
+	auto iter = em.find(topic);
 	return_if(iter == em.end(), 0);
 
 	int count = 0;
@@ -256,6 +262,7 @@ std::size_t sub_map::post(entry_map& em, message::ptr m)
 
 	return count;
 }
+
 
 } // channel
 } // lax

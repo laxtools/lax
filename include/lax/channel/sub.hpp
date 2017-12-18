@@ -24,7 +24,7 @@ public:
 	};
 
 public: 
-	sub(key_t key, message::topic_t topic, cond_t cond, cb_t cb, sub::mode mode)
+	sub(key_t key, const message::topic_t& topic, cond_t cond, cb_t cb, sub::mode mode)
 		: key_(key)
 		, topic_(topic)
 		, cond_(cond)
@@ -40,8 +40,10 @@ public:
 
 	bool post(message::ptr m)
 	{
-		check(m->get_topic() == topic_);
-		return_if(m->get_topic() != topic_, false);
+		check(topic_.is_valid());
+		check(m->get_topic().is_valid());
+
+		return_if(!topic_.match(m->get_topic()), false);
 		return_if(!cond_(m), false);
 
 		cb_(m);

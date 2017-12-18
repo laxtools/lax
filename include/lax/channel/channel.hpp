@@ -17,6 +17,8 @@ namespace channel
  * channel은 메세지를 전달하는 통로를 구성
  *  topic(uint32_t)과 lambda 함수 (std::function)를 사용
  *  채널간 연결도 함수를 사용한다. 
+ *  토픽은 키 전체, 타잎에 대해서만 subscribe 할 수 있다. 
+ *  포스팅할 때 키 전체, 타잎에 대해서만 포스팅 시도한다.
  *
  * 생성: 
  *  channel::create(name) 
@@ -135,7 +137,7 @@ public:
 	 *
 	 * @return number of dispatched cont
 	 */
-	std::size_t push(message::topic_t topic, message::ptr m);
+	std::size_t push(const message::topic_t&topic, message::ptr m);
 
 	/// subscribe to a topic with a condition 
 	/**
@@ -147,7 +149,7 @@ public:
 	 * @return the key to the subscription
 	 */
 	sub::key_t subscribe(
-		message::topic_t topic, 
+		const message::topic_t& topic,
 		cond_t cond, 
 		cb_t cb, 
 		sub::mode mode = sub::mode::delayed
@@ -161,7 +163,7 @@ public:
 	 * @return the key to the subscription
 	 */
 	sub::key_t subscribe(
-		message::topic_t topic, 
+		const message::topic_t& topic,
 		cb_t cb, 
 		sub::mode mode = sub::mode::delayed
 	);
@@ -198,7 +200,7 @@ public:
 private:
 	using mq = util::concurrent_queue<message::ptr>;
 
-	void enqueue_checked(message::topic_t topic, message::ptr m);
+	void enqueue_checked(const message::topic_t& topic, message::ptr m);
 
 private:
 	key_t   key_;

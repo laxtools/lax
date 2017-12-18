@@ -1,5 +1,6 @@
 #pragma once 
 
+#include <lax/channel/topic.hpp>
 #include <memory>
 #include <string>
 
@@ -13,7 +14,7 @@ class message
 public:
 	using ptr = std::shared_ptr<message>;
 	using proto_t = uint8_t;
-	using topic_t = uint32_t;
+	using topic_t = topic;
 	using channel_key_t = std::string;
 
 public:
@@ -25,24 +26,24 @@ public:
 	{
 	}
 
-	topic_t set_topic(proto_t topic)
+	const topic_t& set_topic(const topic_t& topic)
 	{
 		topic_ = topic;
 		return topic_;
 	}
 
-	topic_t get_topic() const
+	const topic_t& get_topic() const
 	{
 		return topic_;
 	}
 
-	bool is_valid_topic(topic_t topic) const
+	bool is_valid_topic(const topic_t& topic) const
 	{
-		return topic != 0;
+		return topic.is_valid();
 	}
 
 private:
-	topic_t topic_ = 0; // invalid
+	topic_t topic_; // invalid
 };
 
 } // net
