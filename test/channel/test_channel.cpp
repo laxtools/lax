@@ -166,11 +166,34 @@ TEST_CASE("test channel")
 
 			// cp는 이 블록 안에서 유효하다.
 		}
+	}
 
-		SECTION("stats")
-		{
+	SECTION("group posting")
+	{
+		auto cp = channel::create("test2", channel::config());
+		REQUIRE(!!cp);
 
-		}
+		// sub 
+		int value = 0;
+		auto cb = [&value](message::ptr m) { value++; };
+
+		auto sk1 = cp->subscribe(topic(1, 0), cb, sub::mode::delayed);
+		REQUIRE(sk1 > 0);
+
+		// push 
+		auto mp = std::make_shared<message>();
+		mp->set_topic(topic(1, 1));
+
+		REQUIRE(cp->push(mp) == 0);
+
+		// post
+		REQUIRE(cp->post() == 1);
+
+		REQUIRE(value == 1);
+
+		REQUIRE(channel::destroy("test2"));
+
+		REQUIRE(!channel::find("test2"));
 	}
 
 	SECTION("basic performance")

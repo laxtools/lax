@@ -49,6 +49,7 @@ Release
 # Log
 logs/
 log*
+temp
 
 # TeX temp files
 *.aux
