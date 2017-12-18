@@ -1,9 +1,6 @@
 [submodule "ext/spdlog"]
 	path = ext/spdlog
-	url = https://github.com/gabime/spdlog.git
-
-[submodule "ext/msgpack"]
-	path = ext/msgpack
-	url = https://github.com/keedongpark/msgpack-c.git
-
-
+	url = https://github.com/laxtools/spdlog.git
+[submodule "ext/msgpack-c"]
+	path = ext/msgpack-c
+	url = https://github.com/laxtools/msgpack-c

@@ -1,6 +1,2 @@
 # exclude nana
-nana*
 
-spdlog
-
-msgpack
