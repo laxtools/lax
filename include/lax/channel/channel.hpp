@@ -137,7 +137,7 @@ public:
 	 *
 	 * @return number of dispatched cont
 	 */
-	std::size_t push(const message::topic_t&topic, message::ptr m);
+	std::size_t push(const message::topic_t& topic, message::ptr m);
 
 	/// subscribe to a topic with a condition 
 	/**
