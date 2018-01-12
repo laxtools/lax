@@ -74,6 +74,11 @@ private:
 	using sequence = util::sequence<uint16_t>;
 	using acceptors = std::map<key, acceptor::ptr>;
 	using connectors = std::map<key, connector::ptr>;
+
+	// TODO: session::ptr을 직접 갖지 않고 slot을 갖는다. 
+	// slot은 session::ptr을 갖는다. 
+	// slot은 개별 seq를 갖는다. 정수 sequence로 한다. 
+	// slot에서 handle을 갖는다. handle에 16비트 age를 포함한다. 
 	using sessions = std::vector<session::ptr>;
 	using threads = std::vector<std::thread>;
 

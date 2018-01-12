@@ -31,14 +31,12 @@ public:
 	{
 		check(begin_ < end_);
 		check(current_ == begin_);
+		check(reserve_ < (end_ - begin_ + 1));
 
 		// clamp 
 		reserve_ = std::min<Seq>(end - begin, reserve_);
 
-		for (Seq s = begin_; s < (begin_ + reserve_); ++s)
-		{
-			seqs_.push_back(current_++);
-		}
+		acquire(reserve_);
 
 		check(!seqs_.empty());
 	}
@@ -51,6 +49,11 @@ public:
 	Seq next()
 	{
 		std::lock_guard<Mutex> lock(mutex_);
+
+		if ( seqs_.size() < reserve_ )
+		{
+		  	acquire(reserve_ - seqs_.size());
+		}
 
 		Seq value = Seq();
 
@@ -96,7 +99,20 @@ public:
 	}
 
 private: 
-	static const Seq default_reserve = 100;
+  	void acquire(std::size_t count)
+	{
+		for (std::size_t s = 0; s < count; ++s)
+		{
+			if ( current_ < end_ )
+			{
+				seqs_.push_back(current_++);
+			}
+		}
+	}
+
+private: 
+	constexpr Seq default_reserve = 100;
+	constexpr Seq deafult_stride = 100;
 
 	mutable Mutex	mutex_;
 	Seq				begin_;

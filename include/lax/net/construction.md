@@ -3,7 +3,8 @@
  roughly in the order of implementation: 
 
  - unique int32 id over time 
-   
+   - big stride... 
+   - 
 
  - read buffer 
    - get a block of memory from a pool of diverse size 
@@ -23,9 +24,17 @@
 
  - msgpack : protocol 
 
+ - send 
+   - handle 
+   - remove direct access to session especially with service::get() for performance
    
- - session / service / acceptor / connector integration 
-
+ - session 
+ - service 
+ - acceptor 
+ - connector integration 
+ 
+ - logging 
+   - enable / disable for network (global option)    
 
  - unit tests 
 
@@ -39,11 +48,36 @@
 
 ## protocol 
 
+### channel 
+
+### ref 
 
 ## msgpack 
 
 
-## integration 
+## session 
+
+## service 
+
+### slot 
+
+
+### acceptor 
+
+### connector 
+
+
+## node 
+
+
+### binder / holder 
+
+
+## actor 
+
+
+
+
 
 
   
