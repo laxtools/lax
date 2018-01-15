@@ -3,7 +3,7 @@
 #include "Prerequisites.h"
 
 
-namespace mu2 { 
+namespace  { 
 
 /**
  * @class StringUtil

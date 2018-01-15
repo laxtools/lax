@@ -10,3 +10,9 @@ a 2d movement test.
 sync: 
  - id (64bit), x, y, z postions 
  - 3 times per second
+ - collision feedback 
+   - random color change 
+
+
+
+

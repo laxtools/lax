@@ -4,7 +4,7 @@
 
 
 
-namespace mu2 { 
+namespace { 
 
 
 const std::string StringUtil::EMPTY;
