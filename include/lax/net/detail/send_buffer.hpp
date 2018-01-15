@@ -1,7 +1,7 @@
 #pragma once 
 
-#include <lax/net/detail/segment.h>
-#include <lax/util/object_pool.h>
+#include <lax/net/detail/segment.hpp>
+#include <lax/util/object_pool.hpp>
 
 #include <vector>
 
@@ -10,17 +10,28 @@ namespace lax
 namespace net
 {
 
-/// buffer segment
+/// send buffer 
+/** 
+ * not thread safe 
+ * - needs to use a lock if used from multiple threads
+ * - if 1-send per socket is used, then it's not required to use a lock
+ */
 template <std::size_t Length>
-class segment_buffer
+class send_buffer
 {
 public: 
 	using seg = segment<Length>;
 	using pool = util::object_pool<seg>;
 
 public: 
-	segment_buffer() {}
-	~segment_buffer()
+	send_buffer() 
+	{
+		expect(Length > 0);
+		expect(pos_ == 0);
+		expect(segs_.empty());
+	}
+
+	~send_buffer()
 	{
 		cleanup();
 	}
@@ -28,6 +39,9 @@ public:
 	/// len만큼 쓴다. seg 부족하면 풀에서 할당
 	std::size_t append(const uint8_t* p, std::size_t len)
 	{
+		expect(p != nullptr);
+		expect(len > 0);
+
 		// 세그먼트 부족하면 확보
 		reserve(len);	
 
@@ -53,7 +67,7 @@ public:
 			written += wl;
 		}
 
-		check(written == len);
+		ensure(written == len);
 
 		return written;
 	}
@@ -124,7 +138,7 @@ public:
 
 		rewind();
 
-		return lst;
+		return lst; // rvo 
 	}
 
 	/// 얻은 것들 다 사용하면 해제
@@ -144,6 +158,8 @@ private:
 
 	void reserve(std::size_t len)
 	{
+		expect(len > 0); 
+
 		auto total_segs = (pos_ + len) / Length + 1;
 		auto required_segs = total_segs - segs_.size();
 
@@ -164,12 +180,12 @@ private:
 private: 
 	static pool			pool_;
 	std::vector<seg*>	segs_;
-	std::size_t			pos_;
+	std::size_t			pos_ = 0;
 };
 
  // per class pool instance
 template <std::size_t Length>
-typename segment_buffer<Length>::pool segment_buffer<Length>::pool_;
+typename send_buffer<Length>::pool send_buffer<Length>::pool_;
 
 } // net 
 } // lax

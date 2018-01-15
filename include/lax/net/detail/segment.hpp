@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <lax/util/macros.h>
+#include <lax/util/macros.hpp>
 #include <array>
 
 namespace lax

@@ -22,7 +22,7 @@
     <ProjectGuid>{B8AB8921-53E6-4056-9C12-AEFB67BC0483}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>test</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -182,6 +182,8 @@
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
     <ClCompile Include="..\..\test\db\test_string_conversion.cpp" />
+    <ClCompile Include="..\..\test\net\test_recv_buffer.cpp" />
+    <ClCompile Include="..\..\test\net\test_send_buffer.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="stdafx.cpp">

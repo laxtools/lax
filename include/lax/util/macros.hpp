@@ -19,7 +19,13 @@ void check_(bool cond, const char* msg, const char* func, const char* file, int 
 	#endif
 #endif 
 
+/// precondition
+#define expect(c) check(c)		 
+/// post condition
+#define ensure(c) check(c)
+
 #define return_if(c, v) if ((c)) return v
 #define break_if(c, v) if ((c)) break 
 #define continue_if(c, v) if ((c)) continue 
+
 

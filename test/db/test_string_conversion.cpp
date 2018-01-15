@@ -72,7 +72,7 @@ inline void convert(const std::string& in, std::wstring& out)
 
 } // win2
 
-TEST_CASE("test string conversion")
+TEST_NONE("test string conversion")
 {
 	SECTION("unx")
 	{

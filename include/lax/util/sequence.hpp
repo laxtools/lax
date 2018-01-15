@@ -111,8 +111,7 @@ private:
 	}
 
 private: 
-	constexpr Seq default_reserve = 100;
-	constexpr Seq deafult_stride = 100;
+	static constexpr Seq default_reserve = 100;
 
 	mutable Mutex	mutex_;
 	Seq				begin_;

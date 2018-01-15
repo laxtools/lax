@@ -4,7 +4,7 @@
 
 using namespace nanodbc;
 
-TEST_CASE("test nanodbc")
+TEST_NONE("test nanodbc")
 {
 	// °³³äµé: 
 	//  - connection 

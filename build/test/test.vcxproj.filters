@@ -57,5 +57,11 @@
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp">
       <Filter>channel</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\net\test_send_buffer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\net\test_recv_buffer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

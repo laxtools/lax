@@ -32,6 +32,9 @@
     <Filter Include="node">
       <UniqueIdentifier>{fbebb2fd-ebee-4599-a613-742562355cbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="net\detail">
+      <UniqueIdentifier>{ee866473-4335-48db-a3b0-b1cbd25886d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -133,6 +136,24 @@
     <ClInclude Include="..\..\include\lax\channel\dispatcher.hpp">
       <Filter>channel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\macros.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\segment.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\send_buffer.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\recv_buffer.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\fixed_size_buffer_pool.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -173,6 +194,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\db\nanodbc.cpp">
       <Filter>db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\lax\net\detail\recv_buffer.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.cpp">
+      <Filter>net\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
