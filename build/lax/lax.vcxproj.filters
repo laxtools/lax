@@ -35,6 +35,9 @@
     <Filter Include="net\detail">
       <UniqueIdentifier>{ee866473-4335-48db-a3b0-b1cbd25886d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="net\detail\buffer">
+      <UniqueIdentifier>{91c674d2-af3b-4d33-a2c3-1d1b2f56db1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

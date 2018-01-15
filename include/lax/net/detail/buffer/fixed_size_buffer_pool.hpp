@@ -24,9 +24,27 @@ public:
 		buffer(uint8_t* data, std::size_t len)
 			: data_(data)
 			, size_(len)
+			, is_alloc_from_os_(true)
 		{
 			expect(data_);
 			expect(size_ > 0);
+
+		}
+
+		buffer(fixed_size_buffer_pool* pool, uint8_t* data, std::size_t len)
+			: pool_(pool)
+			, data_(data)
+			, size_(len)
+			, is_alloc_from_os_(false)
+		{
+			expect(pool_);
+			expect(data_);
+			expect(size_ > 0);
+		}
+		
+		~buffer()
+		{
+			delete data_;
 		}
 
 		uint8_t* data() 
@@ -44,7 +62,19 @@ public:
 			return size_;
 		}
 
+		bool is_allocated_from_os() const
+		{
+			return is_alloc_from_os_;
+		}
+
+		fixed_size_buffer_pool* get_pool() const
+		{
+			return pool_;
+		}
+
 	private:
+		fixed_size_buffer_pool* pool_ = nullptr;
+		bool			is_alloc_from_os_ = false;
 		uint8_t*		data_ = nullptr;
 		std::size_t		size_ = 0;
 	};
@@ -88,7 +118,7 @@ public:
 			return block;
 		}
 			
-		return std::make_shared<buffer>( new uint8_t[get_length()], get_length() );
+		return std::make_shared<buffer>( this, new uint8_t[get_length()], get_length() );
 	}
 
 	void release(const buffer::ptr block)
@@ -98,10 +128,15 @@ public:
 		return_if(!block->data());
 		return_if(block->capacity() != length_);
 
+		check(stat_.alloc_count > 0);
+		
 		--stat_.alloc_count;
 		++stat_.total_release_count;
 
 		blocks_.push(block);
+
+		ensure(stat_.total_alloc_count >= stat_.total_release_count);
+		ensure(blocks_.unsafe_size() > 0);
 	}
 
 	const stat& get_stat() const

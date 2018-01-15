@@ -27,7 +27,15 @@ public:
 	struct config
 	{
 		std::size_t start_power_of_2 = 6;	// 64 bytes 
-		std::size_t	steps = 25;				// upto 1024 MB
+		std::size_t	steps = 16;				// 2^24 = 1MB   
+	};
+
+	struct stat
+	{
+		std::atomic<uint32_t>	os_alloc_count = 0;
+		std::atomic<uint32_t>	os_alloc_bytes = 0;
+		std::atomic<uint32_t>	total_os_alloc_bytes = 0;
+		std::atomic<uint32_t>	total_os_release_bytes = 0;
 	};
 
 public:
@@ -55,20 +63,32 @@ public:
 			}
 		}
 
-		throw std::exception("pool dosn't have the required memory size to alloc");
+		// allocate from OS
+		++stat_.os_alloc_count;
+		stat_.os_alloc_bytes += static_cast<uint32_t>(required_size);
+		stat_.total_os_alloc_bytes += stat_.os_alloc_bytes;
+
+		return std::make_shared<buffer>(new uint8_t[required_size], required_size);
 	}
 
-	void release(const buffer::ptr block)
+	void release(buffer::ptr block)
 	{
-		for (int i = 0; i < pools_.size(); ++i)
-		{
-			if (pools_[i]->get_length() == block->capacity())
-			{
-				return pools_[i]->release(block);
-			}
-		}
+		if ( block->is_allocated_from_os() )
+		{ 
+			check(os_alloc_count_ > 0);
+			check(os_alloc_bytes_ > 0);
+			check(block->get_pool() == nullptr);
 
-		throw std::exception("pool dosn't have the size to release");
+			--stat_.os_alloc_count;
+			stat_.os_alloc_bytes -= static_cast<uint32_t>(block->capacity());
+			stat_.total_os_release_bytes += static_cast<uint32_t>(block->capacity());
+
+			block.reset();
+		}
+		else
+		{
+			block->get_pool()->release(block);
+		}
 	}
 
 	const fixed_size_buffer_pool* get_pool(std::size_t size) const
@@ -82,6 +102,11 @@ public:
 		}
 
 		return nullptr;
+	}
+
+	const stat& get_stat() const
+	{
+		return stat_;
 	}
 
 	void dump_stat() const;
@@ -102,8 +127,9 @@ private:
 private: 
 	using pools = std::vector<std::unique_ptr<fixed_size_buffer_pool>>;
 
-	config config_;
-	pools pools_;
+	config	config_;
+	pools	pools_;
+	stat	stat_;
 };
 
 } // net 

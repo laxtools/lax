@@ -38,4 +38,16 @@ TEST_CASE("recv buffer")
 
 		REQUIRE(rb.data()[0] == 'c');
 	}
+
+	SECTION("alloc from os")
+	{
+		multiple_size_buffer_pool pool;
+
+		auto buf = pool.alloc(1024 * 1024 * 10 );
+
+		REQUIRE(buf->is_allocated_from_os());
+		REQUIRE(buf->capacity() == 1024 * 1024 * 10);
+
+		pool.release(buf);
+	}
 }

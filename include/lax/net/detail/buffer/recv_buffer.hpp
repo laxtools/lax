@@ -50,6 +50,8 @@ public:
 
 		pos_ += len;
 
+		ensure(pos_ <= buf_->capacity());
+
 		return len;
 	}
 	
