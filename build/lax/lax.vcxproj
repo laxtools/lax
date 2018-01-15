@@ -192,6 +192,7 @@
     <ClInclude Include="..\..\include\lax\util\state.hpp" />
     <ClInclude Include="..\..\include\lax\util\state_lambda.hpp" />
     <ClInclude Include="..\..\include\lax\util\state_machine.hpp" />
+    <ClInclude Include="..\..\include\lax\util\string_util.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -210,6 +211,7 @@
     <ClCompile Include="..\..\src\util\sequence.cpp" />
     <ClCompile Include="..\..\src\util\state.cpp" />
     <ClCompile Include="..\..\src\util\state_machine.cpp" />
+    <ClCompile Include="..\..\src\util\string_util.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

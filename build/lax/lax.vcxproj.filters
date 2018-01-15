@@ -157,6 +157,9 @@
     <ClInclude Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.hpp">
       <Filter>net\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\string_util.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -203,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.cpp">
       <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\string_util.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
