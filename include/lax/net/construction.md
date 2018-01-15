@@ -24,15 +24,15 @@
 
  - msgpack : protocol 
 
- - send 
-   - handle 
-   - remove direct access to session especially with service::get() for performance
-   
  - session 
  - service 
  - acceptor 
  - connector integration 
- 
+
+ - send 
+   - ref
+   - remove direct access to session especially with service::get() for performance
+   
  - logging 
    - enable / disable for network (global option)    
 
