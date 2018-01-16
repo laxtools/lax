@@ -25,7 +25,7 @@ private:
 	using key = uint16_t;
 
 public: 
-	service_impl(app* ap, service& svc);
+	service_impl(service& svc);
 	~service_impl();
 
 	/// addr에서 listen. addr은 ip:port 형식. 
@@ -37,20 +37,11 @@ public:
 	/// send to a session
 	service::result send(const session::id& id, uint8_t* data, std::size_t len);
 
-	/// close a session 
-	void close(const session::id& id);
-
 	/// session에서 에러 발생 시 호출
 	void error(const session::id& id);
 
 	/// get session to handle directly
 	session::ptr get(const session::id& id);
-
-	/// access app
-	app* get_app()
-	{
-		return app_;
-	}
 
 	/// access io_service for implementation
 	asio::io_service& get_ios()
@@ -74,6 +65,11 @@ private:
 	using sequence = util::sequence<uint16_t>;
 	using acceptors = std::map<key, acceptor::ptr>;
 	using connectors = std::map<key, connector::ptr>;
+
+	// TODO: session::ptr을 직접 갖지 않고 slot을 갖는다. 
+	// slot은 session::ptr을 갖는다. 
+	// slot은 개별 seq를 갖는다. 정수 sequence로 한다. 
+	// slot에서 handle을 갖는다. handle에 16비트 age를 포함한다. 
 	using sessions = std::vector<session::ptr>;
 	using threads = std::vector<std::thread>;
 

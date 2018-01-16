@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp" />
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
+    <ClCompile Include="..\..\test\net\test_msgpack.cpp" />
     <ClCompile Include="..\..\test\net\test_recv_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_send_buffer.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />

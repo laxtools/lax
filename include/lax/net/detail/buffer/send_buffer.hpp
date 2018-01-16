@@ -29,6 +29,8 @@ public:
 		expect(Length > 0);
 		expect(pos_ == 0);
 		expect(segs_.empty());
+
+		segs_.reserve(256);
 	}
 
 	~send_buffer()

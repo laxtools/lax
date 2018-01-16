@@ -1,10 +1,10 @@
 #pragma once 
 
-#include <lax/util/macros.h>
-#include <lax/util/result.h>
-#include <lax/net/reason.h>
-#include <lax/net/msg.h>
-#include <lax/net/detail/segment_buffer.h>
+#include <lax/util/macros.hpp>
+#include <lax/util/result.hpp>
+#include <lax/net/reason.hpp>
+#include <lax/net/message.hpp>
+#include <lax/net/detail/buffer/send_buffer.hpp>
 
 #include <asio.hpp>
 #include <memory>
@@ -85,25 +85,19 @@ public:
 public:
 	/// setup 
 	session(
-		service& svc,
 		const id& id,
+		service& svc,
 		tcp::socket&& soc,
 		bool accepted);
 
 	/// clean up 
 	virtual ~session();
 
-	/// 생성 완료됨 알려줌
-	void created();
-
 	/// send a message to socket
 	result send(uint8_t* data, std::size_t len);
 
 	/// close socket (shutdown and close) 
 	void close();
-
-	/// get id 
-	id get_id() const;
 
 	/// check 
 	bool is_open() const
@@ -130,22 +124,6 @@ public:
 	}
 
 protected:
-
-	/// 생성되고 처리할 것들 처리 
-	virtual void on_created() = 0;
-
-	/// called when bytes are received. use service::get_app() to report 
-	virtual result on_recv(const uint8_t* data, std::size_t len) = 0;
-
-	/// called before send. process and send it.
-	/**
-	 * session allows in-place modifiction only.
-	 */
-	virtual result on_send(uint8_t* data, std::size_t len) = 0;
-
-	/// called before send. process and send it.
-	virtual void on_error(const asio::error_code& ec) = 0;
-
 	/// service 가져오기. 
 	service& get_svc();
 
@@ -172,7 +150,7 @@ private:
 	void on_send_completed(asio::error_code& ec, std::size_t len);
 
 private:
-	using segs = segment_buffer<32 * 1024>;	// TODO: size configurable
+	using segs = send_buffer<32 * 1024>;	// TODO: size configurable
 	using seg = typename segs::seg;
 
 	service&						svc_;

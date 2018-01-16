@@ -78,19 +78,6 @@ public:
 		unsigned int max_splits = 0
 	);
 
-	/// split a string further spliting with second delimiter. 
-	/** 
-	 * example: 
-	 *   a,c:d,e:f
-	 *   first tokenize with ,, then each one is tokenized with :
-	 */
-	static svec tokenize_nested(
-		const std::string& str, 
-		const std::string& delims = "\t\n ", 
-		const std::string& second_delim = "\"", 
-		unsigned int max_splits = 0
-	);
-
 	/// msg 로 전달된 문자열을 delimiter 단위로 쪼개어 tokens 벡터에 삽입합니다.
 	static void tokenize(
 		const std::wstring& msg, 

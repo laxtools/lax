@@ -4,7 +4,8 @@
 
 using namespace nanodbc;
 
-TEST_NONE("test nanodbc")
+// TEST_CASE("test nanodbc")
+void TEST_NONE_NANODBC()
 {
 	// °³³äµé: 
 	//  - connection 
@@ -227,15 +228,15 @@ TEST_NONE("test nanodbc")
 
 	SECTION("transaction")
 	{
-		SECTION("concepts")
+		SECTION("commit level")
 		{
-			// isolation level
-
-			// 
 		}
+
+
 	}
 
 	SECTION("error handling")
 	{
+
 	}
 }

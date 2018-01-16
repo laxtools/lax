@@ -1,9 +1,9 @@
 #pragma once 
 
-#include <lax/net/msg.h>
-#include <lax/net/reason.h>
-#include <lax/net/detail/segment.h>
-#include <lax/util/result.h>
+#include <lax/net/message.hpp>
+#include <lax/net/reason.hpp>
+#include <lax/net/detail/buffer/send_buffer.hpp>
+#include <lax/util/result.hpp>
 
 namespace lax
 {
@@ -29,48 +29,25 @@ namespace net
  *
  * 메세지에 포함할 오브젝트들은 MSGPACK_DEFINE... 부분만 작성.
  */
-class msg_pack : public msg
+class msgpack_message : public message
 {
-public:
-	static const uint32_t invalid_key = 0;
-	static const uint16_t invalid_type = 0;
-	static const uint16_t invalid_seq = 0;
+public: 
+	using result = util::result<bool, reason>;			
+	using buffer = send_buffer<1024*64>;				/// 64K send block
+	using ptr = std::shared_ptr<msgpack_message>;		
 
 public: 
-	using result = util::result<bool, reason>;
-	using buffer = msgpack::sbuffer;
-	using ptr = std::shared_ptr<msg_pack>;
-
-public: 
-	msg_pack();
-	~msg_pack();
+	msgpack_message();
+	~msgpack_message();
 
 	/// create a message 
-	virtual msg_pack::ptr create() = 0;
+	virtual msgpack_message::ptr create() = 0;
 
 	/// pack this to a buffer. empty
 	virtual result pack(buffer& buf) = 0;
 
 	/// unpack this from data. empty
 	virtual result unpack(const char* data, std::size_t len) = 0;
-
-	/// key 정의 
-	uint32_t get_key() const
-	{
-		return get_type() << 16 | get_seq();
-	}
-
-	/// msg_pack은 타잎을 갖는다. 사용자가 정한다.
-	virtual uint16_t get_type() const 
-	{
-		return invalid_type;
-	}
-
-	/// 하위 부분. 디버깅. 로깅 등에 사용
-	virtual uint16_t get_seq() const 
-	{
-		return invalid_seq;
-	}
 
 	/// utility template to implement pack
 	/** 
@@ -91,22 +68,12 @@ public:
 	 */
 	template <typename Msg> 
 	result unpack(Msg& m, const char* data, std::size_t len);
-
-	/// check validity
-	bool is_valid() const
-	{
-		return valid_;
-	}
-
-protected: 
-	const uint32_t	key_	= 0;
-	bool			valid_	= false;
 };
 
 /// inline / template 구현
 
 template <typename Msg>
-msg_pack::result msg_pack::pack(const Msg& m, buffer& buf)
+msgpack_message::result msgpack_message::pack(const Msg& m, buffer& buf)
 {
 	valid_ = false;
 
@@ -126,7 +93,7 @@ msg_pack::result msg_pack::pack(const Msg& m, buffer& buf)
 }
 
 template <typename Msg>
-msg_pack::result msg_pack::unpack(Msg& m, const char* data, std::size_t len)
+msgpack_message::result msgpack_message::unpack(Msg& m, const char* data, std::size_t len)
 {
 	valid_ = false;
 
@@ -148,7 +115,7 @@ msg_pack::result msg_pack::unpack(Msg& m, const char* data, std::size_t len)
 		msgpack::object_handle oh = msgpack::unpack(data, len);
 
 		msgpack::object obj = oh.get();
-		obj.convert(m);  // 에러 체크는?
+		obj.convert(m);  
 	}
 	catch (std::exception& ex)
 	{
@@ -164,30 +131,19 @@ msg_pack::result msg_pack::unpack(Msg& m, const char* data, std::size_t len)
 } // net
 } // lax
 
-// domain type 등록
-#define MSGPACK_KEY(TYPE, SEQ) \
-	uint16_t get_type() const override \
-	{ \
-		return (TYPE); \
-	} \
-	uint16_t get_seq() const override \
-	{ \
-		return (SEQ); \
-	} 
-
-// msg_pack 자식 클래스에서 필요한 함수들 등록
+// msgpack_message 자식 클래스에서 필요한 함수들 등록
 #define MSGPACK_BODY_OVERRIDE(CLS)  \
-	virtual msg_pack::ptr create() override \
+	virtual msgpack_message::ptr create() override \
 	{ \
 		return std::make_shared<CLS>(); \
 	} \
 	\
 	virtual result pack(buffer& buf) override \
 	{ \
-		return msg_pack::pack(*this, buf); \
+		return msgpack_message::pack(*this, buf); \
 	} \
 	\
 	virtual result unpack(const char* data, std::size_t len) override \
 	{ \
-		return msg_pack::unpack(*this, data, len); \
+		return msgpack_message::unpack(*this, data, len); \
 	}

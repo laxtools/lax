@@ -38,6 +38,12 @@
     <Filter Include="net\detail\buffer">
       <UniqueIdentifier>{91c674d2-af3b-4d33-a2c3-1d1b2f56db1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="net\protocol">
+      <UniqueIdentifier>{cfb91204-5ff0-44ae-b71f-4549c241abd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol\msgpack">
+      <UniqueIdentifier>{49b24c0c-8695-4f8f-b2a9-884e4e49a8af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -160,6 +166,51 @@
     <ClInclude Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.hpp">
       <Filter>net\detail\buffer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\message.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\session.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\service.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\addr.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\connector.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\service_impl.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\acceptor.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\exception.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol_creator.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\reason.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_factory.hpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_message.hpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_protocol.hpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_creator.hpp">
+      <Filter>net\protocol\msgpack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -214,6 +265,12 @@
   <ItemGroup>
     <None Include="..\..\include\lax\util\concurrent_queue.inl">
       <Filter>util</Filter>
+    </None>
+    <None Include="..\..\include\lax\net\session.inl">
+      <Filter>net</Filter>
+    </None>
+    <None Include="..\..\include\lax\net\construction.md">
+      <Filter>net</Filter>
     </None>
   </ItemGroup>
 </Project>

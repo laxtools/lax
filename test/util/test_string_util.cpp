@@ -47,7 +47,7 @@ TEST_CASE("string util")
 			string_util::convert(ns, os);
 			REQUIRE(os == "한글");
 
-			std::cout << os << std::endl;
+			// std::cout << os << std::endl;
 		}
 	}
 
@@ -73,12 +73,16 @@ TEST_CASE("string util")
 		REQUIRE(vec.size() == 4);
 	}
 
-	SECTION("tokenize")
+	SECTION("replace_all")
 	{
-		std::string sv = "a:bc,de:f,g:h,";
+		std::string sv = "a;b;c:d,e;f";
 
-		auto vec = string_util::tokenize_nested(sv, ",", ":");
+		auto res = string_util::replace_all(sv, ";", "_");
 
-		REQUIRE(vec.size() == 8);
+		// 긴 문자열로도 잘 바뀐다.
+
+		REQUIRE(res == "a_b_c:d,e_f");
+
+		// std::cout << res << std::endl;
 	}
 }

@@ -23,8 +23,10 @@ public:
 	using pool = multiple_size_buffer_pool;
 
 public: 
-	recv_buffer() 
+	recv_buffer(std::size_t initial_size = 8*1024)
+		: initial_size_(initial_size)
 	{
+		expect(initial_size_ > 0);
 		expect(pos_ == 0);
 		expect(!buf_);
 	}
@@ -121,7 +123,7 @@ private:
 		if (!buf_)
 		{
 			check(pos_ == 0);
-			buf_ = pool_.alloc(len);
+			buf_ = pool_.alloc(std::max<std::size_t>(len, initial_size_));
 		}
 		else
 		{
@@ -140,6 +142,7 @@ private:
 
 private: 
 	static pool				pool_;
+	std::size_t				initial_size_ = 1024;
 	pool::buffer::ptr		buf_;
 	std::size_t				pos_ = 0;
 };

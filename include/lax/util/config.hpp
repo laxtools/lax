@@ -7,7 +7,7 @@
 #endif
 
 #define LAX_ENABLE_CHECK_LOG		1	// check 위반 사항을 로그로 남김 
-#define LAX_ENABLE_RELEASE_CHECK	1	// release 모드에서 check 처리 
+#define LAX_ENABLE_RELEASE_CHECK	0	// release 모드에서 check 처리 
 
 #ifdef _MSC_VER 
 #define LAX_ENABLE_CONCURRENT_QUEUE 1

@@ -193,80 +193,6 @@ void string_util::tokenize(const std::wstring& msg, wvec& tokens, const std::wst
 	}
 }
 
-string_util::svec string_util::tokenize_nested(const std::string& str, const std::string& fst_delims, const std::string& sec_delim, unsigned int maxSplits)
-{
-	svec ret;
-
-	// Pre-allocate some space for performance
-	ret.reserve(maxSplits ? maxSplits + 1 : 10);    // 10 is guessed capacity for most case
-
-	unsigned int num_splits = 0;
-	std::string delims = fst_delims + sec_delim;
-
-	size_t start = 0; 
-	size_t pos = 0;
-	char cur_nest_delim_pos = 0;
-
-	do
-	{
-		if (cur_nest_delim_pos != 0)
-		{
-			pos = str.find(cur_nest_delim_pos, start);
-		}
-		else
-		{
-			pos = str.find_first_of(delims, start);
-		}
-
-		if (pos == start)
-		{
-			char cur_delim = str.at(pos);
-
-			if (sec_delim.find_first_of(cur_delim) != std::string::npos)
-			{
-				cur_nest_delim_pos = cur_delim;
-			}
-
-			// Do nothing
-			start = pos + 1;
-		}
-		else if (pos == std::string::npos || (maxSplits && num_splits == maxSplits))
-		{
-			if (cur_nest_delim_pos != 0)
-			{
-				//Missing closer. Warn or throw exception?
-			}
-
-			// Copy the rest of the string
-			ret.push_back(str.substr(start));
-
-			break;
-		}
-		else
-		{
-			if (cur_nest_delim_pos != 0)
-			{
-				cur_nest_delim_pos = 0;
-			}
-
-			// Copy up to delimiter
-			ret.push_back(str.substr(start, pos - start));
-
-			start = pos + 1;
-		}
-		if (cur_nest_delim_pos == 0)
-		{
-			// parse up to next real data
-			start = str.find_first_not_of(delims, start);
-		}
-
-		++num_splits;
-
-	} while (pos != std::string::npos);
-
-	return ret;
-}
-
 void string_util::to_lowercase(std::string& str)
 {
 	std::transform(
@@ -418,7 +344,7 @@ bool string_util::match(const std::string& str, const std::string& pattern, bool
 
 const std::string string_util::replace_all(const std::string& source, const std::string& target, const std::string& replace)
 {
-	std::string result = source;
+	std::string result(source);
 	std::string::size_type pos = 0;
 
 	while (1)
