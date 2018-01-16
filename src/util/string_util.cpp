@@ -16,10 +16,29 @@ void string_util::trim(std::string& str, bool left, bool right)
 	static const std::string delims = " \t\r";
 
 	if (right)
+	{
 		str.erase(str.find_last_not_of(delims) + 1); // trim right
+	}
 
 	if (left)
+	{
 		str.erase(0, str.find_first_not_of(delims)); // trim left
+	}
+}
+
+void string_util::trim(std::wstring& str, bool left, bool right)
+{
+	static const std::wstring delims = L" \t\r";
+
+	if (right)
+	{
+		str.erase(str.find_last_not_of(delims) + 1); // trim right
+	}
+
+	if (left)
+	{
+		str.erase(0, str.find_first_not_of(delims)); // trim left
+	}
 }
 
 bool string_util::convert(const std::string& src, std::wstring& out, uint32_t code_page)
@@ -106,9 +125,9 @@ bool string_util::convert(const char* src, std::wstring& out, uint32_t code_page
 	return true;
 }
 
-string_util::string_vector string_util::split(const std::string& str, const std::string& delims, unsigned int max_splits)
+string_util::svec string_util::tokenize(const std::string& str, const std::string& delims, unsigned int max_splits)
 {
-	string_vector ret;
+	svec ret;
 
 	// Pre-allocate some space for performance
 	ret.reserve(max_splits ? max_splits + 1 : 10);    // 10 is guessed capacity for most case
@@ -150,7 +169,7 @@ string_util::string_vector string_util::split(const std::string& str, const std:
 	return ret;
 }
 
-void string_util::tokenize(const std::wstring& msg, std::vector<std::wstring>& tokens, const std::wstring& delimiter)
+void string_util::tokenize(const std::wstring& msg, wvec& tokens, const std::wstring& delimiter)
 {
 	std::wstring::size_type last_pos = msg.find_first_not_of(delimiter, 0);
 	std::wstring::size_type pos = msg.find_first_of(delimiter, last_pos);
@@ -166,30 +185,33 @@ void string_util::tokenize(const std::wstring& msg, std::vector<std::wstring>& t
 		if (last_pos > msg.length())
 		{
 			last_pos = std::wstring::npos;
+
+			return;
 		}
 
 		pos = msg.find_first_of(delimiter, last_pos);
 	}
 }
 
-string_util::string_vector string_util::tokenize(const std::string& str, const std::string& singleDelims, const std::string& doubleDelims, unsigned int maxSplits)
+string_util::svec string_util::tokenize_nested(const std::string& str, const std::string& fst_delims, const std::string& sec_delim, unsigned int maxSplits)
 {
-	string_vector ret;
+	svec ret;
+
 	// Pre-allocate some space for performance
 	ret.reserve(maxSplits ? maxSplits + 1 : 10);    // 10 is guessed capacity for most case
 
 	unsigned int num_splits = 0;
-	std::string delims = singleDelims + doubleDelims;
+	std::string delims = fst_delims + sec_delim;
 
-	// Use STL methods 
-	size_t start, pos;
-	char curDoubleDelim = 0;
-	start = 0;
+	size_t start = 0; 
+	size_t pos = 0;
+	char cur_nest_delim_pos = 0;
+
 	do
 	{
-		if (curDoubleDelim != 0)
+		if (cur_nest_delim_pos != 0)
 		{
-			pos = str.find(curDoubleDelim, start);
+			pos = str.find(cur_nest_delim_pos, start);
 		}
 		else
 		{
@@ -198,39 +220,44 @@ string_util::string_vector string_util::tokenize(const std::string& str, const s
 
 		if (pos == start)
 		{
-			char curDelim = str.at(pos);
-			if (doubleDelims.find_first_of(curDelim) != std::string::npos)
+			char cur_delim = str.at(pos);
+
+			if (sec_delim.find_first_of(cur_delim) != std::string::npos)
 			{
-				curDoubleDelim = curDelim;
+				cur_nest_delim_pos = cur_delim;
 			}
+
 			// Do nothing
 			start = pos + 1;
 		}
 		else if (pos == std::string::npos || (maxSplits && num_splits == maxSplits))
 		{
-			if (curDoubleDelim != 0)
+			if (cur_nest_delim_pos != 0)
 			{
 				//Missing closer. Warn or throw exception?
 			}
+
 			// Copy the rest of the string
 			ret.push_back(str.substr(start));
+
 			break;
 		}
 		else
 		{
-			if (curDoubleDelim != 0)
+			if (cur_nest_delim_pos != 0)
 			{
-				curDoubleDelim = 0;
+				cur_nest_delim_pos = 0;
 			}
 
 			// Copy up to delimiter
 			ret.push_back(str.substr(start, pos - start));
+
 			start = pos + 1;
 		}
-		if (curDoubleDelim == 0)
+		if (cur_nest_delim_pos == 0)
 		{
 			// parse up to next real data
-			start = str.find_first_not_of(singleDelims, start);
+			start = str.find_first_not_of(delims, start);
 		}
 
 		++num_splits;
@@ -239,8 +266,8 @@ string_util::string_vector string_util::tokenize(const std::string& str, const s
 
 	return ret;
 }
-//-----------------------------------------------------------------------
-void string_util::toLowerCase(std::string& str)
+
+void string_util::to_lowercase(std::string& str)
 {
 	std::transform(
 		str.begin(),
@@ -249,8 +276,7 @@ void string_util::toLowerCase(std::string& str)
 		tolower);
 }
 
-//-----------------------------------------------------------------------
-void string_util::toUpperCase(std::string& str)
+void string_util::to_uppercase(std::string& str)
 {
 	std::transform(
 		str.begin(),
@@ -260,7 +286,7 @@ void string_util::toUpperCase(std::string& str)
 }
 
 
-void string_util::toLowerCase(std::wstring& str)
+void string_util::to_lowercase(std::wstring& str)
 {
 	std::transform(
 		str.begin(),
@@ -269,8 +295,7 @@ void string_util::toLowerCase(std::wstring& str)
 		tolower);
 }
 
-//-----------------------------------------------------------------------
-void string_util::toUpperCase(std::wstring& str)
+void string_util::to_uppercase(std::wstring& str)
 {
 	std::transform(
 		str.begin(),
@@ -278,124 +303,64 @@ void string_util::toUpperCase(std::wstring& str)
 		str.begin(),
 		toupper);
 }
-//-----------------------------------------------------------------------
-bool string_util::startsWith(const std::string& str, const std::string& pattern, bool lowerCase)
+
+bool string_util::starts_with(const std::string& str, const std::string& pattern, bool lowerCase)
 {
 	size_t thisLen = str.length();
 	size_t patternLen = pattern.length();
+
 	if (thisLen < patternLen || patternLen == 0)
+	{
 		return false;
+	}
 
 	std::string startOfThis = str.substr(0, patternLen);
+
 	if (lowerCase)
-		string_util::toLowerCase(startOfThis);
+	{
+		to_lowercase(startOfThis);
+	}
 
 	return (startOfThis == pattern);
 }
-//-----------------------------------------------------------------------
-bool string_util::endsWith(const std::string& str, const std::string& pattern, bool lowerCase)
+
+bool string_util::ends_with(const std::string& str, const std::string& pattern, bool lowerCase)
 {
 	size_t thisLen = str.length();
 	size_t patternLen = pattern.length();
+
 	if (thisLen < patternLen || patternLen == 0)
+	{
 		return false;
+	}
 
 	std::string endOfThis = str.substr(thisLen - patternLen, patternLen);
+
 	if (lowerCase)
-		string_util::toLowerCase(endOfThis);
+	{
+		to_lowercase(endOfThis);
+	}
 
 	return (endOfThis == pattern);
 }
-//-----------------------------------------------------------------------
-std::string string_util::standardisePath(const std::string& init)
-{
-	std::string path = init;
 
-	std::replace(path.begin(), path.end(), '\\', '/');
-	if (path[path.length() - 1] != '/')
-		path += '/';
 
-	return path;
-}
-//-----------------------------------------------------------------------
-void string_util::splitFilename(const std::string& qualifiedName, std::string& outBasename, std::string& outPath)
-{
-	std::string path = qualifiedName;
-	// Replace \ with / first
-	std::replace(path.begin(), path.end(), '\\', '/');
-	// split based on final /
-	size_t i = path.find_last_of('/');
-
-	if (i == std::string::npos)
-	{
-		outPath.clear();
-		outBasename = qualifiedName;
-	}
-	else
-	{
-		outBasename = path.substr(i + 1, path.size() - i - 1);
-		outPath = path.substr(0, i + 1);
-	}
-
-}
-
-void string_util::splitFilename(const std::wstring& qualifiedName, std::wstring& outBasename, std::wstring& outPath)
-{
-	std::wstring path = qualifiedName;
-	// Replace \ with / first
-	std::replace(path.begin(), path.end(), L'\\', L'/');
-	// split based on final /
-	size_t i = path.find_last_of(L'/');
-
-	if (i == std::wstring::npos)
-	{
-		outPath.clear();
-		outBasename = qualifiedName;
-	}
-	else
-	{
-		outBasename = path.substr(i + 1, path.size() - i - 1);
-		outPath = path.substr(0, i + 1);
-	}
-
-}
-
-void string_util::splitBaseFilename(const std::string& fullName, std::string& outBasename, std::string& outExtention)
-{
-	size_t i = fullName.find_last_of(".");
-	if (i == std::string::npos)
-	{
-		outExtention.clear();
-		outBasename = fullName;
-	}
-	else
-	{
-		outExtention = fullName.substr(i + 1);
-		outBasename = fullName.substr(0, i);
-	}
-}
-
-void string_util::splitFullFilename(const std::string& qualifiedName, std::string& outBasename, std::string& outExtention, std::string& outPath)
-{
-	std::string fullName;
-	splitFilename(qualifiedName, fullName, outPath);
-	splitBaseFilename(fullName, outBasename, outExtention);
-}
 
 bool string_util::match(const std::string& str, const std::string& pattern, bool caseSensitive)
 {
-	std::string tmpStr = str;
-	std::string tmpPattern = pattern;
+	std::string tmpStr(str);
+	std::string tmpPattern(pattern);
 
 	if (!caseSensitive)
 	{
-		string_util::toLowerCase(tmpStr);
-		string_util::toLowerCase(tmpPattern);
+		to_lowercase(tmpStr);
+		to_lowercase(tmpPattern);
 	}
 
 	std::string::const_iterator strIt = tmpStr.begin();
 	std::string::const_iterator patIt = tmpPattern.begin();
 	std::string::const_iterator lastWildCardIt = tmpPattern.end();
+
 	while (strIt != tmpStr.end() && patIt != tmpPattern.end())
 	{
 		if (*patIt == '*')
@@ -451,23 +416,32 @@ bool string_util::match(const std::string& str, const std::string& pattern, bool
 	}
 }
 
-const std::string string_util::replaceAll(const std::string& source, const std::string& replaceWhat, const std::string& replaceWithWhat)
+const std::string string_util::replace_all(const std::string& source, const std::string& target, const std::string& replace)
 {
 	std::string result = source;
 	std::string::size_type pos = 0;
+
 	while (1)
 	{
-		pos = result.find(replaceWhat, pos);
-		if (pos == std::string::npos) break;
-		result.replace(pos, replaceWhat.size(), replaceWithWhat);
-		pos += replaceWithWhat.size();
+		pos = result.find(target, pos);
+
+		if (pos == std::string::npos)
+		{
+			break;
+		}
+
+		result.replace(pos, target.size(), replace);
+
+		pos += replace.size();
 	}
+
 	return result;
 }
 
-bool string_util::StringReplace(std::wstring& path, const std::wstring& src, const std::wstring& tar)
+bool string_util::replace(std::wstring& path, const std::wstring& src, const std::wstring& tar)
 {
 	auto pos = path.find(src);
+
 	if (pos == std::string::npos)
 	{
 		return false;
@@ -533,6 +507,80 @@ const std::wstring string_util::format(const wchar_t* fmt, ...)
 
 	return strOut;
 }
+
+std::string string_util::standardize_path(const std::string& init)
+{
+	std::string path = init;
+
+	std::replace(path.begin(), path.end(), '\\', '/');
+
+	if (path[path.length() - 1] != '/')
+	{
+		path += '/';
+	}
+
+	return path;
+}
+
+void string_util::split_path(const std::string& qualifiedName, std::string& outBasename, std::string& outPath)
+{
+	std::string path = qualifiedName;
+
+	// Replace \ with / first
+	std::replace(path.begin(), path.end(), '\\', '/');
+
+	// split based on final /
+	size_t i = path.find_last_of('/');
+
+	if (i == std::string::npos)
+	{
+		outPath.clear();
+		outBasename = qualifiedName;
+	}
+	else
+	{
+		outBasename = path.substr(i + 1, path.size() - i - 1);
+		outPath = path.substr(0, i + 1);
+	}
+}
+
+void string_util::split_path(const std::wstring& qualifiedName, std::wstring& outBasename, std::wstring& outPath)
+{
+	std::wstring path = qualifiedName;
+
+	// Replace \ with / first
+	std::replace(path.begin(), path.end(), L'\\', L'/');
+
+	// split based on final /
+	size_t i = path.find_last_of(L'/');
+
+	if (i == std::wstring::npos)
+	{
+		outPath.clear();
+		outBasename = qualifiedName;
+	}
+	else
+	{
+		outBasename = path.substr(i + 1, path.size() - i - 1);
+		outPath = path.substr(0, i + 1);
+	}
+}
+
+void string_util::split_filename(const std::string& fullName, std::string& outBasename, std::string& outExtention)
+{
+	size_t i = fullName.find_last_of(".");
+	if (i == std::string::npos)
+	{
+		outExtention.clear();
+		outBasename = fullName;
+	}
+	else
+	{
+		outExtention = fullName.substr(i + 1);
+		outBasename = fullName.substr(0, i);
+	}
+}
+
 
 } // util
 } // lax

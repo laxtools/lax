@@ -197,13 +197,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.cpp" />
-    <ClCompile Include="..\..\include\lax\net\detail\buffer\recv_buffer.cpp" />
-    <ClCompile Include="..\..\include\lax\net\detail\buffer\send_buffer.cpp" />
     <ClCompile Include="..\..\src\channel\channel.cpp" />
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />
     <ClCompile Include="..\..\src\db\nanodbc.cpp" />
+    <ClCompile Include="..\..\src\net\detail\buffer\multiple_size_buffer_pool.cpp" />
+    <ClCompile Include="..\..\src\net\detail\buffer\recv_buffer.cpp" />
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />

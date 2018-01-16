@@ -51,9 +51,6 @@
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp">
       <Filter>db</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\db\test_string_conversion.cpp">
-      <Filter>db</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp">
       <Filter>channel</Filter>
     </ClCompile>
@@ -62,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="..\..\test\net\test_recv_buffer.cpp">
       <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\util\test_string_util.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

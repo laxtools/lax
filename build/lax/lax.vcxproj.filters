@@ -204,13 +204,10 @@
     <ClCompile Include="..\..\src\util\string_util.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\lax\net\detail\buffer\send_buffer.cpp">
+    <ClCompile Include="..\..\src\net\detail\buffer\recv_buffer.cpp">
       <Filter>net\detail\buffer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.cpp">
-      <Filter>net\detail\buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\include\lax\net\detail\buffer\recv_buffer.cpp">
+    <ClCompile Include="..\..\src\net\detail\buffer\multiple_size_buffer_pool.cpp">
       <Filter>net\detail\buffer</Filter>
     </ClCompile>
   </ItemGroup>
