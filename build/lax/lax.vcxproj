@@ -170,11 +170,11 @@
     <ClInclude Include="..\..\include\lax\db\nanodbc.h" />
     <ClInclude Include="..\..\include\lax\db\query.hpp" />
     <ClInclude Include="..\..\include\lax\db\query_scheduler.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\fixed_size_buffer_pool.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\recv_buffer.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\segment.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\send_buffer.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\fixed_size_buffer_pool.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\recv_buffer.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\segment.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\send_buffer.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
@@ -197,8 +197,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.cpp" />
-    <ClCompile Include="..\..\include\lax\net\detail\recv_buffer.cpp" />
+    <ClCompile Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.cpp" />
+    <ClCompile Include="..\..\include\lax\net\detail\buffer\recv_buffer.cpp" />
+    <ClCompile Include="..\..\include\lax\net\detail\buffer\send_buffer.cpp" />
     <ClCompile Include="..\..\src\channel\channel.cpp" />
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />

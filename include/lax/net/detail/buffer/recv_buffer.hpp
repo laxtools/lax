@@ -1,7 +1,9 @@
 #pragma once 
 
-#include <lax/net/detail/multiple_size_buffer_pool.hpp>
+#include <lax/net/detail/buffer/multiple_size_buffer_pool.hpp>
 #include <lax/util/macros.hpp>
+
+#include <algorithm>
 #include <vector>
 
 namespace lax

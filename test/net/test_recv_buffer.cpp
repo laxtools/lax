@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <catch.hpp>
-#include <lax/net/detail/recv_buffer.hpp>
+#include <lax/net/detail/buffer/recv_buffer.hpp>
 
 using namespace lax::net;
 

@@ -1,7 +1,7 @@
 #pragma once 
 
-#include <lax/net/detail/segment.hpp>
 #include <lax/util/concurrent_queue.hpp>
+#include <lax/util/macros.hpp>
 
 #include <atomic>
 #include <map>

@@ -142,23 +142,23 @@
     <ClInclude Include="..\..\include\lax\util\macros.hpp">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\segment.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\send_buffer.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\recv_buffer.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\fixed_size_buffer_pool.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\util\string_util.hpp">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\recv_buffer.hpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\segment.hpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\send_buffer.hpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\fixed_size_buffer_pool.hpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.hpp">
+      <Filter>net\detail\buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,14 +201,17 @@
     <ClCompile Include="..\..\src\db\nanodbc.cpp">
       <Filter>db</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\lax\net\detail\recv_buffer.cpp">
-      <Filter>net\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\include\lax\net\detail\multiple_size_buffer_pool.cpp">
-      <Filter>net\detail</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\util\string_util.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\lax\net\detail\buffer\send_buffer.cpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.cpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\lax\net\detail\buffer\recv_buffer.cpp">
+      <Filter>net\detail\buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <lax/net/detail/segment.hpp>
+#include <lax/net/detail/buffer/segment.hpp>
 #include <lax/util/object_pool.hpp>
 
 #include <vector>

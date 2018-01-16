@@ -44,10 +44,15 @@ public:
 
 	ref get_ref() const;	
 
-	result send(msg::ptr m); 
+	virtual result send(msg::ptr m) = 0; 
 
-	virtual ... on_recv(bytes );
-	virtual ... on_send(bytes );
+	// for session only 
+	virtual ... on_recv(bytes ) = 0;
+
+	// for session only
+	virtual ... on_send(bytes ) = 0;
+
+	virtual ... on_error() = 0;
 };
 
 } // net 

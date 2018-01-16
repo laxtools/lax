@@ -1,49 +1,92 @@
-#include "Prefix.h"
-#include "StringUtil.h"
-#include <windows.h>
+#include "stdafx.h"
 
+#include <lax/util/string_util.hpp>
 
+#include <algorithm>
 
-namespace { 
+namespace lax
+{
+namespace util
+{
 
+const std::string string_util::empty;
 
-const std::string StringUtil::EMPTY;
-
-void StringUtil::trim(std::string& str, bool left, bool right)
+void string_util::trim(std::string& str, bool left, bool right)
 {
 	static const std::string delims = " \t\r";
-    
-	if(right)
-		str.erase(str.find_last_not_of(delims)+1); // trim right
-     
-	if(left)
+
+	if (right)
+		str.erase(str.find_last_not_of(delims) + 1); // trim right
+
+	if (left)
 		str.erase(0, str.find_first_not_of(delims)); // trim left
 }
 
-Bool StringUtil::Convert( const std::string& src, std::string& out, Int32 codePage )
+bool string_util::convert(const std::string& src, std::wstring& out, uint32_t code_page)
+{
+	out.clear();
+
+	int slen = std::min<int>(8192, (int)strlen(src.c_str()));
+	if (slen == 0)
+	{
+		return true;
+	}
+
+	int wlen = MultiByteToWideChar(code_page, 0, src.c_str(), slen, NULL, NULL);
+	LPWSTR np = (LPWSTR)_alloca(sizeof(WCHAR) * (wlen + 1)); // 스택에서 할당
+	::memset(np, 0, (wlen + 1) * sizeof(WCHAR));
+	MultiByteToWideChar(code_page, 0, src.c_str(), slen, np, wlen);
+
+	out.append(np);
+
+	return true;
+}
+
+bool string_util::convert(const std::wstring& s, std::string& out, uint32_t code_page)
+{
+	out.clear();
+
+	int slen = std::min<int>(8192, (int)wcslen(s.c_str()));
+
+	int wlen = WideCharToMultiByte(code_page, 0, s.c_str(), slen, NULL, 0, NULL, NULL);
+	if (wlen == 0)
+	{
+		return true;
+	}
+
+	LPSTR np = (LPSTR)_alloca(sizeof(CHAR) * (wlen + 1));
+	::memset(np, 0, (wlen + 1) * sizeof(CHAR));
+	WideCharToMultiByte(code_page, 0, s.c_str(), slen, np, wlen, NULL, NULL);
+
+	out.append(np);
+
+	return true;
+}
+
+bool string_util::convert(const std::string& src, std::string& out, uint32_t code_page)
 {
 	std::wstring wstr;
-	Convert( src, wstr );
-	Convert( wstr, out, codePage );
+	convert(src, wstr);
+	convert(wstr, out, code_page);
 
 	return true;
 }
 
-Bool StringUtil::Convert( const std::wstring& src, std::wstring& out, Int32 codePage )
+bool string_util::convert(const std::wstring& src, std::wstring& out, uint32_t code_page)
 {
-	codePage;
+	code_page;
 	out = src;
 	return true;
 }
 
-Bool StringUtil::Convert(const wchar_t* src, std::wstring& out, Int32 codePage)
+bool string_util::convert(const wchar_t* src, std::wstring& out, uint32_t code_page)
 {
-	codePage;
+	code_page;
 	out = src;
 	return true;
 }
 
-Bool StringUtil::Convert(const char* src, std::wstring& out, Int32 codePage)
+bool string_util::convert(const char* src, std::wstring& out, uint32_t code_page)
 {
 	out.clear();
 
@@ -53,164 +96,96 @@ Bool StringUtil::Convert(const char* src, std::wstring& out, Int32 codePage)
 		return true;
 	}
 
-	int wlen = MultiByteToWideChar(codePage, 0, src, slen, NULL, NULL);
+	int wlen = MultiByteToWideChar(code_page, 0, src, slen, NULL, NULL);
 	LPWSTR np = (LPWSTR)_alloca(sizeof(WCHAR) * (wlen + 1)); // 스택에서 할당
 	::memset(np, 0, (wlen + 1) * sizeof(WCHAR));
-	MultiByteToWideChar(codePage, 0, src, slen, np, wlen);
+	MultiByteToWideChar(code_page, 0, src, slen, np, wlen);
 
 	out.append(np);
 
 	return true;
 }
 
-
-Bool StringUtil::Convert( const std::string& src, std::wstring& out, Int32 codePage )
+string_util::string_vector string_util::split(const std::string& str, const std::string& delims, unsigned int max_splits)
 {
-	out.clear();
+	string_vector ret;
 
-	int slen = std::min<int>( 8192, (int)strlen( src.c_str() ) );
-	if ( slen == 0 )
-	{
-		return true;
-	}
-
-	int wlen = MultiByteToWideChar( codePage, 0, src.c_str(), slen, NULL, NULL );
-	LPWSTR np = (LPWSTR)_alloca( sizeof( WCHAR ) * ( wlen + 1 ) ); // 스택에서 할당
-	::memset( np, 0, (wlen + 1 ) * sizeof( WCHAR ) );
-	MultiByteToWideChar( codePage, 0, src.c_str(), slen, np, wlen );
-
-	out.append( np );
-
-	return true;
-}
-
-Bool StringUtil::Convert( const std::wstring& s, std::string& out, Int32 codePage )
-{
-	out.clear();
-
-	int slen = std::min<int>( 8192, (int)wcslen( s.c_str() ) );
-
-	int wlen = WideCharToMultiByte( codePage, 0, s.c_str(), slen, NULL, 0, NULL, NULL );
-	if ( wlen == 0 )
-	{
-		return true;
-	}
-
-	LPSTR np = (LPSTR)_alloca( sizeof( CHAR ) * ( wlen + 1 ) );
-	::memset( np, 0, (wlen + 1 ) * sizeof( CHAR ) );
-	WideCharToMultiByte( codePage, 0, s.c_str(), slen, np, wlen, NULL, NULL );
-
-	out.append( np );
-
-	return true;
-}
-
-
-void StringUtil::TokenizeStr( const std::wstring& msg, std::vector< std::wstring >& tokenizedWords, const std::wstring& delimiter )
-{
-	std::wstring::size_type last_pos = msg.find_first_not_of( delimiter, 0 );
-	std::wstring::size_type pos = msg.find_first_of( delimiter, last_pos );
-	while( std::wstring::npos != pos || std::wstring::npos != last_pos )
-	{
-		std::wstring var = msg.substr( last_pos, pos - last_pos );
-		tokenizedWords.push_back( var );
-		last_pos += var.length() + delimiter.length();
-		if( last_pos > msg.length() )
-			last_pos = std::wstring::npos;
-		pos = msg.find_first_of( delimiter, last_pos );
-	}
-}
-
-Bool StringUtil::ParserInt( const std::wstring& msg, const std::wstring& delimiter, Int32& value )
-{
-	std::wstring::size_type last_pos = msg.find_first_not_of( delimiter, 0 );
-	std::wstring::size_type pos = msg.find_first_of( delimiter, last_pos );
-
-	std::wstring data = msg.substr( last_pos, pos - last_pos );
-	if ( data.empty() )
-	{
-		return false;
-	}
-
-	value = _wtoi( data.c_str() );
-
-	return true;
-}
-
-
-Bool StringUtil::ParserFloat( const std::wstring& msg, const std::wstring& delimiter, Float& value )
-{
-	std::wstring::size_type last_pos = msg.find_first_not_of( delimiter, 0 );
-	std::wstring::size_type pos = msg.find_first_of( delimiter, last_pos );
-
-	std::wstring data = msg.substr( last_pos, pos - last_pos );
-	if ( data.empty() )
-	{
-		return false;
-	}
-
-	value = static_cast<Float>(_wtof( data.c_str() ) );
-
-	return true;
-}
-
-
-StringUtil::StringVector StringUtil::split( const std::string& str, const std::string& delims, unsigned int maxSplits)
-{
-	StringVector ret;
 	// Pre-allocate some space for performance
-	ret.reserve(maxSplits ? maxSplits+1 : 10);    // 10 is guessed capacity for most case
+	ret.reserve(max_splits ? max_splits + 1 : 10);    // 10 is guessed capacity for most case
 
-	unsigned int numSplits = 0;
+	unsigned int num_splits = 0;
 
 	// Use STL methods 
-	size_t start, pos;
-	start = 0;
-	do 
+	size_t start = 0; 
+	size_t pos = 0;
+
+	do
 	{
 		pos = str.find_first_of(delims, start);
+
 		if (pos == start)
 		{
 			// Do nothing
 			start = pos + 1;
 		}
-		else if (pos == std::string::npos || (maxSplits && numSplits == maxSplits))
+		else if (pos == std::string::npos || (max_splits > 0 && num_splits == max_splits))
 		{
 			// Copy the rest of the string
-			ret.push_back( str.substr(start) );
+			ret.push_back(str.substr(start));
 			break;
 		}
 		else
 		{
 			// Copy up to delimiter
-			ret.push_back( str.substr(start, pos - start) );
+			ret.push_back(str.substr(start, pos - start));
 			start = pos + 1;
 		}
-		// parse up to next real data
+
+		// Parse up to next real data
 		start = str.find_first_not_of(delims, start);
-		++numSplits;
+		++num_splits;
 
 	} while (pos != std::string::npos);
 
-
-
 	return ret;
 }
-//-----------------------------------------------------------------------
-StringUtil::StringVector StringUtil::tokenise( const std::string& str, const std::string& singleDelims, const std::string& doubleDelims, unsigned int maxSplits)
-{
-	StringVector ret;
-	// Pre-allocate some space for performance
-	ret.reserve(maxSplits ? maxSplits+1 : 10);    // 10 is guessed capacity for most case
 
-	unsigned int numSplits = 0;
+void string_util::tokenize(const std::wstring& msg, std::vector<std::wstring>& tokens, const std::wstring& delimiter)
+{
+	std::wstring::size_type last_pos = msg.find_first_not_of(delimiter, 0);
+	std::wstring::size_type pos = msg.find_first_of(delimiter, last_pos);
+
+	while (std::wstring::npos != pos || std::wstring::npos != last_pos)
+	{
+		std::wstring var = msg.substr(last_pos, pos - last_pos);
+
+		tokens.push_back(var);
+
+		last_pos += var.length() + delimiter.length();
+
+		if (last_pos > msg.length())
+		{
+			last_pos = std::wstring::npos;
+		}
+
+		pos = msg.find_first_of(delimiter, last_pos);
+	}
+}
+
+string_util::string_vector string_util::tokenize(const std::string& str, const std::string& singleDelims, const std::string& doubleDelims, unsigned int maxSplits)
+{
+	string_vector ret;
+	// Pre-allocate some space for performance
+	ret.reserve(maxSplits ? maxSplits + 1 : 10);    // 10 is guessed capacity for most case
+
+	unsigned int num_splits = 0;
 	std::string delims = singleDelims + doubleDelims;
 
 	// Use STL methods 
 	size_t start, pos;
 	char curDoubleDelim = 0;
 	start = 0;
-	do 
+	do
 	{
 		if (curDoubleDelim != 0)
 		{
@@ -231,14 +206,14 @@ StringUtil::StringVector StringUtil::tokenise( const std::string& str, const std
 			// Do nothing
 			start = pos + 1;
 		}
-		else if (pos == std::string::npos || (maxSplits && numSplits == maxSplits))
+		else if (pos == std::string::npos || (maxSplits && num_splits == maxSplits))
 		{
 			if (curDoubleDelim != 0)
 			{
 				//Missing closer. Warn or throw exception?
 			}
 			// Copy the rest of the string
-			ret.push_back( str.substr(start) );
+			ret.push_back(str.substr(start));
 			break;
 		}
 		else
@@ -249,7 +224,7 @@ StringUtil::StringVector StringUtil::tokenise( const std::string& str, const std
 			}
 
 			// Copy up to delimiter
-			ret.push_back( str.substr(start, pos - start) );
+			ret.push_back(str.substr(start, pos - start));
 			start = pos + 1;
 		}
 		if (curDoubleDelim == 0)
@@ -258,14 +233,14 @@ StringUtil::StringVector StringUtil::tokenise( const std::string& str, const std
 			start = str.find_first_not_of(singleDelims, start);
 		}
 
-		++numSplits;
+		++num_splits;
 
 	} while (pos != std::string::npos);
 
 	return ret;
 }
 //-----------------------------------------------------------------------
-void StringUtil::toLowerCase(std::string& str)
+void string_util::toLowerCase(std::string& str)
 {
 	std::transform(
 		str.begin(),
@@ -275,7 +250,7 @@ void StringUtil::toLowerCase(std::string& str)
 }
 
 //-----------------------------------------------------------------------
-void StringUtil::toUpperCase(std::string& str)
+void string_util::toUpperCase(std::string& str)
 {
 	std::transform(
 		str.begin(),
@@ -285,7 +260,7 @@ void StringUtil::toUpperCase(std::string& str)
 }
 
 
-void StringUtil::toLowerCase(std::wstring& str)
+void string_util::toLowerCase(std::wstring& str)
 {
 	std::transform(
 		str.begin(),
@@ -295,7 +270,7 @@ void StringUtil::toLowerCase(std::wstring& str)
 }
 
 //-----------------------------------------------------------------------
-void StringUtil::toUpperCase(std::wstring& str)
+void string_util::toUpperCase(std::wstring& str)
 {
 	std::transform(
 		str.begin(),
@@ -304,7 +279,7 @@ void StringUtil::toUpperCase(std::wstring& str)
 		toupper);
 }
 //-----------------------------------------------------------------------
-Bool StringUtil::startsWith(const std::string& str, const std::string& pattern, bool lowerCase)
+bool string_util::startsWith(const std::string& str, const std::string& pattern, bool lowerCase)
 {
 	size_t thisLen = str.length();
 	size_t patternLen = pattern.length();
@@ -313,12 +288,12 @@ Bool StringUtil::startsWith(const std::string& str, const std::string& pattern, 
 
 	std::string startOfThis = str.substr(0, patternLen);
 	if (lowerCase)
-		StringUtil::toLowerCase(startOfThis);
+		string_util::toLowerCase(startOfThis);
 
 	return (startOfThis == pattern);
 }
 //-----------------------------------------------------------------------
-Bool StringUtil::endsWith(const std::string& str, const std::string& pattern, bool lowerCase)
+bool string_util::endsWith(const std::string& str, const std::string& pattern, bool lowerCase)
 {
 	size_t thisLen = str.length();
 	size_t patternLen = pattern.length();
@@ -327,27 +302,27 @@ Bool StringUtil::endsWith(const std::string& str, const std::string& pattern, bo
 
 	std::string endOfThis = str.substr(thisLen - patternLen, patternLen);
 	if (lowerCase)
-		StringUtil::toLowerCase(endOfThis);
+		string_util::toLowerCase(endOfThis);
 
 	return (endOfThis == pattern);
 }
 //-----------------------------------------------------------------------
-std::string StringUtil::standardisePath(const std::string& init)
+std::string string_util::standardisePath(const std::string& init)
 {
 	std::string path = init;
 
-	std::replace( path.begin(), path.end(), '\\', '/' );
-	if( path[path.length() - 1] != '/' )
+	std::replace(path.begin(), path.end(), '\\', '/');
+	if (path[path.length() - 1] != '/')
 		path += '/';
 
 	return path;
 }
 //-----------------------------------------------------------------------
-void StringUtil::splitFilename(const std::string& qualifiedName, std::string& outBasename, std::string& outPath)
+void string_util::splitFilename(const std::string& qualifiedName, std::string& outBasename, std::string& outPath)
 {
 	std::string path = qualifiedName;
 	// Replace \ with / first
-	std::replace( path.begin(), path.end(), '\\', '/' );
+	std::replace(path.begin(), path.end(), '\\', '/');
 	// split based on final /
 	size_t i = path.find_last_of('/');
 
@@ -358,13 +333,13 @@ void StringUtil::splitFilename(const std::string& qualifiedName, std::string& ou
 	}
 	else
 	{
-		outBasename = path.substr(i+1, path.size() - i - 1);
-		outPath = path.substr(0, i+1);
+		outBasename = path.substr(i + 1, path.size() - i - 1);
+		outPath = path.substr(0, i + 1);
 	}
 
 }
 
-void StringUtil::splitFilename(const std::wstring& qualifiedName, std::wstring& outBasename, std::wstring& outPath)
+void string_util::splitFilename(const std::wstring& qualifiedName, std::wstring& outBasename, std::wstring& outPath)
 {
 	std::wstring path = qualifiedName;
 	// Replace \ with / first
@@ -385,8 +360,7 @@ void StringUtil::splitFilename(const std::wstring& qualifiedName, std::wstring& 
 
 }
 
-//-----------------------------------------------------------------------
-void StringUtil::splitBaseFilename(const std::string& fullName, std::string& outBasename, std::string& outExtention)
+void string_util::splitBaseFilename(const std::string& fullName, std::string& outBasename, std::string& outExtention)
 {
 	size_t i = fullName.find_last_of(".");
 	if (i == std::string::npos)
@@ -396,26 +370,27 @@ void StringUtil::splitBaseFilename(const std::string& fullName, std::string& out
 	}
 	else
 	{
-		outExtention = fullName.substr(i+1);
+		outExtention = fullName.substr(i + 1);
 		outBasename = fullName.substr(0, i);
 	}
 }
-// ----------------------------------------------------------------------------------------------------------------------------------------------
-void StringUtil::splitFullFilename(	const std::string& qualifiedName,	std::string& outBasename, std::string& outExtention, std::string& outPath )
+
+void string_util::splitFullFilename(const std::string& qualifiedName, std::string& outBasename, std::string& outExtention, std::string& outPath)
 {
 	std::string fullName;
-	splitFilename( qualifiedName, fullName, outPath );
-	splitBaseFilename( fullName, outBasename, outExtention );
+	splitFilename(qualifiedName, fullName, outPath);
+	splitBaseFilename(fullName, outBasename, outExtention);
 }
-//-----------------------------------------------------------------------
-Bool StringUtil::match(const std::string& str, const std::string& pattern, bool caseSensitive)
+
+bool string_util::match(const std::string& str, const std::string& pattern, bool caseSensitive)
 {
 	std::string tmpStr = str;
 	std::string tmpPattern = pattern;
+
 	if (!caseSensitive)
 	{
-		StringUtil::toLowerCase(tmpStr);
-		StringUtil::toLowerCase(tmpPattern);
+		string_util::toLowerCase(tmpStr);
+		string_util::toLowerCase(tmpPattern);
 	}
 
 	std::string::const_iterator strIt = tmpStr.begin();
@@ -436,7 +411,7 @@ Bool StringUtil::match(const std::string& str, const std::string& pattern, bool 
 			else
 			{
 				// scan until we find next pattern character
-				while(strIt != tmpStr.end() && *strIt != *patIt)
+				while (strIt != tmpStr.end() && *strIt != *patIt)
 					++strIt;
 			}
 		}
@@ -474,44 +449,41 @@ Bool StringUtil::match(const std::string& str, const std::string& pattern, bool 
 	{
 		return false;
 	}
-
 }
 
-const std::string StringUtil::replaceAll(const std::string& source, const std::string& replaceWhat, const std::string& replaceWithWhat)
+const std::string string_util::replaceAll(const std::string& source, const std::string& replaceWhat, const std::string& replaceWithWhat)
 {
 	std::string result = source;
 	std::string::size_type pos = 0;
-	while(1)
+	while (1)
 	{
-		pos = result.find(replaceWhat,pos);
+		pos = result.find(replaceWhat, pos);
 		if (pos == std::string::npos) break;
-		result.replace(pos,replaceWhat.size(),replaceWithWhat);
+		result.replace(pos, replaceWhat.size(), replaceWithWhat);
 		pos += replaceWithWhat.size();
 	}
 	return result;
 }
 
-Bool StringUtil::StringReplace( std::wstring& path, const std::wstring& src, const std::wstring& tar )
+bool string_util::StringReplace(std::wstring& path, const std::wstring& src, const std::wstring& tar)
 {
 	auto pos = path.find(src);
-	if ( pos == std::string::npos )
+	if (pos == std::string::npos)
 	{
 		return false;
 	}
 
-	path.replace( pos, path.length(), tar );
+	path.replace(pos, path.length(), tar);
 
 	return true;
 }
 
-
-
-std::string& StringUtil::format(std::string& dest, const char* fmt, ...)
+std::string& string_util::format(std::string& dest, const char* fmt, ...)
 {
 	char text[1024];
 
 	va_list args;
-	va_start(args, fmt);	
+	va_start(args, fmt);
 	_vsnprintf_s(text, sizeof(text) / sizeof(char), _TRUNCATE, fmt, args);
 	va_end(args);
 
@@ -520,9 +492,7 @@ std::string& StringUtil::format(std::string& dest, const char* fmt, ...)
 	return dest;
 }
 
-
-
-std::wstring& StringUtil::format(std::wstring& dest, const wchar_t* fmt, ...)
+std::wstring& string_util::format(std::wstring& dest, const wchar_t* fmt, ...)
 {
 	wchar_t text[1024];
 
@@ -536,9 +506,7 @@ std::wstring& StringUtil::format(std::wstring& dest, const wchar_t* fmt, ...)
 	return dest;
 }
 
-
-
-const std::string StringUtil::format(const char* fmt, ...)
+const std::string string_util::format(const char* fmt, ...)
 {
 	char text[1024];
 
@@ -547,14 +515,12 @@ const std::string StringUtil::format(const char* fmt, ...)
 	_vsnprintf_s(text, sizeof(text) / sizeof(char), _TRUNCATE, fmt, args);
 	va_end(args);
 
-	std::string strOut = text;
+	std::string strOut(text);
 
 	return strOut;
 }
 
-
-
-const std::wstring StringUtil::format(const wchar_t* fmt, ...)
+const std::wstring string_util::format(const wchar_t* fmt, ...)
 {
 	wchar_t text[1024];
 
@@ -563,34 +529,10 @@ const std::wstring StringUtil::format(const wchar_t* fmt, ...)
 	_vsnwprintf_s(text, sizeof(text) / sizeof(wchar_t), _TRUNCATE, fmt, args);
 	va_end(args);
 
-	std::wstring strOut = text;
+	std::wstring strOut(text);
 
 	return strOut;
 }
 
-
-
-std::string StringUtil::ToString(UInt32 value)
-{
-	char buff[12] = { 0, };
-	_ultoa_s(value, buff, 10);
-	return std::string(buff);
-}
-
-std::string StringUtil::ToString(Int32 value)
-{
-	char buff[12] = { 0, };
-	_itoa_s(value, buff, 10);
-	return std::string(buff);
-}
-
-std::string StringUtil::ToString(UShort value)
-{
-	return ToString((Int32)value);
-}
-
-
-
-
-
-} // namespace mu2
+} // util
+} // lax

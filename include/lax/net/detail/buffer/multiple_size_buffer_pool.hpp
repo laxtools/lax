@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <lax/net/detail/fixed_size_buffer_pool.hpp>
+#include <lax/net/detail/buffer/fixed_size_buffer_pool.hpp>
 
 #include <atomic>
 #include <mutex>
@@ -75,8 +75,8 @@ public:
 	{
 		if ( block->is_allocated_from_os() )
 		{ 
-			check(os_alloc_count_ > 0);
-			check(os_alloc_bytes_ > 0);
+			check(stat_.os_alloc_count > 0);
+			check(stat_.os_alloc_bytes > 0);
 			check(block->get_pool() == nullptr);
 
 			--stat_.os_alloc_count;

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <catch.hpp>
-#include <lax/net/detail/send_buffer.hpp>
+#include <lax/net/detail/buffer/send_buffer.hpp>
 
 using namespace lax::net;
 
