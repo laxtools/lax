@@ -211,6 +211,9 @@
     <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_creator.hpp">
       <Filter>net\protocol\msgpack</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\logger.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -260,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\net\detail\buffer\multiple_size_buffer_pool.cpp">
       <Filter>net\detail\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\logger.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

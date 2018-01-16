@@ -66,5 +66,8 @@
     <ClCompile Include="..\..\test\net\test_msgpack.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\util\test_logger.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

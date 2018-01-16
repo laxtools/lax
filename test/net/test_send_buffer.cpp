@@ -47,7 +47,7 @@ TEST_CASE("send buffer")
 
 	SECTION("simple performance")
 	{
-		constexpr int test_count = 1000000;
+		constexpr int test_count = 10000;
 
 		std::vector<send_buffer<1024 * 8>> sbs;
 

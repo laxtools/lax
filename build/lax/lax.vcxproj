@@ -22,7 +22,7 @@
     <ProjectGuid>{3A05B5E7-B816-4F30-BAAD-603125377721}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>lax</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -197,6 +197,7 @@
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
     <ClInclude Include="..\..\include\lax\util\config.hpp" />
     <ClInclude Include="..\..\include\lax\util\json.hpp" />
+    <ClInclude Include="..\..\include\lax\util\logger.hpp" />
     <ClInclude Include="..\..\include\lax\util\macros.hpp" />
     <ClInclude Include="..\..\include\lax\util\null_mutex.hpp" />
     <ClInclude Include="..\..\include\lax\util\object_pool.hpp" />
@@ -221,6 +222,7 @@
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
+    <ClCompile Include="..\..\src\util\logger.cpp" />
     <ClCompile Include="..\..\src\util\macros.cpp" />
     <ClCompile Include="..\..\src\util\platform.cpp" />
     <ClCompile Include="..\..\src\util\sequence.cpp" />
