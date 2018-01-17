@@ -28,6 +28,9 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\test\net\monster_generated.h">
+      <Filter>net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="..\..\test\util\test_logger.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\net\test_serializers.cpp">
+      <Filter>net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -29,9 +29,6 @@
     <Filter Include="db\detail">
       <UniqueIdentifier>{08855888-fd53-4a25-8e18-6dae162db3cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="node">
-      <UniqueIdentifier>{fbebb2fd-ebee-4599-a613-742562355cbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="net\detail">
       <UniqueIdentifier>{ee866473-4335-48db-a3b0-b1cbd25886d7}</UniqueIdentifier>
     </Filter>
@@ -43,6 +40,15 @@
     </Filter>
     <Filter Include="net\protocol\msgpack">
       <UniqueIdentifier>{49b24c0c-8695-4f8f-b2a9-884e4e49a8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="actor">
+      <UniqueIdentifier>{6fd46d83-d3d5-4a3b-a0ff-c40ec61e406a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\util">
+      <UniqueIdentifier>{37172915-18c0-4ffc-a75a-a87d5b6362bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol\flat">
+      <UniqueIdentifier>{4fd52aad-3866-4b13-93f0-65cf91c98136}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +181,6 @@
     <ClInclude Include="..\..\include\lax\net\service.hpp">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\addr.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\connector.hpp">
       <Filter>net\detail</Filter>
     </ClInclude>
@@ -188,12 +191,6 @@
       <Filter>net\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\exception.hpp">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol.hpp">
-      <Filter>net</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol_creator.hpp">
       <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\reason.hpp">
@@ -212,6 +209,33 @@
       <Filter>net\protocol\msgpack</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\util\logger.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\protocol_factory.hpp">
+      <Filter>net\protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\protocol.hpp">
+      <Filter>net\protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\actor_task.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\component.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\scene.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\actor.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\actor_factory.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\actor_pool.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\multi_object_pool.hpp">
       <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
@@ -277,6 +301,9 @@
     </None>
     <None Include="..\..\include\lax\net\construction.md">
       <Filter>net</Filter>
+    </None>
+    <None Include="..\..\include\lax\actor\construction.md">
+      <Filter>actor</Filter>
     </None>
   </ItemGroup>
 </Project>

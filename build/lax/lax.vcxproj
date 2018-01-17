@@ -22,7 +22,7 @@
     <ProjectGuid>{3A05B5E7-B816-4F30-BAAD-603125377721}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>lax</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -71,25 +71,25 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
@@ -155,6 +155,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\lax\actor\actor.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\actor_factory.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\actor_pool.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\actor_task.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\component.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\scene.hpp" />
     <ClInclude Include="..\..\include\lax\channel\channel.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp" />
@@ -171,7 +177,6 @@
     <ClInclude Include="..\..\include\lax\db\query.hpp" />
     <ClInclude Include="..\..\include\lax\db\query_scheduler.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\acceptor.hpp" />
-    <ClInclude Include="..\..\include\lax\net\detail\addr.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\fixed_size_buffer_pool.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\recv_buffer.hpp" />
@@ -181,12 +186,12 @@
     <ClInclude Include="..\..\include\lax\net\detail\service_impl.hpp" />
     <ClInclude Include="..\..\include\lax\net\exception.hpp" />
     <ClInclude Include="..\..\include\lax\net\message.hpp" />
-    <ClInclude Include="..\..\include\lax\net\protocol.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_creator.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_factory.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_message.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_protocol.hpp" />
-    <ClInclude Include="..\..\include\lax\net\protocol_creator.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\protocol.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\protocol_factory.hpp" />
     <ClInclude Include="..\..\include\lax\net\reason.hpp" />
     <ClInclude Include="..\..\include\lax\net\service.hpp" />
     <ClInclude Include="..\..\include\lax\net\session.hpp" />
@@ -199,6 +204,7 @@
     <ClInclude Include="..\..\include\lax\util\json.hpp" />
     <ClInclude Include="..\..\include\lax\util\logger.hpp" />
     <ClInclude Include="..\..\include\lax\util\macros.hpp" />
+    <ClInclude Include="..\..\include\lax\util\multi_object_pool.hpp" />
     <ClInclude Include="..\..\include\lax\util\null_mutex.hpp" />
     <ClInclude Include="..\..\include\lax\util\object_pool.hpp" />
     <ClInclude Include="..\..\include\lax\util\platform.hpp" />
@@ -237,6 +243,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\include\lax\actor\construction.md" />
     <None Include="..\..\include\lax\net\construction.md" />
     <None Include="..\..\include\lax\net\session.inl" />
     <None Include="..\..\include\lax\util\concurrent_queue.inl" />

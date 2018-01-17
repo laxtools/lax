@@ -42,6 +42,9 @@ enum reason
 	fail_msg_pack_duplicate_add, 
 	fail_msg_pack_serialize, 
 	fail_msg_pack_deserialize, 
+	fail_msg_pack_decryption, 
+	fail_msg_pack_encryption, 
+	fail_msg_pack_crc32_invalid, 
 };
 
 } // net 

@@ -59,6 +59,18 @@
 
 ## protocol
 
+
+## msgpack 
+
+
+## session 
+
+채널과 ref 기능을 session과 service로 이동. 
+익숙한 session 개념으로 진행하고 
+프로토콜은 factory로 처리함. 
+프로토콜 명칭을 주면 해당 프로토콜을 찾아서 설정하도록 함
+
+
 ### channel 
 
 ### ref 
@@ -70,10 +82,6 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
 
 이렇게 하는 게 좋아 보인다. 
 
-## msgpack 
-
-
-## session 
 
 ## service 
 
@@ -84,16 +92,14 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
  protocol::ref를 통해 전송
 
 
-
 ### slot 
-
 
 ### acceptor 
 
 ### connector 
 
 
-## node 
+## server
 
 
 ### binder / holder 
@@ -102,10 +108,38 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
 ## actor 
 
 
+## interface 
 
+ auto& svc = net::service::inst(); 
 
+ MSGPACK_REGISTER(msg_new_msgapck_session); 
+ MSGPACK_REGISTER(mreq_login);
+ MSGPACK_REGISTER(mres_login);
+ MSGPACK_REGISTER(msyn_login);
 
+ session::sub( topic(msgpack, new_session), on_new_msgpack_session );
 
-  
+ svc.accept( ..., "msgpack");
+ svc.connect( ..., "msgpack"); 
 
+ on_new_session(m) 
+ {
+	// 프로세스 	
+	auto sref = net::service::inst().acquire(m->id())
+
+	sref.send( nm );
+
+	sref.close();
+ } 
+
+ - 디버깅 
+ - 상태 보기  
+ - 구성 가능  
+
+ 전체적으로 깔끔하다. 
+
+ heartbeat 같은 건? 
+
+ - 밑단에 둘 필요 없이 send() 할 때 (사용할 때) 확인하고 종료 시킴
+ - 구성만 하도록 함  
  

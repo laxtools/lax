@@ -1,10 +1,11 @@
 #pragma once 
 
-#include <lax/util/macros.hpp>
-#include <lax/util/result.hpp>
+#include <lax/channel/channel.hpp>
 #include <lax/net/reason.hpp>
 #include <lax/net/message.hpp>
 #include <lax/net/detail/buffer/send_buffer.hpp>
+#include <lax/util/macros.hpp>
+#include <lax/util/result.hpp>
 
 #include <asio.hpp>
 #include <memory>
@@ -22,17 +23,21 @@ class service;
 /// socket wrapper to use with asio
 /** 
  * 바이트 송수신 처리 세션. 
- * 각 프로토콜 처리 세션은 session에서 상속 받아서 구현. 
+ * - 각 프로토콜 처리는 protocol 클래스에서 처리
  * 
  * 주의할 점: 
  *  - 생성자는 unique 락 걸린 상태에서 호출됨. 
- *     - 필요할 경우 on_created에서 초기화 관련 진행 
  */
-class session
+class session final
 {
 public:
 	using ptr = std::shared_ptr<session>;
 	using result = util::result<bool, reason>;
+	using key_t = channel::channel::key_t;
+	using cond_t = channel::channel::cond_t;
+	using cb_t = channel::channel::cb_t;
+
+	friend class protocol; // to use send and error
 
 public:
 	union id
@@ -45,56 +50,75 @@ public:
 			uint16_t index_;
 		};
 
-		explicit id(uint32_t value = 0)
-			: value_(value)
-		{
-		}
-
-		id(uint16_t seq, uint16_t index)
-			: seq_(seq)
-			, index_(index)
-		{
-			check(is_valid());
-		}
+		explicit id(uint32_t value = 0);
+		id(uint16_t seq, uint16_t index);
 
 		/// seq_ > 0 
 		bool is_valid() const;
 
 		const uint32_t get_value() const;
-
 		const uint16_t get_seq() const;
-
 		const uint16_t get_index() const;
 
-		bool operator==(const id& rhs) const
-		{
-			return value_ == rhs.value_;
-		}
+		bool operator==(const id& rhs) const;
+		bool operator!=(const id& rhs) const;
+		bool operator < (const id& rhs) const;
+	};
 
-		bool operator!=(const id& rhs) const
-		{
-			return value_ != rhs.value_;
-		}
+	/// ref to session to use it for send, close callback
+	class ref
+	{
+	public:
+		ref(ptr ss);
 
-		bool operator < (const id& rhs) const
-		{
-			return value_ < rhs.value_;
-		}
+		result send(message::ptr m);
+
+		bool is_valid() const;
+
+		const std::string& get_remote_addr() const;
+
+		void close();
+
+	private:
+		ptr session_;
 	};
 
 public:
 	/// setup 
 	session(
 		const id& id,
-		service& svc,
 		tcp::socket&& soc,
-		bool accepted);
+		bool accepted,
+		const std::string& protocol);
 
 	/// clean up 
 	virtual ~session();
 
-	/// send a message to socket
-	result send(uint8_t* data, std::size_t len);
+	/// subscribe to a topic with a condition 
+	/**
+	* direct mode subscription only. message is posted immediately
+	*/
+	static key_t sub(
+		const message::topic_t& topic,
+		cond_t cond,
+		cb_t cb
+	);
+
+	/// subscribe to a topic without condition 
+	/**
+	* direct mode subscription only. message is posted immediately
+	*/
+	static key_t sub(
+		const message::topic_t& topic,
+		cb_t cb
+	);
+
+	/// unsubscribe 
+	static bool unsub(key_t key);
+
+
+	/// send through a protocol. call following send
+	result send(message::ptr m);
 
 	/// close socket (shutdown and close) 
 	void close();
@@ -104,6 +128,9 @@ public:
 	{
 		return socket_.is_open();
 	}
+
+	/// get internal id
+	const id& get_id() const;
 
 	/// local endpoint address
 	const std::string& get_local_addr() const
@@ -124,9 +151,6 @@ public:
 	}
 
 protected:
-	/// service 가져오기. 
-	service& get_svc();
-
 	// get last error (for debug / test purpose)
 	const asio::error_code& get_last_error() const
 	{
@@ -134,6 +158,12 @@ protected:
 	}
 
 private:
+	/// send a message to socket
+	result send(uint8_t* data, std::size_t len);
+
+	/// 만들어진 메세지를 channel로 전송
+	void post(message::ptr m);
+
 	/// 에러 처리 함수
 	void error(const asio::error_code& ec);
 
@@ -150,10 +180,10 @@ private:
 	void on_send_completed(asio::error_code& ec, std::size_t len);
 
 private:
-	using segs = send_buffer<32 * 1024>;	// TODO: size configurable
+	using segs = send_buffer<32 * 1024>;	
 	using seg = typename segs::seg;
 
-	service&						svc_;
+  	static channel::channel			channel_; /// channel to communicate msgs
 	tcp::socket						socket_;
 	id								id_;
 	bool							accepted_ = false;
@@ -163,7 +193,7 @@ private:
 	std::recursive_mutex			session_mutex_;
 	bool							recving_ = false;
 	bool							sending_ = false;
-	std::array<uint8_t, 32*1024>	recv_buf_;	// TODO: size configurable
+	std::array<uint8_t, 32*1024>	recv_buf_;	
 
 	std::recursive_mutex			send_segs_mutex_;
 	segs							send_segs_;
