@@ -1,30 +1,20 @@
 #include "stdafx.h"
 
-#include "session.h"
-#include "service.h"
-#include <lax/util/logger.h>
+#include <lax/net/session.hpp>
+#include <lax/net/service.hpp>
+#include <lax/util/logger.hpp>
 
 namespace lax
 {
 namespace net
 {
 
-session::session(service& svc, const id& id, tcp::socket&& soc, bool accepted)
-	: svc_(svc)
-	, socket_(std::move(soc))
+session::session(const id& id, tcp::socket&& soc, bool accepted, const std::string& protocol)
+	: socket_(std::move(soc))
 	, id_(id)
 	, accepted_(accepted)
 {
-	request_recv();
-}
 
-session::~session()
-{
-	close();
-}
-
-void session::created()
-{
 	// remote
 	{
 		std::ostringstream oss;
@@ -50,7 +40,30 @@ void session::created()
 		local_addr_, remote_addr_
 	);
 
-	on_created();
+	// TODO: create a protocol
+
+	request_recv();
+}
+
+session::~session()
+{
+	close();
+}
+
+session::result session::send(message::ptr m)
+{
+	// ask protocol to send
+}
+
+void session::close()
+{
+	if (socket_.is_open())
+	{
+		asio::error_code ec; 
+
+		socket_.shutdown(socket_.shutdown_both, ec);
+		socket_.close(ec);
+	}
 }
 
 session::result session::send(uint8_t* data, std::size_t len)
@@ -58,14 +71,15 @@ session::result session::send(uint8_t* data, std::size_t len)
 	return_if(!socket_.is_open(), result(false, reason::fail_socket_closed));
 
 	// in-place modification only at session level
+
+	// TDOO: tell protocol
+
 	auto rc = on_send(data, len);
 
 	if (rc)
 	{
 		// append 
 		{
-			// TODO: 최대 전송 버퍼 크기 설정 기능. 에러 처리 할 지 여부 설정
-
 			std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
 			send_segs_.append(data, len);
 		}
@@ -81,15 +95,9 @@ session::result session::send(uint8_t* data, std::size_t len)
 	return rc;
 }
 
-void session::close()
+void session::push(message::ptr m)
 {
-	if (socket_.is_open())
-	{
-		asio::error_code ec; 
-
-		socket_.shutdown(socket_.shutdown_both, ec);
-		socket_.close(ec);
-	}
+	channel_.push(m);
 }
 
 void session::error(const asio::error_code& ec)
@@ -109,8 +117,11 @@ void session::error(const asio::error_code& ec)
 
 	if (!sending_ && !recving_) // wait both if any 
 	{
+		// TODO: tell protocol 
+
 		(void)on_error(ec);
-		get_svc().error(get_id());
+
+		service::inst().error(get_id());
 	}
 }
 
@@ -220,6 +231,8 @@ void session::on_recv_completed(asio::error_code& ec, std::size_t len)
 	if (!ec)
 	{
 		check(len > 0);
+
+		// TODO: tell protocol 
 
 		auto rc = on_recv(recv_buf_.data(), len);
 

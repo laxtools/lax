@@ -45,8 +45,8 @@
 
 ## buffer 
 
- - send_buffer 
- - recv_buffer 
+ - resize_buffer (수신처리, 임시 버퍼)
+ - segment_buffer (송신용 분할 처리 버퍼)
 
  memcpy가 가장 느린 호출이 될 때까지 최적화를 했다. 
  check() 매크로 느리기 때문에 Shipping 빌드를 추가해야 한다. 

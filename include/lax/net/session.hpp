@@ -162,7 +162,7 @@ private:
 	result send(uint8_t* data, std::size_t len);
 
 	/// 만들어진 메세지를 channel로 전송
-	void post(message::ptr m);
+	void push(message::ptr m);
 
 	/// 에러 처리 함수
 	void error(const asio::error_code& ec);

@@ -20,7 +20,7 @@
  */
 #include "stdafx.h"
 
-#include "json.hpp"
+#include <lax/util/json.hpp>
 #include <cassert>
 #include <cmath>
 #include <cstdlib>

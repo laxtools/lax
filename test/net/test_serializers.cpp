@@ -16,6 +16,11 @@
 
 #include "monster_generated.h"
 
+// ----------------------------------------------------------------------
+// finished - bitsery is chosen after testing
+// ----------------------------------------------------------------------
+
+
 namespace
 {
 struct type {

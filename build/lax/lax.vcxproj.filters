@@ -38,16 +38,13 @@
     <Filter Include="net\protocol">
       <UniqueIdentifier>{cfb91204-5ff0-44ae-b71f-4549c241abd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\protocol\msgpack">
-      <UniqueIdentifier>{49b24c0c-8695-4f8f-b2a9-884e4e49a8af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="actor">
       <UniqueIdentifier>{6fd46d83-d3d5-4a3b-a0ff-c40ec61e406a}</UniqueIdentifier>
     </Filter>
     <Filter Include="net\util">
       <UniqueIdentifier>{37172915-18c0-4ffc-a75a-a87d5b6362bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\protocol\flat">
+    <Filter Include="net\protocol\bits">
       <UniqueIdentifier>{4fd52aad-3866-4b13-93f0-65cf91c98136}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -157,13 +154,7 @@
     <ClInclude Include="..\..\include\lax\util\string_util.hpp">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\buffer\recv_buffer.hpp">
-      <Filter>net\detail\buffer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\buffer\segment.hpp">
-      <Filter>net\detail\buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\buffer\send_buffer.hpp">
       <Filter>net\detail\buffer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\buffer\fixed_size_buffer_pool.hpp">
@@ -196,18 +187,6 @@
     <ClInclude Include="..\..\include\lax\net\reason.hpp">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_factory.hpp">
-      <Filter>net\protocol\msgpack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_message.hpp">
-      <Filter>net\protocol\msgpack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_protocol.hpp">
-      <Filter>net\protocol\msgpack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\msgpack\msgpack_creator.hpp">
-      <Filter>net\protocol\msgpack</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\util\logger.hpp">
       <Filter>util</Filter>
     </ClInclude>
@@ -237,6 +216,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\util\multi_object_pool.hpp">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\segment_buffer.hpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\resize_buffer.hpp">
+      <Filter>net\detail\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\buffer\resize_buffer_iterator.hpp">
+      <Filter>net\detail\buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -282,14 +270,17 @@
     <ClCompile Include="..\..\src\util\string_util.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\net\detail\buffer\recv_buffer.cpp">
-      <Filter>net\detail\buffer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\net\detail\buffer\multiple_size_buffer_pool.cpp">
       <Filter>net\detail\buffer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\util\logger.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\json.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\detail\buffer\resize_buffer.cpp">
+      <Filter>net\detail\buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -121,15 +121,11 @@ public:
 		return std::make_shared<buffer>( this, new uint8_t[get_length()], get_length() );
 	}
 
-	void release(const buffer::ptr block)
+	void release(const buffer::ptr& block)
 	{
-		expect(block->data());
-		expect(block->capacity() == length_);
 		return_if(!block->data());
 		return_if(block->capacity() != length_);
 
-		check(stat_.alloc_count > 0);
-		
 		--stat_.alloc_count;
 		++stat_.total_release_count;
 

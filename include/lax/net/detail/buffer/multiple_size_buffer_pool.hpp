@@ -55,6 +55,8 @@ public:
 
 	buffer::ptr alloc(std::size_t required_size)
 	{
+		// TODO: 최적화로 loop 대신 map을 사용하는 것 고려 
+
 		for (int i = 0; i < pools_.size(); ++i)
 		{
 			if (pools_[i]->get_length() >= required_size)
@@ -71,7 +73,7 @@ public:
 		return std::make_shared<buffer>(new uint8_t[required_size], required_size);
 	}
 
-	void release(buffer::ptr block)
+	void release(buffer::ptr& block)
 	{
 		if ( block->is_allocated_from_os() )
 		{ 

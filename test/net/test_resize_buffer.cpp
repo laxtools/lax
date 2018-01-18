@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <catch.hpp>
-#include <lax/net/detail/buffer/recv_buffer.hpp>
+#include <lax/net/detail/buffer/resize_buffer.hpp>
 #include <lax/util/simple_timer.hpp>
 #include <iostream>
 
@@ -10,7 +10,7 @@ TEST_CASE("recv buffer")
 {
 	SECTION("basic usage")
 	{
-		recv_buffer rb; 
+		resize_buffer rb; 
 
 		REQUIRE(rb.append("abc", 3) == 3);
 		REQUIRE(rb.data()[0] == 'a');
@@ -18,7 +18,7 @@ TEST_CASE("recv buffer")
 
 	SECTION("resizing")
 	{
-		recv_buffer rb(1024); 
+		resize_buffer rb(1024); 
 
 		for (int i = 0; i < 1024; ++i)
 		{
@@ -31,7 +31,7 @@ TEST_CASE("recv buffer")
 
 	SECTION("pop front")
 	{
-		recv_buffer rb; 
+		resize_buffer rb; 
 
 		REQUIRE(rb.append("abc", 3) == 3);
 		REQUIRE(rb.data()[0] == 'a');
@@ -61,7 +61,7 @@ TEST_CASE("recv buffer")
 
 		for (int i = 0; i < test_count; ++i)
 		{
-			recv_buffer rb(1024*8);
+			resize_buffer rb(1024*8);
 
 			for (int k = 0; k < 16; ++k)
 			{
@@ -79,5 +79,36 @@ TEST_CASE("recv buffer")
 		// - 아규먼트로 최초 길이 받고 8K로 설정 --> 0.6초
 		// - append를 줄이면 0.267 
 		// - send보다 약간 더 빠르다. 
+	}
+
+	SECTION("iteartor test")
+	{
+		resize_buffer rb; 
+
+		REQUIRE(rb.begin() == rb.end());
+		REQUIRE(rb.cbegin() == rb.cend());
+
+		rb.append("abc", 3);
+
+		REQUIRE(rb.size() == 3);
+
+		REQUIRE(*rb.begin() == 'a');
+		REQUIRE(rb.begin() != rb.end());
+
+		auto iter = rb.begin(); 
+
+		++iter;
+
+		REQUIRE(*iter == 'b');
+
+		iter = rb.begin(); 
+
+		iter += 2;
+
+		REQUIRE(*iter == 'c');
+
+		iter -= 2;
+
+		REQUIRE(*iter == 'a');
 	}
 }

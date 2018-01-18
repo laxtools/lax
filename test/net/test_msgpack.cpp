@@ -4,6 +4,11 @@
 #include <lax/util/simple_timer.hpp>
 #include <iostream>
 
+
+// ----------------------------------------------------------------------
+// dropped - instead of msgpack, bitsery is chosen
+// ----------------------------------------------------------------------
+
 namespace
 {
 

@@ -173,7 +173,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\test\net\monster_generated.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -183,9 +182,8 @@
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
     <ClCompile Include="..\..\test\net\test_bitsery.cpp" />
-    <ClCompile Include="..\..\test\net\test_msgpack.cpp" />
-    <ClCompile Include="..\..\test\net\test_recv_buffer.cpp" />
-    <ClCompile Include="..\..\test\net\test_send_buffer.cpp" />
+    <ClCompile Include="..\..\test\net\test_resize_buffer.cpp" />
+    <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="..\..\test\util\test_logger.cpp" />

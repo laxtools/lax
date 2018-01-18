@@ -28,9 +28,6 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\test\net\monster_generated.h">
-      <Filter>net</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -57,20 +54,17 @@
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp">
       <Filter>channel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\net\test_send_buffer.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_recv_buffer.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\test\util\test_string_util.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\net\test_msgpack.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\test\util\test_logger.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\net\test_segment_buffer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\net\test_resize_buffer.cpp">
+      <Filter>net</Filter>
     </ClCompile>
     <ClCompile Include="..\..\test\net\test_bitsery.cpp">
       <Filter>net</Filter>

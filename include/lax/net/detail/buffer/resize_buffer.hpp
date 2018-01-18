@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <lax/net/detail/buffer/multiple_size_buffer_pool.hpp>
+#include <lax/net/detail/buffer/resize_buffer_iterator.hpp>
 #include <lax/util/macros.hpp>
 
 #include <algorithm>
@@ -17,13 +18,17 @@ namespace net
  * - needs to use a lock if used from multiple threads 
  * - if 1-recv is used, then lock is not required
  */
-class recv_buffer 
+class resize_buffer 
 {
 public: 
 	using pool = multiple_size_buffer_pool;
 
 public: 
-	recv_buffer(std::size_t initial_size = 8*1024)
+	using value_type = uint8_t;
+	using iterator = resize_buffer_iterator<value_type>;
+	using const_iterator = resize_buffer_iterator<const value_type>;
+
+	resize_buffer(std::size_t initial_size = 8*1024)
 		: initial_size_(initial_size)
 	{
 		expect(initial_size_ > 0);
@@ -31,7 +36,7 @@ public:
 		expect(!buf_);
 	}
 
-	~recv_buffer()
+	~resize_buffer()
 	{
 		if (buf_)
 		{
@@ -77,9 +82,41 @@ public:
 		return pos_;
 	}
 
+	std::size_t capacity() const
+	{
+		return_if(!buf_, 0);
+		return buf_->capacity();
+	}
+
+	/// change the size of buffer. position is changed.
+	void resize(const std::size_t new_size)
+	{
+		return_if(new_size <= capacity());
+
+		reserve(new_size - capacity());
+
+		ensure(buf_);
+
+		pos_ = capacity();
+
+		// memset(buf_->data(), 0, size());
+	}
+
 	const uint8_t* data() const
 	{
+		return_if(!buf_, nullptr);
 		return buf_->data();
+	}
+
+	const uint8_t& at(std::size_t pos) const
+	{
+		check(buf_);
+		return_if(!buf_, 0); 
+
+		check(pos < size());
+		return_if(pos >= size(), 0);
+		
+		return buf_->data()[pos];
 	}
 
 	/// 세그먼트 앞으로 돌린다.
@@ -95,6 +132,12 @@ public:
 	 */
 	void pop_front(std::size_t count)
 	{
+		check(buf_);
+		return_if(!buf_);
+
+		check(count > 0);
+		return_if(count == 0);
+
 		count = std::min(count, size());
 
 		::memmove_s(
@@ -105,9 +148,32 @@ public:
 		pos_ -= count;
 	}
 
-	std::size_t capacity() const
-	{
-		return buf_->capacity();
+	iterator begin() 
+	{ 
+		check(buf_);
+		return_if(!buf_, 0);
+		return iterator(buf_->data()); 
+	}
+
+	iterator end() 
+	{ 
+		check(buf_);
+		return_if(!buf_, 0);
+		return iterator(&buf_->data()[pos_]); 
+	}
+
+	const_iterator cbegin() 
+	{ 
+		check(buf_);
+		return_if(!buf_, 0);
+		return const_iterator(buf_->data()); 
+	}
+
+	const_iterator cend() 
+	{ 
+		check(buf_);
+		return_if(!buf_, 0);
+		return const_iterator(&buf_->data()[pos_]); 
 	}
 
 	/// for test and debugging
@@ -138,6 +204,9 @@ private:
 				buf_ = nbuf;
 			}
 		}
+
+		ensure(buf_);
+		ensure(capacity() >= len);
 	}
 
 private: 

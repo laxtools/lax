@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <catch.hpp>
-#include <lax/net/detail/buffer/send_buffer.hpp>
+#include <lax/net/detail/buffer/segment_buffer.hpp>
 #include <lax/util/simple_timer.hpp>
 #include <iostream>
 
@@ -10,7 +10,7 @@ TEST_CASE("send buffer")
 {
 	SECTION("basic case")
 	{
-		send_buffer<7> sb; 
+		segment_buffer<7> sb; 
 
 		REQUIRE(sb.append("abc", 3) == 3);
 		REQUIRE(sb.append("cde", 3) == 3);
@@ -19,6 +19,9 @@ TEST_CASE("send buffer")
 		REQUIRE(sb.size() == 9);
 		REQUIRE(sb.get_write_seg() == 1);
 		REQUIRE(sb.get_data_seg() == 1);
+
+		REQUIRE(sb.at(1) == 'b');
+		REQUIRE(sb.at(8) == 'h');
 
 		for (int i = 0; i < 128; ++i)
 		{
@@ -29,11 +32,15 @@ TEST_CASE("send buffer")
 
 	SECTION("edge cases")
 	{
-		send_buffer<7> sb; 
+		segment_buffer<7> sb; 
 
 		REQUIRE(sb.append("abcdefg", 7) == 7);
 		REQUIRE(sb.get_write_seg() == 1);
 		REQUIRE(sb.get_data_seg() == 0);
+
+		REQUIRE(sb.at(0) == 'a');
+		REQUIRE(sb.at(1) == 'b');
+		REQUIRE(sb.at(6) == 'g');
 
 		auto lst = sb.transfer();
 
@@ -49,11 +56,11 @@ TEST_CASE("send buffer")
 	{
 		constexpr int test_count = 10000;
 
-		std::vector<send_buffer<1024 * 8>> sbs;
+		std::vector<segment_buffer<1024 * 8>> sbs;
 
 		for (int i = 0; i < test_count; ++i)
 		{
-			sbs.emplace_back(send_buffer<1024 * 8>());
+			sbs.emplace_back(segment_buffer<1024 * 8>());
 		}
 
 		lax::util::simple_timer timer;

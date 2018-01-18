@@ -17,14 +17,14 @@ namespace net
  * - if 1-send per socket is used, then it's not required to use a lock
  */
 template <std::size_t Length>
-class send_buffer
+class segment_buffer
 {
 public: 
 	using seg = segment<Length>;
 	using pool = util::object_pool<seg>;
 
 public: 
-	send_buffer() 
+	segment_buffer() 
 	{
 		expect(Length > 0);
 		expect(pos_ == 0);
@@ -33,7 +33,7 @@ public:
 		segs_.reserve(256);
 	}
 
-	~send_buffer()
+	~segment_buffer()
 	{
 		cleanup();
 	}
@@ -90,6 +90,17 @@ public:
 	std::size_t size() const
 	{
 		return pos_;
+	}
+
+	/// 값 접근. 주로 테스트용
+	const uint8_t& at(std::size_t pos) const
+	{
+		return_if(segs_.empty(), 0);
+
+		auto seg_index = pos / Length;
+		auto offset = pos % Length;
+
+		return segs_[seg_index]->data()[offset];
 	}
 
 	/// 현재 쓰려고 하는 세그먼트 
@@ -187,7 +198,7 @@ private:
 
  // per class pool instance
 template <std::size_t Length>
-typename send_buffer<Length>::pool send_buffer<Length>::pool_;
+typename segment_buffer<Length>::pool segment_buffer<Length>::pool_;
 
 } // net 
 } // lax

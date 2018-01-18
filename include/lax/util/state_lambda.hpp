@@ -1,7 +1,6 @@
 ﻿#pragma once 
 
-#include "state.h"
-
+#include <lax/util/state.hpp>
 #include <functional>
 
 namespace lax
@@ -26,22 +25,25 @@ public:
 	{
 	}
 
-	action& set_enter(action act)
+	state_lambda& set_enter(action act)
 	{
+		check(!enter_);
 		enter_ = act;
-		return enter_;
+		return *this;
 	}
 
-	action& set_execute(action act)
+	state_lambda& set_execute(action act)
 	{
+		check(!exec_);
 		exec_ = act;
-		return exec_;
+		return *this;
 	}
 
-	action& set_exit(action act)
+	state_lambda& set_exit(action act)
 	{
+		check(!exit_);
 		exit_ = act;
-		return exit_;
+		return *this;
 	}
 
 private:
