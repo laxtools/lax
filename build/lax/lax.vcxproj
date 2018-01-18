@@ -83,13 +83,13 @@
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>

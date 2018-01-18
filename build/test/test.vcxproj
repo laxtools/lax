@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
@@ -94,7 +94,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
@@ -182,10 +182,10 @@
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp" />
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
+    <ClCompile Include="..\..\test\net\test_bitsery.cpp" />
     <ClCompile Include="..\..\test\net\test_msgpack.cpp" />
     <ClCompile Include="..\..\test\net\test_recv_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_send_buffer.cpp" />
-    <ClCompile Include="..\..\test\net\test_serializers.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="..\..\test\util\test_logger.cpp" />
@@ -197,6 +197,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\test\net\construction.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

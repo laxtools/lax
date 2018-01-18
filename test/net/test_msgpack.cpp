@@ -97,7 +97,7 @@ TEST_CASE("msgpack protocol")
 			vec.back().vec_.push_back(3);
 		}
 
-		constexpr int test_count = 1000000;
+		constexpr int test_count = 1;
 
 		lax::util::simple_timer timer;
 
@@ -132,45 +132,12 @@ TEST_CASE("msgpack protocol")
 		// - flatbuffers가 코드는 깔끔. 
 	}
 
-	SECTION("msgpack performance 2")
+	SECTION("external memory plugin")
 	{
-		// msgpack의 C++ 구현 내부를 본다. 
-		// 얼마나 빠른 지, 개선할 점은 없는 지 살펴본다. 
+		//
+		// zone 메모리 할당 / 해제로 인해 msgpack이 느리다. 
+		// 이를 개선할 수 있는 방법은 없을까? 
+		// 
 
-		constexpr int vec_size = 1;
-
-		std::vector<myclass> vec;
-
-		for (int i = 0; i < 1; ++i)
-		{
-			vec.emplace_back(myclass());
-			vec.back().str_ = "hello world!";
-			vec.back().vec_.push_back(1);
-			vec.back().vec_.push_back(2);
-			vec.back().vec_.push_back(3);
-		}
-
-		constexpr int test_count = 1;
-
-		lax::util::simple_timer timer;
-
-		for (int i = 0; i < test_count; ++i)
-		{
-			msgpack::sbuffer sbuf;
-			msgpack::pack(sbuf, vec);
-
-			msgpack::object_handle oh = msgpack::unpack(sbuf.data(), sbuf.size());
-
-			msgpack::object obj = oh.get();
-
-			// you can convert object to myclass directly
-			std::vector<myclass> rvec;
-			obj.convert(rvec);
-		}
-
-		std::cout << "msgpack: " << test_count << " elapsed: " << timer.elapsed() << std::endl;
-
-		// 오브젝트의 크기 보다는 개별 오브젝트의 개수에 따라 차이가 많이 난다. 
-		// - 4개 오브젝트. 64개의 1백만번 pack / unpack에 0.697 초 걸림
 	}
 }
