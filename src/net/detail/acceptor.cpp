@@ -1,20 +1,19 @@
 #include "stdafx.h"
 
-#include <lax/net/detail/acceptor.h>
-#include <lax/net/detail/service_impl.h>
+#include <lax/net/detail/acceptor.hpp>
+#include <lax/net/detail/service_impl.hpp>
 
 namespace lax
 {
 namespace net
 {
 
-acceptor::acceptor(service* svc, uint16_t id, service::creator& creator, const std::string& addr)
-	: svc_(svc)
-	, id_(id)
-	, creator_(creator)
+acceptor::acceptor(uint16_t id, const std::string& protocol, const std::string& addr)
+	: id_(id)
 	, addr_(addr)
-	, socket_(svc_->impl()->get_ios())
-	, acceptor_(svc_->impl()->get_ios())
+	, protocol_(protocol)
+	, socket_(service::inst().impl().get_ios())
+	, acceptor_(service::inst().impl().get_ios())
 {
 }
 
@@ -35,7 +34,7 @@ service::result acceptor::listen()
 	}
 	catch (asio::system_error& se)
 	{
-		util::log_helper::get()->error(
+		util::log()->error(
 			"acceptor failed to open. endpoint: {0}, reason: {1}", 
 			addr_.get_raw(),  
 			se.what()
@@ -50,7 +49,7 @@ service::result acceptor::listen()
 	}
 	catch (asio::system_error& se)
 	{
-		util::log_helper::get()->error(
+		util::log()->error(
 			"acceptor failed to bind. endpoint: {0}, reason: {1}",
 			addr_.get_raw(),
 			se.what()
@@ -65,7 +64,7 @@ service::result acceptor::listen()
 	}
 	catch (asio::system_error& se)
 	{
-		util::log_helper::get()->error(
+		util::log()->error(
 			"acceptor failed to listen. endpoint: {0}, reason: {1}",
 			addr_.get_raw(),
 			se.what()
@@ -77,11 +76,6 @@ service::result acceptor::listen()
 	do_accept();
 
 	return service::result(true, reason::success);
-}
-
-session::ptr acceptor::create(const session::id& id, tcp::socket&& soc)
-{
-	return creator_(*svc_, id, std::move(soc), true);
 }
 
 void acceptor::do_accept()
@@ -98,17 +92,17 @@ void acceptor::on_accepted(const asio::error_code& ec)
 {
 	if (!ec) 
 	{
-		svc_->impl()->on_accepted(id_, std::move(socket_));
+		service::inst().impl().on_accepted(id_, std::move(socket_));
 	}
 	else
 	{
-		util::log_helper::get()->error(
+		util::log()->error(
 			"acceptor failed to accept. endpoint: {0}, reason: {1}",
 			addr_.get_raw(),
 			ec.message()
 		);
 
-		svc_->impl()->on_accept_failed(id_);
+		service::inst().impl().on_accept_failed(id_, ec);
 	}
 
 	do_accept();

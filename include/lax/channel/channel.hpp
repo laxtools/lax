@@ -56,16 +56,16 @@ public:
 	struct config
 	{
 		/// limit post count in a post loop
-		std::size_t loop_post_limit = 2048;					
+		std::size_t loop_post_limit = 2048;
 
 		/// 단일 메세지 전파 실행 시간이 이 시간을 넘을 경우 로그 남김
-		float time_to_log_when_post_time_over = 0.02f;		
+		float time_to_log_when_post_time_over = 0.02f;
 
 		/// post() 루프의 전체 전파 실행 시간이 이 시간을 넘을 경우 로그 남김
-		float time_to_log_when_post_loop_timeover = 0.2f;	
+		float time_to_log_when_post_loop_timeover = 0.2f;
 
 		/// shared lock 사용 여부 지정
-		bool use_lock = true;							
+		bool use_lock = true;
 
 		/// 토픽에 등록된 콜백이 없을 경우 로그 남김
 		bool log_no_sub_when_post = false;
@@ -90,7 +90,7 @@ public:
 
 public:
 	/// create a channel and register it to a map
-	/** 
+	/**
 	 * @return 생성된 채널. 중복되면 오류로 channel::ptr() 리턴.
 	 */
 	static ptr create(const key_t& key, const config& cfg);
@@ -102,6 +102,11 @@ public:
 	static bool destroy(const key_t& key);
 
 public:
+	channel(const key_t& key)
+		: channel(key, config())
+	{
+	}
+
 	/// 생성자 
 	/** 
 	 * key와 구성 정보로 생성

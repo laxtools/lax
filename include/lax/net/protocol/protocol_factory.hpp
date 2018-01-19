@@ -1,19 +1,35 @@
 #pragma once 
 
-#include <lax/net/session.hpp>
-#include <lax/net/protocol.hpp>
+#include <lax/net/protocol/protocol.hpp>
+
+#include <functional>
+#include <map>
 
 namespace lax
 {
 namespace net
 {
 
-class protocol_creator
+class protocol_factory
 {
 public: 
-	using ptr = std::shared_ptr<protocol_creator>;
+	using creator = std::function<protocol::ptr()>;
 
-	virtual protocol::ptr create(session::ptr ss) = 0;
+	static protocol_factory& inst();
+
+	/// add a creator for a protocol
+	void add(const std::string& name, creator c);
+
+	/// check
+	bool has(const std::string& name);
+
+	/// create a protocol
+	protocol::ptr create(const std::string& name) const;
+
+private: 
+	using map = std::map<const std::string, creator>;
+
+	map map_;
 };
 
 } // net 

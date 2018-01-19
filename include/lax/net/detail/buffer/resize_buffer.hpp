@@ -42,6 +42,8 @@ public:
 		{
 			pool_.release(buf_);
 		}
+
+		ensure(!buf_);
 	}
 
 	/// len만큼 쓴다. seg 부족하면 풀에서 할당

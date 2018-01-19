@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "addr.h"
+#include <lax/net/addr.hpp>
 
 namespace lax
 {

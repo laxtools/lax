@@ -55,7 +55,7 @@ TEST_CASE("recv buffer")
 
 	SECTION("simple performance")
 	{
-		constexpr int test_count = 10000;
+		constexpr int test_count = 1000;
 
 		lax::util::simple_timer timer;
 

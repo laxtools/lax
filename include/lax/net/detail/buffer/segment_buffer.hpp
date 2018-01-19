@@ -93,8 +93,12 @@ public:
 	}
 
 	/// 값 접근. 주로 테스트용
-	const uint8_t& at(std::size_t pos) const
+	const uint8_t at(std::size_t pos) const
 	{
+		expect(pos < pos_);
+		return_if(pos >= pos_, 0);
+
+		check(!segs_.empty());
 		return_if(segs_.empty(), 0);
 
 		auto seg_index = pos / Length;

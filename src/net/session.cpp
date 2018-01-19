@@ -2,45 +2,58 @@
 
 #include <lax/net/session.hpp>
 #include <lax/net/service.hpp>
+#include <lax/net/protocol/protocol_factory.hpp>
 #include <lax/util/logger.hpp>
+#include <lax/util/exception.hpp>
+#include <spdlog/fmt/fmt.h>
 
 namespace lax
 {
 namespace net
 {
 
+channel::channel session::channel_("session");
+
 session::session(const id& id, tcp::socket&& soc, bool accepted, const std::string& protocol)
 	: socket_(std::move(soc))
 	, id_(id)
 	, accepted_(accepted)
 {
-
-	// remote
-	{
-		std::ostringstream oss;
-
-		oss << socket_.remote_endpoint().address().to_string() 
-			<< ":" << socket_.remote_endpoint().port();
-
-		remote_addr_ = oss.str();
-	}
-
-	// local
-	{
-		std::ostringstream oss;
-
-		oss << socket_.local_endpoint().address().to_string() 
-			<< ":" << socket_.local_endpoint().port();
-
-		local_addr_ = oss.str();
-	}
-
-	util::log()->info(
-		"session created. local: {0} remote: {1}", 
-		local_addr_, remote_addr_
+	remote_addr_ = fmt::format(
+		"{0}:{1}",
+		socket_.remote_endpoint().address().to_string(),
+		socket_.remote_endpoint().port()
 	);
 
-	// TODO: create a protocol
+	local_addr_ = fmt::format(
+		"{0}:{1}",
+		socket_.local_endpoint().address().to_string(),
+		socket_.local_endpoint().port()
+	);
+
+	desc_ = fmt::format(
+		"session/{0}/{1}", 
+		get_id().get_index(), 
+		remote_addr_
+	);
+
+	util::log()->info(
+		"{2}. local: {0} remote: {1}",
+		local_addr_, 
+		remote_addr_, 
+		accepted_ ? "accepted" : "connected"
+	);
+
+	protocol_ = protocol_factory::inst().create(protocol);
+
+	if (!protocol_)
+	{
+		THROW("fail to create protocol");
+
+		return;
+	}
+
+	protocol_->bind(this);
 
 	request_recv();
 }
@@ -48,11 +61,40 @@ session::session(const id& id, tcp::socket&& soc, bool accepted, const std::stri
 session::~session()
 {
 	close();
+
+	util::log()->info("bye! {0}", get_desc());
+}
+
+session::key_t session::sub(
+	const message::topic_t& topic,
+	cond_t cond,
+	cb_t cb
+)
+{
+	return channel_.subscribe(topic, cond, cb, channel::sub::mode::immediate);
+}
+
+session::key_t session::sub(
+	const message::topic_t& topic,
+	cb_t cb
+)
+{
+	return channel_.subscribe(topic, cb, channel::sub::mode::immediate);
+}
+
+bool session::unsub(key_t key)
+{
+	return channel_.unsubscribe(key);
+}
+
+void session::push(message::ptr m)
+{
+	channel_.push(m);
 }
 
 session::result session::send(message::ptr m)
 {
-	// ask protocol to send
+	return protocol_->send(m);
 }
 
 void session::close()
@@ -70,34 +112,13 @@ session::result session::send(uint8_t* data, std::size_t len)
 {
 	return_if(!socket_.is_open(), result(false, reason::fail_socket_closed));
 
-	// in-place modification only at session level
-
-	// TDOO: tell protocol
-
-	auto rc = on_send(data, len);
-
-	if (rc)
+	// append 
 	{
-		// append 
-		{
-			std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
-			send_segs_.append(data, len);
-		}
-
-		rc = request_send();
-	}
-	else
-	{
-		// just close here. iocp callback is used to handle error 
-		close();
+		std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
+		send_buffer_.append(data, len);
 	}
 
-	return rc;
-}
-
-void session::push(message::ptr m)
-{
-	channel_.push(m);
+	return request_send();
 }
 
 void session::error(const asio::error_code& ec)
@@ -108,7 +129,6 @@ void session::error(const asio::error_code& ec)
 		ec.message()
 	);
 
-	// TODO: make it configurable
 	util::log()->flush();
 
 	last_error_ = ec;
@@ -117,9 +137,7 @@ void session::error(const asio::error_code& ec)
 
 	if (!sending_ && !recving_) // wait both if any 
 	{
-		// TODO: tell protocol 
-
-		(void)on_error(ec);
+		(void)protocol_->on_error(ec);
 
 		service::inst().error(get_id());
 	}
@@ -170,7 +188,7 @@ session::result session::request_send()
 		{
 			std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
 
-			if (send_segs_.size() == 0)
+			if (send_buffer_.size() == 0)
 			{
 				return result(true, reason::success_session_no_data_to_send);
 			}
@@ -183,7 +201,7 @@ session::result session::request_send()
 	{
 		std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
 
-		check(send_segs_.size() > 0);
+		check(send_buffer_.size() > 0);
 		check(sending_segs_.empty());
 		check(sending_bufs_.empty());
 
@@ -191,10 +209,10 @@ session::result session::request_send()
 		sending_segs_.clear();
 
 		// rvo and move will be fine
-		sending_segs_ = send_segs_.transfer();
+		sending_segs_ = send_buffer_.transfer();
 	}
 
-	check(send_segs_.size() == 0);
+	check(send_buffer_.size() == 0);
 	check(!sending_segs_.empty());
 
 	send_request_size_ = 0;
@@ -232,9 +250,7 @@ void session::on_recv_completed(asio::error_code& ec, std::size_t len)
 	{
 		check(len > 0);
 
-		// TODO: tell protocol 
-
-		auto rc = on_recv(recv_buf_.data(), len);
+		auto rc = protocol_->on_recv(recv_buf_.data(), len);
 
 		if (rc)
 		{
@@ -248,7 +264,6 @@ void session::on_recv_completed(asio::error_code& ec, std::size_t len)
 				rc.value
 			);
 
-			// todo: 적절한 에러 코드 생성
 			error(ec);
 		}
 	}
@@ -270,7 +285,7 @@ void session::on_send_completed(asio::error_code& ec, std::size_t len)
 			check(send_request_size_ == len);
 		}
 
-		send_segs_.release(sending_segs_);
+		send_buffer_.release(sending_segs_);
 		sending_segs_.clear();
 		sending_bufs_.clear();
 		send_request_size_ = 0;

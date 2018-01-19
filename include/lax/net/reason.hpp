@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace lax
 {
 namespace net
@@ -22,30 +24,21 @@ enum reason
 	fail_acceptor_bind, 
 	fail_acceptor_listen,
 
+	// session
 	fail_session_already_recving, 
 	success_session_already_sending,
 	success_session_no_data_to_send,
+	fail_invalid_session,
 
 	fail_socket_closed, 
 
-	// net::json
-	fail_json_parse_error,
-	fail_json_build_error_key_not_found, 
-	fail_json_build_error_msg_not_found, 
-	fail_json_parse_error_key_not_found, 
-	fail_json_parse_error_msg_not_found, 
-	fail_session_buffer_overflow,
+	// protocol 
+	fail_protocol_not_added, 
 
-	// msg_pack
-	fail_msg_pack_invalid_type,
-	fail_msg_pack_domain_type_not_found,
-	fail_msg_pack_duplicate_add, 
-	fail_msg_pack_serialize, 
-	fail_msg_pack_deserialize, 
-	fail_msg_pack_decryption, 
-	fail_msg_pack_encryption, 
-	fail_msg_pack_crc32_invalid, 
 };
+
+/// get description from reason
+static std::string get_reason_desc(reason r);
 
 } // net 
 } // lax

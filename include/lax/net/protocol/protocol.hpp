@@ -1,13 +1,19 @@
 #pragma once 
 
 #include <lax/net/message.hpp>
-#include <lax/net/session.hpp>
+#include <lax/net/reason.hpp>
 #include <lax/util/result.hpp>
+#include <asio.hpp>
 
 namespace lax
 {
 namespace net
 {
+
+/// forward decl
+class session;
+using wptr = session*;
+
 
 /// abstract base class for protocols
 class protocol
@@ -20,33 +26,42 @@ public:
 
 public:
 	/// constructor
-	protocol(session::ptr ss);
+	protocol();
 
 	/// destructor
 	virtual ~protocol();
 
-	/// used to log remote:sid:socket
-	virtual const std::string& get_desc() const;
+	/// bind a session after creation
+	bool bind(wptr ss);
+
+	/// idx:addr
+	const std::string& get_desc() const
+	{
+		return desc_;
+	}
 
 	/// send to a session after processing message
 	virtual result send(message::ptr m) = 0; 
 
-private:
-	virtual void on_accepted() = 0;
-
-	virtual void on_connected() = 0;
+protected:
+	/// bind to session
+	virtual void on_bind() = 0; 
 
 	/// session calls this when received data
-	virtual void on_recv(uint8_t* bytes, std::size_t len) = 0;
+	virtual result on_recv(uint8_t* bytes, std::size_t len) = 0;
 
 	/// session calls this when sent data 
 	virtual void on_send(std::size_t len) = 0;
 
 	/// session calls this when error ocurrs
-	virtual void on_error() = 0;
+	virtual void on_error(const asio::error_code& ec) = 0;
+
+protected:
+	wptr& get_session() { return session_;  }
 
 private:
-	session::ptr			session_; /// session
+	wptr			session_ = nullptr;
+	std::string		desc_;
 };
 
 } // net 

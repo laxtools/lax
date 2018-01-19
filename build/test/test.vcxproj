@@ -182,8 +182,10 @@
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
     <ClCompile Include="..\..\test\net\test_bitsery.cpp" />
+    <ClCompile Include="..\..\test\net\test_bits_protocol.cpp" />
     <ClCompile Include="..\..\test\net\test_resize_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
+    <ClCompile Include="..\..\test\net\test_service.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="..\..\test\util\test_logger.cpp" />

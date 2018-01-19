@@ -10,19 +10,16 @@ namespace lax
 namespace net
 {
 
-class message : public channel::message
+struct message : public channel::message
 {
-public:
-	message()
+	using sid = uint32_t;
+
+	sid src = 0;	/// source session id
+
+	message(const topic_t& topic)
+		: channel::message(topic)
 	{
 	}
-
-	virtual ~message()
-	{
-	}
-
-private:
-
 };
 
 } // net

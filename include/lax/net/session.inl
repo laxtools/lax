@@ -6,19 +6,13 @@ namespace lax {
 namespace net {
 
 inline
-session::id session::get_id() const
+const session::id& session::get_id() const
 {
 	return id_;
 }
 
 inline
-service& session::get_svc()
-{
-	return svc_;
-}
-
-inline
-session::id::id(uint32_t value = 0)
+session::id::id(uint32_t value)
 	: value_(value)
 {
 }
@@ -74,7 +68,7 @@ bool session::id::operator < (const id& rhs) const
 }
 
 inline
-session::ref(session::ptr ss)
+session::ref::ref(session::ptr ss)
 	: session_(ss)
 {
 	check(session_);
@@ -83,21 +77,24 @@ session::ref(session::ptr ss)
 inline
 session::result session::ref::send(message::ptr m)
 {
-	return_if(!is_valid(), );
+	return_if(
+		!is_valid(), 
+		session::result(false, reason::fail_invalid_session)
+	);
 
-	return session->send(m);
+	return session_->send(m);
 }
 
 inline
 bool session::ref::is_valid() const
 {
-	return !!session && session->is_open();
+	return !!session_ && session_->is_open();
 }
 
 inline
-const std::string& get_remote_addr() const
+const std::string& session::ref::get_desc() const
 {
-	return session_->get_remote_addr();
+	return session_->get_desc();
 }
 
 inline

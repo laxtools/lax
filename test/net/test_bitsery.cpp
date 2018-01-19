@@ -268,7 +268,7 @@ TEST_CASE("bitsery test")
 
 			SECTION("performance")
 			{
-				constexpr int test_count = 100000;
+				constexpr int test_count = 1000;
 
 				lax::util::simple_timer timer;
 

@@ -83,13 +83,13 @@
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\lib\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
@@ -176,6 +176,7 @@
     <ClInclude Include="..\..\include\lax\db\nanodbc.h" />
     <ClInclude Include="..\..\include\lax\db\query.hpp" />
     <ClInclude Include="..\..\include\lax\db\query_scheduler.hpp" />
+    <ClInclude Include="..\..\include\lax\net\addr.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\acceptor.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\fixed_size_buffer_pool.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.hpp" />
@@ -187,8 +188,14 @@
     <ClInclude Include="..\..\include\lax\net\detail\service_impl.hpp" />
     <ClInclude Include="..\..\include\lax\net\exception.hpp" />
     <ClInclude Include="..\..\include\lax\net\message.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_message.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_message_factory.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_protocol.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_util.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\protocol.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\protocol_factory.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\sys\sys_messages.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\topics.hpp" />
     <ClInclude Include="..\..\include\lax\net\reason.hpp" />
     <ClInclude Include="..\..\include\lax\net\service.hpp" />
     <ClInclude Include="..\..\include\lax\net\session.hpp" />
@@ -198,6 +205,7 @@
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
     <ClInclude Include="..\..\include\lax\util\config.hpp" />
+    <ClInclude Include="..\..\include\lax\util\exception.hpp" />
     <ClInclude Include="..\..\include\lax\util\json.hpp" />
     <ClInclude Include="..\..\include\lax\util\logger.hpp" />
     <ClInclude Include="..\..\include\lax\util\macros.hpp" />
@@ -220,8 +228,19 @@
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />
     <ClCompile Include="..\..\src\db\nanodbc.cpp" />
+    <ClCompile Include="..\..\src\net\addr.cpp" />
+    <ClCompile Include="..\..\src\net\detail\acceptor.cpp" />
     <ClCompile Include="..\..\src\net\detail\buffer\multiple_size_buffer_pool.cpp" />
     <ClCompile Include="..\..\src\net\detail\buffer\resize_buffer.cpp" />
+    <ClCompile Include="..\..\src\net\detail\connector.cpp" />
+    <ClCompile Include="..\..\src\net\detail\service_impl.cpp" />
+    <ClCompile Include="..\..\src\net\protocol\bits\bits_message_factory.cpp" />
+    <ClCompile Include="..\..\src\net\protocol\bits\bits_protocol.cpp" />
+    <ClCompile Include="..\..\src\net\protocol\protocol.cpp" />
+    <ClCompile Include="..\..\src\net\protocol\protocol_factory.cpp" />
+    <ClCompile Include="..\..\src\net\reason.cpp" />
+    <ClCompile Include="..\..\src\net\service.cpp" />
+    <ClCompile Include="..\..\src\net\session.cpp" />
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />

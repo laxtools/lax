@@ -47,6 +47,12 @@
     <Filter Include="net\protocol\bits">
       <UniqueIdentifier>{4fd52aad-3866-4b13-93f0-65cf91c98136}</UniqueIdentifier>
     </Filter>
+    <Filter Include="net\protocol\util">
+      <UniqueIdentifier>{345d838a-a005-42f7-b74e-b0b9df94ceb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\protocol\sys">
+      <UniqueIdentifier>{994af1de-7bb5-4460-b2e0-fbd121fb4679}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -226,6 +232,30 @@
     <ClInclude Include="..\..\include\lax\net\detail\buffer\resize_buffer_iterator.hpp">
       <Filter>net\detail\buffer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\exception.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_protocol.hpp">
+      <Filter>net\protocol\bits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_message.hpp">
+      <Filter>net\protocol\bits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\topics.hpp">
+      <Filter>net\protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_message_factory.hpp">
+      <Filter>net\protocol\bits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_util.hpp">
+      <Filter>net\protocol\bits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\sys\sys_messages.hpp">
+      <Filter>net\protocol\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\addr.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -281,6 +311,39 @@
     </ClCompile>
     <ClCompile Include="..\..\src\net\detail\buffer\resize_buffer.cpp">
       <Filter>net\detail\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\service.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\session.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\protocol_factory.cpp">
+      <Filter>net\protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\protocol.cpp">
+      <Filter>net\protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\reason.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\detail\service_impl.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\bits\bits_message_factory.cpp">
+      <Filter>net\protocol\bits</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\bits\bits_protocol.cpp">
+      <Filter>net\protocol\bits</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\addr.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\detail\connector.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\detail\acceptor.cpp">
+      <Filter>net\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

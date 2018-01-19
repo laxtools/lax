@@ -18,18 +18,13 @@ public:
 	using channel_key_t = std::string;
 
 public:
-	message()
+	message(const topic_t& topic = topic_t(0))
+		: topic_(topic)
 	{
 	}
 
 	virtual ~message()
 	{
-	}
-
-	const topic_t& set_topic(const topic_t& topic)
-	{
-		topic_ = topic;
-		return topic_;
 	}
 
 	const topic_t& get_topic() const
@@ -42,7 +37,13 @@ public:
 		return topic.is_valid();
 	}
 
-private:
+	// for test 
+	void set_topic(const topic_t& tp)
+	{
+		topic_ = tp;
+	}
+
+protected:
 	topic_t topic_; // invalid
 };
 

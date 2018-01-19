@@ -1,56 +1,71 @@
 #include "stdafx.h"
 
-#include "service.h"
-#include "detail/service_impl.h"
+#include <lax/net/service.hpp>
+#include <lax/net/detail/service_impl.hpp>
+#include <chrono>
 
 namespace lax
 {
 namespace net
 {
 
-service::service(app* ap)
-	: impl_(new service_impl(ap, *this))
+service::config service::cfg;
+
+service& service::inst()
+{
+	static service inst_;
+
+	return inst_;
+}
+
+service::service()
+	: impl_(new service_impl(*this))
 {
 }
 
 service::~service()
 {
-	impl_->stop(); // stop and wait
+	impl_->fini(); // stop and wait
 }
 
-service::result service::listen(const std::string& addr, creator& c)
+bool service::init()
 {
-	return impl_->listen(addr, c);
+	return impl_->init();
 }
 
-service::result service::connect(const std::string& addr, creator& c)
+void service::fini()
 {
-	return impl_->connect(addr, c);
+	impl_->fini();
 }
 
-service::result service::send(const session::id& id, uint8_t* data, std::size_t len)
+void service::wait(unsigned int ms)
 {
-	return impl_->send(id, data, len);
+	std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 }
 
-void service::close(const session::id& id)
+service::result service::listen(const std::string& addr, const std::string& protocol)
 {
-	return impl_->close(id);
+	return impl_->listen(addr, protocol);
+}
+
+service::result service::connect(const std::string& addr, const std::string& protocol)
+{
+	return impl_->connect(addr, protocol);
+}
+
+session::ref service::acquire(const session::id& id)
+{
+	return impl_->acquire(id);
+}
+
+std::size_t service::get_session_count() const
+{
+	return impl_->get_session_count();
 }
 
 void service::error(const session::id& id)
 {
 	return impl_->error(id);
-}
-
-app* service::get_app()
-{
-	return impl_->get_app();
-}
-
-session::ptr service::get(const session::id& id)
-{
-	return impl_->get(id);
 }
 
 } // net
