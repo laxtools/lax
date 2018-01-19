@@ -29,7 +29,7 @@ TEST_CASE("service")
 		// - 일단, 유보
 	}
 
-	SECTION("acctor / connector / session ready")
+	SECTION("acctor / connector")
 	{
 		auto& svc = service::inst();
 
@@ -44,23 +44,27 @@ TEST_CASE("service")
 		REQUIRE(svc.get_session_count() == 2);
 
 		svc.fini();
-
-		// 
-		// 프로토콜 등록 안 된 상태면 exception이 발생.
-		// - listen, connect에서 원천 봉쇄하고 로그 남김 
-		// - 사전에 차단하는 게 가장 깔끔하다. 
-		// - 크래시가 나거나 상태가 꼬이면 디버깅이 어려움 
-		//
 	}
 
-	SECTION("ref and subscription")
+	SECTION("close subs")
 	{
-		//
-		// sub for session ready and close 
-		// - ready 
-		// - get ref 
-		//   - sub for close
-		//   - handle close
-		//
+		SECTION("test close_subs class")
+		{
+
+		}
+
+		SECTION("test with a session")
+		{
+
+		}
+	}
+
+	SECTION("ready subs")
+	{
+		// ready 
+
+		// close 
+
+		// callback
 	}
 }

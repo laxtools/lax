@@ -34,6 +34,26 @@ struct sys_accept_failed : public message
 	}
 };
 
+/// 技记 霖厚凳
+struct sys_session_ready : public message
+{
+	sys_session_ready()
+		: message(topic_t(topics::groups::sys, topics::sys_keys::session_ready))
+	{
+	}
+};
+
+/// 技记 辆丰凳
+struct sys_session_closed : public message
+{
+	asio::error_code ec;
+
+	sys_session_closed()
+		: message(topic_t(topics::groups::sys, topics::sys_keys::session_closed))
+	{
+	}
+};
+
 } // net
 } // lax
 

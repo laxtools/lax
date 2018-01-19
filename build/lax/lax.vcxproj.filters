@@ -256,6 +256,9 @@
     <ClInclude Include="..\..\include\lax\net\addr.hpp">
       <Filter>net</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\close_subs.hpp">
+      <Filter>net\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

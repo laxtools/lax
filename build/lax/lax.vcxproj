@@ -184,6 +184,7 @@
     <ClInclude Include="..\..\include\lax\net\detail\buffer\resize_buffer_iterator.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\segment.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\buffer\segment_buffer.hpp" />
+    <ClInclude Include="..\..\include\lax\net\detail\close_subs.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\connector.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\service_impl.hpp" />
     <ClInclude Include="..\..\include\lax\net\exception.hpp" />

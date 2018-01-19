@@ -186,7 +186,8 @@ private:
 	using segment_buffer = segment_buffer<32 * 1024>;
 	using seg = typename segment_buffer::seg;
 
-	static channel::channel			channel_; /// channel to communicate msgs
+	static channel::channel			channel_;		/// channel to communicate msgs
+
 	tcp::socket						socket_;
 	id								id_;
 	bool							accepted_ = false;
