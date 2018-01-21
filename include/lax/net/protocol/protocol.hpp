@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <lax/net/message.hpp>
+#include <lax/net/packet.hpp>
 #include <lax/net/reason.hpp>
 #include <lax/util/result.hpp>
 #include <asio.hpp>
@@ -41,7 +41,7 @@ public:
 	}
 
 	/// send to a session after processing message
-	virtual result send(message::ptr m) = 0; 
+	virtual result send(packet::ptr m) = 0; 
 
 protected:
 	/// bind to session

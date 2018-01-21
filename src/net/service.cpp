@@ -19,23 +19,25 @@ service& service::inst()
 }
 
 service::service()
-	: impl_(new service_impl(*this))
 {
 }
 
 service::~service()
 {
-	impl_->fini(); // stop and wait
 }
 
 bool service::init()
 {
+	impl_ = std::make_unique<service_impl>(*this);
+
 	return impl_->init();
 }
 
 void service::fini()
 {
 	impl_->fini();
+
+	impl_.reset();
 }
 
 void service::wait(unsigned int ms)

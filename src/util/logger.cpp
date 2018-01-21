@@ -19,10 +19,15 @@ const char*		log::file_prefix = "logs/system";
 const char*		log::log_pattern = "[%Y-%m-%d %H:%M:%S][%t][%L] %v";
 bool			log::retry_on_overflow = true;
 
+
+std::recursive_mutex log::mutex_;
 std::atomic<bool> log::initialized_ = false;
 
 void log::init()
 {
+	// 초기화 중 여러 곳에서 호출할 경우 블럭 시킴
+	std::lock_guard<std::recursive_mutex> lock(mutex_);
+
 	return_if(initialized_);
 
 	spdlog::set_pattern(log_pattern);

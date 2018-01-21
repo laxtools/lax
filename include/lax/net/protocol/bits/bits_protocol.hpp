@@ -8,6 +8,12 @@ namespace lax
 namespace net
 {
 
+/// bitsery serialization protocol 
+/** 
+ * - length: 4 bytes
+ * - encryption per message 
+ * - crc32 per message
+ */
 class bits_protocol final : public protocol
 {
 public:
@@ -28,8 +34,8 @@ public:
 	/// ensure session is closed
 	~bits_protocol();
 
-	/// send to a session after processing message
-	virtual result send(message::ptr m) override;
+	/// send to a session after processing packet
+	virtual result send(packet::ptr m) override;
 
 private:
 	/// session is bound

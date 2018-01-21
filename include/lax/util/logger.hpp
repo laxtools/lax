@@ -1,6 +1,7 @@
 #pragma once
 
 #include <spdlog/spdlog.h>
+#include <mutex>
 
 namespace lax
 {
@@ -24,7 +25,14 @@ public:
 
 	static std::shared_ptr<spdlog::logger> get()
 	{
-		init(); // make it sure 
+		if (!initialized_) 
+		{
+			// 한번만 초기화 하고 초기화 대기 위해 락 사용. 
+			// 성능을 위해 미리 체크하고 진행
+
+			init(); // make it sure 
+		}
+
 		return spdlog::get(name);
 	}
 
@@ -32,6 +40,7 @@ private:
 	static void create_log_folder(const char* path);
 
 private:
+	static std::recursive_mutex mutex_;
 	static const char* name;					// default "system"
 
 private:

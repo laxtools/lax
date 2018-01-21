@@ -13,7 +13,7 @@ bits_message_factory& inst()
 	return inst_;
 }
 
-void bits_message_factory::add(const message::topic_t& topic, creator c)
+void bits_message_factory::add(const packet::topic_t& topic, creator c)
 {
 	auto iter = map_.find(topic);
 
@@ -23,7 +23,7 @@ void bits_message_factory::add(const message::topic_t& topic, creator c)
 	map_[topic] = c;
 }
 
-bits_message::ptr  bits_message_factory::create(const message::topic_t& topic) const
+bits_message::ptr  bits_message_factory::create(const packet::topic_t& topic) const
 {
 	auto iter = map_.find(topic);
 	return_if(iter == map_.end(), bits_message::ptr());

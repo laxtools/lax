@@ -19,7 +19,10 @@ service_impl::service_impl(service& svc)
 
 service_impl::~service_impl()
 {
-	// service calls stop on destruction
+	// fini()를 외부에서 호출해서 정리한다. 
+	// - unique_ptr로 관리할 때 프로세스 나가면서 호출된다. 
+	// - 이 때 메모리가 해제되어 있다. 
+	// - 왜 그런가????
 }
 
 service::result service_impl::listen(const std::string& addr, const std::string& protocol)
@@ -86,7 +89,7 @@ session::ref service_impl::acquire(const session::id& id)
 void service_impl::error(const session::id& id)
 {
 	util::log()->info(
-		"{0} remove on error. id: {1}, reason: {2}",
+		"{0} remove on error. id: {1}",
 		__FUNCTION__,
 		id.get_value()
 	);
@@ -145,7 +148,7 @@ void service_impl::on_accept_failed(key k, const asio::error_code& ec)
 		mp->addr = apt->get_addr().get_raw();
 		mp->ec = ec;
 
-		session::push(mp);
+		session::post(mp);
 	}
 }
 
@@ -194,7 +197,7 @@ void service_impl::on_connect_failed(key k, const asio::error_code& ec)
 		mp->addr = cnt->get_addr().get_raw();
 		mp->ec = ec;
 
-		session::push(mp);
+		session::post(mp);
 	}
 }
 
@@ -245,10 +248,7 @@ void service_impl::run()
 
 void service_impl::fini()
 {
-	std::unique_lock<std::shared_timed_mutex> lock(mutex_);
-
 	return_if(stop_);
-
 	stop_ = true;
 
 	// post to all threads
@@ -266,46 +266,54 @@ void service_impl::fini()
 	cleanup();
 }
 
+void service_impl::cleanup()
+{
+	// 꼭 필요한 구현은 아니지만 명시적으로 
+	// 정리하면 안정성 관련 오류를 찾기 쉽다.
+
+	sessions_.clear();
+	acceptors_.clear();
+	connectors_.clear();
+	threads_.clear();
+}
+
 void service_impl::on_new_socket(const std::string& protocol, tcp::socket&& soc, bool accepted)
 {
 	// called w/ a unique lock
 
+	uint16_t slot_idx = slot_idx = get_free_slot();
 	uint32_t seq = 0;
-	uint16_t slot_idx = 0;
 
-	slot_idx = get_free_slot();
 	seq = sessions_[slot_idx].seq++;
 	seq = (seq == 0 ? sessions_[slot_idx].seq++ : seq);
 
 	check(seq > 0);
 
-	sessions_[slot_idx].session = std::make_shared<session>(
+	mutex_.unlock(); // session 생성이 느림
+
+	// TODO: exception safety?
+
+	auto sp = std::make_shared<session>(
 		session::id(seq, slot_idx),
 		std::move(soc),
 		accepted,
 		protocol
 	);
 
+	mutex_.lock(); // 다시 락 필요
+
+	sessions_[slot_idx].session = sp;
 	session_count_++;
 
 	ensure(sessions_[slot_idx].session);
 	ensure(session_count_ > 0);
-}
 
-void service_impl::cleanup()
-{
-	for (auto& ss : sessions_)
-	{
-		ss.session->close();
-	}
-
-	sessions_.clear();
-	free_slots_.clear();
+	mutex_.unlock();
 }
 
 uint16_t service_impl::get_free_slot()
 {
-	// 외부에서 exclusive 락 거는 것으로 가정
+	// 외부에서 unique 락 거는 것으로 가정
 
 	check(sessions_.size() < UINT16_MAX);
 

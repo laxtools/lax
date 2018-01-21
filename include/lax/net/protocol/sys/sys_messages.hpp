@@ -1,7 +1,7 @@
 #pragma once 
 
 #include <lax/net/protocol/topics.hpp>
-#include <lax/net/message.hpp>
+#include <lax/net/packet.hpp>
 
 #include <asio.hpp>
 
@@ -11,52 +11,40 @@ namespace net
 {
 
 /// 연결 실패 전달. 에러 처리는 session::sub로 등록해서 진행
-struct sys_connect_failed : public message
+struct sys_connect_failed : public packet
 {
+	MSG_TOPIC(topics::groups::sys, topics::types::connect_failed);
+	MSG_HEAD(sys_connect_failed);
+
 	std::string addr; 
 	asio::error_code ec;
-
-	sys_connect_failed()
-		: message(topic_t(topics::groups::sys, topics::sys_keys::connect_failed))
-	{
-	}
 };
 
 /// 연결 받기 실패 전달. 에러 처리는 session::sub로 등록해서 진행
-struct sys_accept_failed : public message
+struct sys_accept_failed : public packet
 {
+	MSG_TOPIC(topics::groups::sys, topics::types::accept_failed);
+	MSG_HEAD(sys_accept_failed);
+
 	std::string addr; 
 	asio::error_code ec;
-
-	sys_accept_failed()
-		: message(topic_t(topics::groups::sys, topics::sys_keys::accept_failed))
-	{
-	}
 };
 
 /// 세션 준비됨
-struct sys_session_ready : public message
+struct sys_session_ready : public packet
 {
-	sys_session_ready()
-		: message(topic_t(topics::groups::sys, topics::sys_keys::session_ready))
-	{
-	}
+	MSG_TOPIC(topics::groups::sys, topics::types::session_ready);
+	MSG_HEAD(sys_session_ready);
 };
 
 /// 세션 종료됨
-struct sys_session_closed : public message
+struct sys_session_closed : public packet
 {
-	asio::error_code ec;
+	MSG_TOPIC(topics::groups::sys, topics::types::session_closed);
+	MSG_HEAD(sys_session_closed);
 
-	sys_session_closed()
-		: message(topic_t(topics::groups::sys, topics::sys_keys::session_closed))
-	{
-	}
+	asio::error_code ec;
 };
 
 } // net
 } // lax
-
-
-
-

@@ -41,6 +41,7 @@ public:
 		if (buf_)
 		{
 			pool_.release(buf_);
+			buf_.reset();
 		}
 
 		ensure(!buf_);
@@ -152,28 +153,24 @@ public:
 
 	iterator begin() 
 	{ 
-		check(buf_);
 		return_if(!buf_, 0);
 		return iterator(buf_->data()); 
 	}
 
 	iterator end() 
 	{ 
-		check(buf_);
 		return_if(!buf_, 0);
 		return iterator(&buf_->data()[pos_]); 
 	}
 
 	const_iterator cbegin() 
 	{ 
-		check(buf_);
 		return_if(!buf_, 0);
 		return const_iterator(buf_->data()); 
 	}
 
 	const_iterator cend() 
 	{ 
-		check(buf_);
 		return_if(!buf_, 0);
 		return const_iterator(&buf_->data()[pos_]); 
 	}

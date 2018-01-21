@@ -11,10 +11,10 @@ struct topics
 	{
 		sys,		// system internal local messages
 		bits,		// bits protocol messages if any  
-		end = 4,	// end mark. reserved up to end
+		groups_end = 4,	// end mark. reserved up to end
 	};
 
-	enum sys_keys 
+	enum types
 	{
 		accepted,
 		accept_failed, 
@@ -22,6 +22,7 @@ struct topics
 		connect_failed,
 		session_ready, 
 		session_closed,
+		sys_keys_end
 	};
 
 }; // topics

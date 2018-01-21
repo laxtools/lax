@@ -1,8 +1,11 @@
 #pragma once 
 
-#include <lax/net/message.hpp>
+#include <lax/net/packet.hpp>
+#include <bitset>
 
 // add this file into stdafx.h for faster parsing
+/// to add bitsery specializations
+#include "bits_util.hpp"
 
 namespace lax
 {
@@ -18,10 +21,10 @@ namespace net
  * - define serialize template function in global namespace 
  * - use array, vector only (map is not supported for now)
  */
-struct bits_message : public message
+struct bits_message : public packet
 {
-	virtual bool pack(message::ptr m) = 0;
-	virtual bool unpack(message::ptr m) = 0;
+	virtual bool pack(packet::ptr m) = 0;
+	virtual bool unpack(packet::ptr m) = 0;
 };
 
 } // net
@@ -31,7 +34,8 @@ struct bits_message : public message
 #define BITS_BODY() 
 
 /// reg to factory
-#define BITS_REG(m)
-
-/// to add bitsery specializations
-#include "bits_util.hpp"
+#define BITS_REG(cls, encrypted, checksum)
+// bits_protocol::reg(lambda to create cls
+// set flag for the class
+// 00000011. 2nd bit - encrypted, 1st bit - checksum
+//

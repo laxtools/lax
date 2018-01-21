@@ -187,6 +187,9 @@ public:
 	 */
 	std::size_t post();
 
+	/// post with a message not from a queue. (for net)
+	std::size_t post(message::ptr m);
+
 	/// ≈∞∏¶ µπ∑¡¡‹
 	const key_t& get_key() const 
 	{

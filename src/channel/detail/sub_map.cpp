@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <lax/channel/detail/sub_map.hpp>
 #include <lax/channel/detail/use_lock.hpp>
+#include <lax/util/logger.hpp>
 #include <algorithm>
 
 namespace lax
@@ -256,6 +257,13 @@ std::size_t sub_map::post_on_topic(entry_map& em, const message::topic_t& topic,
 		if (sub.post(m))
 		{
 			++count;
+
+			util::log()->debug(
+				"post. msg: {0} topic: {1}/{2} count: {3}", 
+				m->get_desc(),
+				topic.get_group(), 
+				topic.get_type(), count
+			);
 		}
 	}
 

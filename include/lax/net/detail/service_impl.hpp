@@ -85,11 +85,11 @@ private:
 	/// io_service 쓰레드 대기. service에서 호출
 	void fini();
 
-	/// handle new connection. accepted or connected
-	void on_new_socket(const std::string& protocol, tcp::socket&& soc, bool accepted);
-
 	/// cleanup all
 	void cleanup();
+
+	/// handle new connection. accepted or connected
+	void on_new_socket(const std::string& protocol, tcp::socket&& soc, bool accepted);
 
 	/// 가용한 슬롯을 가져옴. 없으면 만들고 추가 
 	uint16_t get_free_slot();

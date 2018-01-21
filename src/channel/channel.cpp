@@ -94,6 +94,15 @@ std::size_t channel::post()
 	return count;
 }
 
+std::size_t channel::post(message::ptr m)
+{
+	auto count = map_.post(m, sub::mode::immediate);
+
+	stat_.total_immediate_post_count += count;
+
+	return count;
+}
+
 std::size_t channel::get_queue_size() const
 {
 	return q_.unsafe_size();

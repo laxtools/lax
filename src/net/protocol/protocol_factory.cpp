@@ -16,8 +16,6 @@ protocol_factory& protocol_factory::inst()
 void protocol_factory::add(const std::string& name, creator c)
 {
 	auto iter = map_.find(name);
-
-	check(iter == map_.end());
 	return_if(iter != map_.end());
 
 	map_[name] = c; 

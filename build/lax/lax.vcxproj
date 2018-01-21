@@ -22,7 +22,7 @@
     <ProjectGuid>{3A05B5E7-B816-4F30-BAAD-603125377721}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>lax</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -187,8 +187,7 @@
     <ClInclude Include="..\..\include\lax\net\detail\close_subs.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\connector.hpp" />
     <ClInclude Include="..\..\include\lax\net\detail\service_impl.hpp" />
-    <ClInclude Include="..\..\include\lax\net\exception.hpp" />
-    <ClInclude Include="..\..\include\lax\net\message.hpp" />
+    <ClInclude Include="..\..\include\lax\net\packet.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_message.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_message_factory.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\bits\bits_protocol.hpp" />
@@ -233,6 +232,7 @@
     <ClCompile Include="..\..\src\net\detail\acceptor.cpp" />
     <ClCompile Include="..\..\src\net\detail\buffer\multiple_size_buffer_pool.cpp" />
     <ClCompile Include="..\..\src\net\detail\buffer\resize_buffer.cpp" />
+    <ClCompile Include="..\..\src\net\detail\close_subs.cpp" />
     <ClCompile Include="..\..\src\net\detail\connector.cpp" />
     <ClCompile Include="..\..\src\net\detail\service_impl.cpp" />
     <ClCompile Include="..\..\src\net\protocol\bits\bits_message_factory.cpp" />

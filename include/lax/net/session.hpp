@@ -1,9 +1,10 @@
 #pragma once 
 
+#include <lax/net/detail/close_subs.hpp>
 #include <lax/channel/channel.hpp>
 #include <lax/net/protocol/protocol.hpp>
 #include <lax/net/reason.hpp>
-#include <lax/net/message.hpp>
+#include <lax/net/packet.hpp>
 #include <lax/net/detail/buffer/segment_buffer.hpp>
 #include <lax/util/macros.hpp>
 #include <lax/util/result.hpp>
@@ -69,16 +70,36 @@ public:
 	public:
 		ref(ptr ss = ptr());
 
-		result send(message::ptr m);
+		~ref();
 
+		// TODO: add move constructor, operator
+
+		/// send through a protocol
+		result send(packet::ptr m);
+
+		/// subscribe for close callback
+		bool sub(cb_t cb);
+
+		/// close session
+		void close();
+
+		/// check validity 
 		bool is_valid() const;
 
+		/// get desc
 		const std::string& get_desc() const;
 
-		void close();
+		/// get id to keept in map or hash_map
+		packet::sid get_id() const
+		{
+			return session_->get_id().get_value();
+		}
+
+		// operators: ==, !=, <, > defined
 
 	private:
 		ptr session_;
+		key_t key_ = 0;
 	};
 
 public:
@@ -94,20 +115,20 @@ public:
 
 	/// subscribe to a topic with a condition 
 	/**
-	* direct mode subscription only. message is posted immediately
+	* direct mode subscription only. packet is posted immediately
 	*/
 	static key_t sub(
-		const message::topic_t& topic,
+		const packet::topic_t& topic,
 		cond_t cond,
 		cb_t cb
 	);
 
 	/// subscribe to a topic without condition 
 	/**
-	* direct mode subscription only. message is posted immediately
+	* direct mode subscription only. packet is posted immediately
 	*/
 	static key_t sub(
-		const message::topic_t& topic,
+		const packet::topic_t& topic,
 		cb_t cb
 	);
 
@@ -115,10 +136,19 @@ public:
 	static bool unsub(key_t key);
 
 	/// 만들어진 메세지를 channel로 전송
-	static void push(message::ptr m);
+	static void post(packet::ptr m);
+
+	/// session::id에 대해 통지
+	static key_t sub_close(
+		close_subs::sid id, 
+		close_subs::cb_t cb
+	);
+
+	/// always called from ref when subscribed
+	static void unsub_close(key_t key);
 
 	/// send through a protocol. call following send
-	result send(message::ptr m);
+	result send(packet::ptr m);
 
 	/// close socket (shutdown and close) 
 	void close();
@@ -163,12 +193,14 @@ protected:
 	}
 
 private:
-	/// send a message to socket
+	/// send a packet to socket
 	result send(uint8_t* data, std::size_t len);
-
 
 	/// 에러 처리 함수
 	void error(const asio::error_code& ec);
+
+	/// close외에 추가 개념. close되고 send/recv 없을 때 가능. 통지까지
+	void destroy(const asio::error_code& ec = asio::error::shut_down);
 
 	/// recv request
 	result request_recv();
@@ -182,11 +214,18 @@ private:
 	/// callback on send 
 	void on_send_completed(asio::error_code& ec, std::size_t len);
 
+	/// 준비됨 통지
+	void notify_session_ready();
+
+	/// 메세지 통지
+	void notify_session_closed(const asio::error_code& ec);
+
 private:
 	using segment_buffer = segment_buffer<32 * 1024>;
 	using seg = typename segment_buffer::seg;
 
 	static channel::channel			channel_;		/// channel to communicate msgs
+	static close_subs				close_subs_;
 
 	tcp::socket						socket_;
 	id								id_;
@@ -197,7 +236,7 @@ private:
 	std::string						desc_;
 
 	std::recursive_mutex			session_mutex_;
-	bool							recving_ = false;
+	bool							recving_ = false; /// sending과 recving은 항상 session_mutex_ 걸고 처리
 	bool							sending_ = false;
 	std::array<uint8_t, 32 * 1024>	recv_buf_;
 
@@ -208,6 +247,7 @@ private:
 	std::vector<asio::const_buffer> sending_bufs_;
 
 	asio::error_code				last_error_;
+	std::atomic<bool>				destroyed_ = false;
 };
 
 } // net

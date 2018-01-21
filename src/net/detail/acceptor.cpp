@@ -19,6 +19,7 @@ acceptor::acceptor(uint16_t id, const std::string& protocol, const std::string& 
 
 acceptor::~acceptor()
 {
+	acceptor_.close();
 }
 
 service::result acceptor::listen()

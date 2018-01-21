@@ -43,6 +43,11 @@ public:
 		topic_ = tp;
 	}
 
+	virtual const char* get_desc() const
+	{
+		return "message";
+	}
+
 protected:
 	topic_t topic_; // invalid
 };

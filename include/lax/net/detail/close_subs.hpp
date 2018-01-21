@@ -2,6 +2,8 @@
 
 #include <lax/channel/message.hpp>
 #include <lax/util/sequence.hpp>
+
+#include <asio.hpp>
 #include <unordered_map>
 #include <shared_mutex>
 #include <vector>
@@ -25,12 +27,12 @@ namespace net
  */
 class close_subs
 {
-public: 
+public:
 	using sid = uint32_t;
 	using key_t = uint32_t;
 	using cb_t = std::function<void(channel::message::ptr)>;
 
-public: 
+public:
 	/// »ý¼ºÀÚ
 	close_subs();
 
@@ -38,18 +40,18 @@ public:
 	~close_subs();
 
 	/// subscribe to topic. locked with unique_lock
-	key_t subscribe( sid id, cb_t cb );
+	key_t subscribe(sid id, cb_t cb);
 
 	/// unsubscribe to topic. locked with unique_lock
-	bool unsubscribe(key_t key);
+	void unsubscribe(key_t key);
 
 	/// post a topic and message topic. locked with shared_lock
-	std::size_t post(sid id);
+	std::size_t post(sid id, const asio::error_code& ec = asio::error::fault);
 
-private: 
+private:
 	struct entry
 	{
-		key_t key; 
+		key_t key;
 		cb_t cb;
 	};
 
@@ -58,10 +60,10 @@ private:
 	using index = std::unordered_map<key_t, sid>;
 
 private:
-	std::shared_timed_mutex		mutex_;
+	std::recursive_mutex		mutex_;
 	map							subs_;
 	index						index_;
-	util::sequence<key_t>		seq_;
+	util::sequence<key_t>		key_seq_;
 };
 
 } // channel

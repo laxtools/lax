@@ -3,6 +3,7 @@
 #include <lax/net/session.hpp>
 #include <lax/net/service.hpp>
 #include <lax/net/protocol/protocol_factory.hpp>
+#include <lax/net/protocol/sys/sys_messages.hpp>
 #include <lax/util/logger.hpp>
 #include <lax/util/exception.hpp>
 #include <spdlog/fmt/fmt.h>
@@ -13,12 +14,17 @@ namespace net
 {
 
 channel::channel session::channel_("session");
+close_subs session::close_subs_;
 
 session::session(const id& id, tcp::socket&& soc, bool accepted, const std::string& protocol)
 	: socket_(std::move(soc))
 	, id_(id)
 	, accepted_(accepted)
 {
+	// 다른 곳에 참조되지 않은 상태를 유지
+	// thread-unsafe한 것들 참조 금지. 
+	// service 함수들 호출 주의. (락 이슈들 발생 가능)
+
 	remote_addr_ = fmt::format(
 		"{0}:{1}",
 		socket_.remote_endpoint().address().to_string(),
@@ -49,11 +55,14 @@ session::session(const id& id, tcp::socket&& soc, bool accepted, const std::stri
 	if (!protocol_)
 	{
 		THROW("fail to create protocol");
-
 		return;
 	}
 
 	protocol_->bind(this);
+
+	util::log()->debug( "{0} protocol bound", get_desc() );
+
+	notify_session_ready();
 
 	request_recv();
 }
@@ -66,7 +75,7 @@ session::~session()
 }
 
 session::key_t session::sub(
-	const message::topic_t& topic,
+	const packet::topic_t& topic,
 	cond_t cond,
 	cb_t cb
 )
@@ -75,10 +84,16 @@ session::key_t session::sub(
 }
 
 session::key_t session::sub(
-	const message::topic_t& topic,
+	const packet::topic_t& topic,
 	cb_t cb
 )
 {
+	util::log()->debug(
+		"subscribe: {0}:{1}", 
+		topic.get_group(), 
+		topic.get_type()
+	);
+
 	return channel_.subscribe(topic, cb, channel::sub::mode::immediate);
 }
 
@@ -87,25 +102,54 @@ bool session::unsub(key_t key)
 	return channel_.unsubscribe(key);
 }
 
-void session::push(message::ptr m)
+void session::post(packet::ptr m)
 {
-	channel_.push(m);
+	channel_.post(m);
 }
 
-session::result session::send(message::ptr m)
+session::key_t session::sub_close(
+	close_subs::sid id,
+	close_subs::cb_t cb
+)
+{
+	return close_subs_.subscribe(id, cb);
+}
+
+void session::unsub_close(key_t key)
+{
+	close_subs_.unsubscribe(key);
+}
+
+session::result session::send(packet::ptr m)
 {
 	return protocol_->send(m);
 }
 
 void session::close()
 {
-	if (socket_.is_open())
-	{
-		asio::error_code ec; 
+	// 연결이 유효하면 끊고 소멸을 시도한다. 
 
-		socket_.shutdown(socket_.shutdown_both, ec);
-		socket_.close(ec);
+	return_if(destroyed_);
+
+	// close
+	{
+		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
+
+		if (socket_.is_open())
+		{
+			asio::error_code ec;
+
+			socket_.shutdown(socket_.shutdown_both, ec);
+			socket_.close(ec);
+
+			util::log()->debug("{0} close", get_desc());
+		}
 	}
+
+	// socket is closed. 
+	// check for destroy
+
+	destroy();
 }
 
 session::result session::send(uint8_t* data, std::size_t len)
@@ -125,22 +169,50 @@ void session::error(const asio::error_code& ec)
 {
 	util::log()->warn(
 		"session error. id: {0}, reason: {1}",
-		get_id().get_value(), 
+		get_id().get_value(),
 		ec.message()
 	);
 
 	util::log()->flush();
 
-	last_error_ = ec;
+	close();		// will call destroy
+}
 
-	close();
+void session::destroy(const asio::error_code& ec)
+{
+	// 소멸이 가능하면 소멸을 처리한다. 
+	// - app -> close -> destroy 또는
+	// - recv_comp -> error -> close -> destroy 또는 
+	// - send_comp -> error -> close -> destroy 이다
 
-	if (!sending_ && !recving_) // wait both if any 
+	// check
 	{
+		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
+
+		if (sending_ || recving_) // wait both if any 
+		{
+			return;
+		}
+	}
+
+	util::log()->debug("{0} destroying...", get_desc());
+
+	// notify
+	{
+		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
+
+		check(!destroyed_);
+
 		(void)protocol_->on_error(ec);
 
-		service::inst().error(get_id());
+		notify_session_closed(ec);
+
+		destroyed_ = true;
 	}
+
+	service::inst().error(get_id());
+
+	util::log()->debug( "{0} destroyed", get_desc() );
 }
 
 session::result session::request_recv()
@@ -161,6 +233,8 @@ session::result session::request_recv()
 
 		recving_ = true;
 	}
+
+	util::log()->debug( "{0} request recv", get_desc() );
 
 	// request recv. 한번에 하나만 읽고 위에서 막히므로 락 필요 없음
 	socket_.async_read_some(
@@ -226,11 +300,16 @@ session::result session::request_send()
 	check(!sending_bufs_.empty());
 	check(send_request_size_ > 0);
 
+	util::log()->debug( 
+		"{0} request send. {1} bytes", 
+		get_desc(), 
+		send_request_size_ 
+	);
+
 	asio::async_write(
 		socket_,
 		sending_bufs_,
-		[this](asio::error_code ec, std::size_t len)
-	{
+		[this](asio::error_code ec, std::size_t len) {
 		this->on_send_completed(ec, len);
 	});
 
@@ -306,6 +385,27 @@ void session::on_send_completed(asio::error_code& ec, std::size_t len)
 	{
 		error(ec);
 	}
+}
+
+void session::notify_session_ready()
+{
+	auto mp = std::make_shared<sys_session_ready>();
+	mp->id = get_id().get_value();
+
+	post(mp); // send to channel
+}
+
+void session::notify_session_closed(const asio::error_code& ec)
+{
+	// destroy에서 호출
+
+	auto mp = std::make_shared<sys_session_closed>();
+	mp->id = get_id().get_value();
+	mp->ec = ec;
+
+	post(mp); // send to channel
+
+	close_subs_.post(get_id().get_value(), ec); // send to refs
 }
 
 } // net

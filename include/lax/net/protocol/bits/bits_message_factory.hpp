@@ -15,13 +15,13 @@ public:
 	static bits_message_factory& inst();
 
 	/// add a creator for a protocol
-	void add(const message::topic_t& topic, creator c);
+	void add(const packet::topic_t& topic, creator c);
 
 	/// create a protocol
-	bits_message::ptr create(const message::topic_t& topic) const;
+	bits_message::ptr create(const packet::topic_t& topic) const;
 
 	template <typename Msg>
-	std::shared_ptr<Msg> create(const message::topic_t& topic) const
+	std::shared_ptr<Msg> create(const packet::topic_t& topic) const
 	{
 		auto ptr = create(name);
 
@@ -29,12 +29,10 @@ public:
 	}
 
 private:
-	using map = std::map<const message::topic_t, creator>;
+	using map = std::map<const packet::topic_t, creator>;
 
 	map map_;
 };
-
-
 
 } // net
 } // lax

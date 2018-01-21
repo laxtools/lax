@@ -75,7 +75,17 @@ session::ref::ref(session::ptr ss)
 }
 
 inline
-session::result session::ref::send(message::ptr m)
+session::ref::~ref()
+{
+	if (key_ > 0)
+	{
+		session_.reset();
+		session::unsub_close(key_);
+	}
+}
+
+inline
+session::result session::ref::send(packet::ptr m)
 {
 	return_if(
 		!is_valid(), 
@@ -98,6 +108,19 @@ const std::string& session::ref::get_desc() const
 }
 
 inline
+bool session::ref::sub(cb_t cb)
+{
+	return_if(!session_, false);
+
+	key_ = session::sub_close(
+		session_->get_id().get_value(),
+		cb
+	);
+
+	return key_ > 0;
+}
+
+inline
 void session::ref::close()
 {
 	if (is_valid())
@@ -106,7 +129,48 @@ void session::ref::close()
 	}
 }
 
+inline
+static bool operator == (const session::ref& r1, const session::ref& r2) 
+{
+	return r1.get_id() == r2.get_id();
+}
+
+inline
+static bool operator != (const session::ref& r1, const session::ref& r2) 
+{
+	return !(operator == (r1, r2));
+}
+
+inline
+static bool operator < (const session::ref& r1, const session::ref& r2) 
+{
+	return r1.get_id() < r2.get_id();
+}
+
+inline
+static bool operator > (const session::ref& r1, const session::ref& r2) 
+{
+	return r1.get_id() > r2.get_id();
+}
+
 } // net 
 } // lax
+
+#include <unordered_map>
+
+namespace std {
+
+template <>
+struct hash<::lax::net::session::ref>
+{
+	std::size_t operator()(const ::lax::net::session::ref& k) const
+	{
+		auto key = static_cast<uint32_t>(k.get_id());
+
+		return std::hash<uint32_t>()(key);
+	}
+};
+
+} // std
 
 

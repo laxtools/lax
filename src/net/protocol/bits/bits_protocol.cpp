@@ -11,23 +11,18 @@ bits_protocol::config bits_protocol::cfg;
 
 bits_protocol::bits_protocol()
 {
-
 }
 
 bits_protocol::~bits_protocol()
 {
-
 }
 
 void bits_protocol::on_bind()
 {
 	ensure(get_session());
-
-	// initialize 
-	// session_ must be valid
 }
 
-protocol::result bits_protocol::send(message::ptr m)
+protocol::result bits_protocol::send(packet::ptr m)
 {
 	return result(false, reason::fail_not_implemented);
 }
@@ -39,12 +34,10 @@ protocol::result bits_protocol::on_recv(uint8_t* bytes, std::size_t len)
 
 void bits_protocol::on_send(std::size_t len)
 {
-
 }
 
 void bits_protocol::on_error(const asio::error_code& ec)
 {
-
 }
 
 } // net

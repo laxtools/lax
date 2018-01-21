@@ -169,9 +169,6 @@
     <ClInclude Include="..\..\include\lax\net\detail\buffer\multiple_size_buffer_pool.hpp">
       <Filter>net\detail\buffer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\message.hpp">
-      <Filter>net</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\net\session.hpp">
       <Filter>net</Filter>
     </ClInclude>
@@ -186,9 +183,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\acceptor.hpp">
       <Filter>net\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\exception.hpp">
-      <Filter>net</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\reason.hpp">
       <Filter>net</Filter>
@@ -258,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\close_subs.hpp">
       <Filter>net\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\packet.hpp">
+      <Filter>net</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +343,9 @@
       <Filter>net\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\net\detail\acceptor.cpp">
+      <Filter>net\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\detail\close_subs.cpp">
       <Filter>net\detail</Filter>
     </ClCompile>
   </ItemGroup>
