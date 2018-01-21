@@ -48,7 +48,7 @@ public:
 		return "message";
 	}
 
-protected:
+private: 
 	topic_t topic_; // invalid
 };
 

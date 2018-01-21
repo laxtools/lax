@@ -5,76 +5,47 @@
 
 using namespace lax::net;
 
+// to make this test readable
+#include "bits_message_design.hpp"
+
 namespace
 {
 
-// design bits_message
-struct bm : public packet
+struct bm_derived : public bits_message
 {
-	bm()
-		: packet(3)
-	{
-	}
+	BITS_MSG_TOPIC(3, 3);		// group, type
+	BITS_MSG_CLASS(bm_derived); // constructor and pack/unpack
 
-	std::size_t pack(resize_buffer& buf)
-	{
-		BitsSerializer serializer{ buf };
-		serializer.object(*this);
-
-		auto& writer = bitsery::AdapterAccess::getWriter(serializer);
-		writer.flush();
-
-		return writer.writtenBytesCount();
-	}
-
-	bool unpack(resize_buffer::iterator& iter, std::size_t len)
-	{
-		check(len > 0);
-
-		BitsDeserializer deserializer{ InputAdapter{ iter, len} };
-		deserializer.object(*this);
-
-		auto& reader = bitsery::AdapterAccess::getReader(deserializer);
-
-		auto error = reader.error();
-		return error == bitsery::ReaderError::NoError;
-	}
-
-	int v = 0;
+	std::string name;
 };
 
+// must be in global, anonymous or bitsery namespace
 template <typename S>
-void serialize(S& s, bm& o)
+void serialize(S& ss, bm_derived& m)
 {
-	s.value4b(o.v);
+	BITS_SERIALIZE_TOPIC(ss, m);
+
+	ss.text1b(m.name, 64);
 }
 
 } // noname
 
 TEST_CASE("bits protocol")
 {
-	SECTION("defining messages")
+	SECTION("bits message")
 	{
-		// design test
-		// - implementation of pack/unpack
-		// - recv message packetization
-		// 
+		auto mp = std::make_shared<bm_derived>();
+		mp->name = "Hello";
 
-		SECTION("pack / unpack")
-		{
-			auto mp = std::make_shared<bm>();
-			mp->v = 3;
+		resize_buffer buf;
 
-			resize_buffer buf;
+		auto size = mp->pack(buf);
+		REQUIRE(size > 0);
 
-			auto size = mp->pack(buf);
-			REQUIRE(size > 0);
+		auto res = std::make_shared<bm_derived>();
+		auto rc = res->unpack(buf, buf.begin(), size);
 
-			auto res = std::make_shared<bm>();
-			auto rc = res->unpack(buf.begin(), size);
-
-			REQUIRE(res->v == 3);
-		}
+		REQUIRE(res->name == mp->name);
 	}
 
 	SECTION("communication w/ lambda callbacks")
@@ -92,5 +63,45 @@ TEST_CASE("bits protocol")
 	{
 		// single connection send / recv 
 		// aims for 1G bps, 1M pps
+	}
+
+	SECTION("defining messages")
+	{
+		// design test
+		// - implementation of pack/unpack
+		// - recv message packetization
+		// 
+
+		SECTION("pack / unpack. 1st try")
+		{
+			auto mp = std::make_shared<bm>();
+			mp->v = 3;
+
+			resize_buffer buf;
+
+			auto size = mp->pack(buf);
+			REQUIRE(size > 0);
+
+			auto res = std::make_shared<bm>();
+			auto rc = res->unpack(buf.begin(), size);
+
+			REQUIRE(res->v == 3);
+		}
+
+		SECTION("pack / unpack. 2nd try")
+		{
+			auto mp = std::make_shared<bm2>();
+			mp->name = "Hello";
+
+			resize_buffer buf;
+
+			auto size = mp->pack(buf);
+			REQUIRE(size > 0);
+
+			auto res = std::make_shared<bm2>();
+			auto rc = res->unpack(buf, buf.begin(), size);
+
+			REQUIRE(res->name == mp->name);
+		}
 	}
 }

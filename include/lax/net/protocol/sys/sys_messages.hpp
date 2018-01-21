@@ -14,7 +14,7 @@ namespace net
 struct sys_connect_failed : public packet
 {
 	MSG_TOPIC(topics::groups::sys, topics::types::connect_failed);
-	MSG_HEAD(sys_connect_failed);
+	MSG_CLASS(sys_connect_failed);
 
 	std::string addr; 
 	asio::error_code ec;
@@ -24,7 +24,7 @@ struct sys_connect_failed : public packet
 struct sys_accept_failed : public packet
 {
 	MSG_TOPIC(topics::groups::sys, topics::types::accept_failed);
-	MSG_HEAD(sys_accept_failed);
+	MSG_CLASS(sys_accept_failed);
 
 	std::string addr; 
 	asio::error_code ec;
@@ -34,14 +34,14 @@ struct sys_accept_failed : public packet
 struct sys_session_ready : public packet
 {
 	MSG_TOPIC(topics::groups::sys, topics::types::session_ready);
-	MSG_HEAD(sys_session_ready);
+	MSG_CLASS(sys_session_ready);
 };
 
 /// ¼¼¼Ç Á¾·áµÊ
 struct sys_session_closed : public packet
 {
 	MSG_TOPIC(topics::groups::sys, topics::types::session_closed);
-	MSG_HEAD(sys_session_closed);
+	MSG_CLASS(sys_session_closed);
 
 	asio::error_code ec;
 };

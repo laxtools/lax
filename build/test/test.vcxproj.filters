@@ -28,6 +28,9 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\test\net\bits_message_design.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -44,7 +44,7 @@ static const lax::channel::message::topic_t get_topic() \
 { return lax::channel::message::topic_t(topic_key); }
 
 
-#define	MSG_HEAD(cls) \
+#define	MSG_CLASS(cls) \
 cls() \
 : lax::net::packet(topic_key) \
 { \
