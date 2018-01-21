@@ -51,8 +51,6 @@
  memcpy가 가장 느린 호출이 될 때까지 최적화를 했다. 
  check() 매크로 느리기 때문에 Shipping 빌드를 추가해야 한다. 
 
-
-
 ## Serialization 
 
 msgpack으로 진행할 생각이었으나 생각보다 많이 느리다. 작은 경우 초당 백만개 이상은 가능하나 
@@ -84,24 +82,33 @@ bitsery를 사용하는 프로토콜. bitsery는 러시아어로 얇은 조각이란 뜻인데
 bits_message, bits_factory, bits_protocol이 필요. 위를 지원하기 위한 
 구조를 단위 테스트를 진행하면서 설계한다. 
 
+ - bits_message
+   - serialization을 일일이 작성해야 하는 게 불편하긴 하다. 
+   - thrift 같은 경우 관리 구조가 맘에 들지 않기는 하다. 
+     - C++에 맞지 않은 메세지 전송 구조와 enum 들이 만들어진다
+	 - 서버 기능 개발에 사용한 구조체, 클래스를 메세지에 사용하기 어렵다
+   - 최대한 버그 없게, 디버깅이 쉽게 메세지 정의하기 
+
+
 ## service / protocol / session / acceptor / connector 
 
 한번에 구현해야 한다. 상호 연관이 밀접하다. 
 작업은 각 영역에 적는다. 
 
-## protocol
+연결 관리가 꽤 많이 깔끔해졌다. 
+close / destroy 개념 분리로 세션 정리도 괜찮고 
+적절하게 에러 처리도 되고 있다.
+
+### protocol
 
 
-## bits 
 
-
-## session 
+### session 
 
 채널과 ref 기능을 session과 service로 이동. 
 익숙한 session 개념으로 진행하고 
 프로토콜은 factory로 처리함. 
 프로토콜 명칭을 주면 해당 프로토콜을 찾아서 설정하도록 함
-
 
 ### channel 
 
@@ -115,7 +122,7 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
 이렇게 하는 게 좋아 보인다. 
 
 
-## service 
+### service 
 
  acceptor / connector only. 
 
@@ -124,21 +131,9 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
  protocol::ref를 통해 전송
 
 
-### slot 
-
-### acceptor 
-
-### connector 
-
-
-## server
-
-
-### binder / holder 
-
-
 ## actor 
 
+ 메세지 송수신이 깔끔하도록 한다.
 
 ## interface 
 
