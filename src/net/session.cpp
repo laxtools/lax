@@ -14,7 +14,7 @@ namespace net
 {
 
 channel::channel session::channel_("session");
-close_subs session::close_subs_;
+subs_close session::subs_close_;
 
 session::session(const id& id, tcp::socket&& soc, bool accepted, const std::string& protocol)
 	: socket_(std::move(soc))
@@ -108,16 +108,16 @@ void session::post(packet::ptr m)
 }
 
 session::key_t session::sub_close(
-	close_subs::sid id,
-	close_subs::cb_t cb
+	subs_close::sid_t id,
+	subs_close::cb_t cb
 )
 {
-	return close_subs_.subscribe(id, cb);
+	return subs_close_.subscribe(id, cb);
 }
 
 void session::unsub_close(key_t key)
 {
-	close_subs_.unsubscribe(key);
+	subs_close_.unsubscribe(key);
 }
 
 session::result session::send(packet::ptr m)
@@ -198,17 +198,11 @@ void session::destroy(const asio::error_code& ec)
 	util::log()->debug("{0} destroying...", get_desc());
 
 	// notify
-	{
-		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
+	destroyed_ = true;
 
-		check(!destroyed_);
+	(void)protocol_->on_error(ec);
 
-		(void)protocol_->on_error(ec);
-
-		notify_session_closed(ec);
-
-		destroyed_ = true;
-	}
+	notify_session_closed(ec);
 
 	service::inst().error(get_id());
 
@@ -234,7 +228,7 @@ session::result session::request_recv()
 		recving_ = true;
 	}
 
-	util::log()->debug( "{0} request recv", get_desc() );
+	util::log()->debug( "{} request recv", get_desc() );
 
 	// request recv. 한번에 하나만 읽고 위에서 막히므로 락 필요 없음
 	socket_.async_read_some(
@@ -379,6 +373,9 @@ void session::on_send_completed(asio::error_code& ec, std::size_t len)
 
 	if (!ec)
 	{
+		// TODO: protocol에서 메세지를 끌어와서 쓸 것인가? 
+		// 
+
 		request_send();
 	}
 	else
@@ -405,7 +402,7 @@ void session::notify_session_closed(const asio::error_code& ec)
 
 	post(mp); // send to channel
 
-	close_subs_.post(get_id().get_value(), ec); // send to refs
+	subs_close_.post(get_id().get_value(), ec); // send to refs
 }
 
 } // net

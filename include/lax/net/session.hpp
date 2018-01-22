@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <lax/net/detail/close_subs.hpp>
+#include <lax/net/detail/subs_close.hpp>
 #include <lax/channel/channel.hpp>
 #include <lax/net/protocol/protocol.hpp>
 #include <lax/net/reason.hpp>
@@ -90,7 +90,7 @@ public:
 		const std::string& get_desc() const;
 
 		/// get id to keept in map or hash_map
-		packet::sid get_id() const
+		packet::sid_t get_id() const
 		{
 			return session_->get_id().get_value();
 		}
@@ -140,8 +140,8 @@ public:
 
 	/// session::id에 대해 통지
 	static key_t sub_close(
-		close_subs::sid id, 
-		close_subs::cb_t cb
+		subs_close::sid_t id, 
+		subs_close::cb_t cb
 	);
 
 	/// always called from ref when subscribed
@@ -225,7 +225,7 @@ private:
 	using seg = typename segment_buffer::seg;
 
 	static channel::channel			channel_;		/// channel to communicate msgs
-	static close_subs				close_subs_;
+	static subs_close				subs_close_;
 
 	tcp::socket						socket_;
 	id								id_;

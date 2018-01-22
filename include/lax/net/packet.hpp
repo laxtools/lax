@@ -12,9 +12,9 @@ namespace net
 
 struct packet : public channel::message
 {
-	using sid = uint32_t;
+	using sid_t = uint32_t;
 
-	sid id = 0;	/// session id
+	sid_t id = 0;	/// session id
 
 	packet(const topic_t::key_t key)
 		: packet(topic_t(key))

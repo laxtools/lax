@@ -2,7 +2,7 @@
 #include <catch.hpp>
 #include <lax/net/service.hpp>
 #include <lax/net/protocol/bits/bits_message.hpp>
-#include <lax/net/detail/close_subs.hpp>
+#include <lax/net/detail/subs_close.hpp>
 #include <lax/net/protocol/sys/sys_messages.hpp>
 #include <lax/util/logger.hpp>
 
@@ -52,9 +52,9 @@ TEST_CASE("service")
 
 	SECTION("close subs")
 	{
-		SECTION("test close_subs class")
+		SECTION("test subs_close class")
 		{
-			close_subs subs;
+			subs_close subs;
 
 			auto key = subs.subscribe(3, [](packet::ptr m) {});
 			subs.unsubscribe(key);
@@ -84,7 +84,7 @@ TEST_CASE("service")
 
 			// ref 참조 등 먼저 지워져야 함
 			{
-				std::vector<packet::sid> sids;
+				std::vector<packet::sid_t> sids;
 
 				// session_ready sub
 				session::sub(

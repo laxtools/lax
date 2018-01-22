@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <lax/channel/message.hpp>
+#include <lax/net/packet.hpp>
 #include <lax/util/sequence.hpp>
 
 #include <asio.hpp>
@@ -25,28 +25,28 @@ namespace net
  * - put the message into a queue, then process in its own thread.
  * - locking, slow processing can affect io performance.
  */
-class close_subs
+class subs_close
 {
 public:
-	using sid = uint32_t;
+	using sid_t = packet::sid_t;
 	using key_t = uint32_t;
 	using cb_t = std::function<void(channel::message::ptr)>;
 
 public:
 	/// 持失切
-	close_subs();
+	subs_close();
 
 	/// 社瑚切
-	~close_subs();
+	~subs_close();
 
 	/// subscribe to topic. locked with unique_lock
-	key_t subscribe(sid id, cb_t cb);
+	key_t subscribe(sid_t id, cb_t cb);
 
 	/// unsubscribe to topic. locked with unique_lock
 	void unsubscribe(key_t key);
 
 	/// post a topic and message topic. locked with shared_lock
-	std::size_t post(sid id, const asio::error_code& ec = asio::error::fault);
+	std::size_t post(sid_t id, const asio::error_code& ec = asio::error::fault);
 
 private:
 	struct entry
@@ -56,8 +56,8 @@ private:
 	};
 
 	using vec = std::vector<entry>;
-	using map = std::unordered_map<sid, vec>;
-	using index = std::unordered_map<key_t, sid>;
+	using map = std::unordered_map<sid_t, vec>;
+	using index = std::unordered_map<key_t, sid_t>;
 
 private:
 	std::recursive_mutex		mutex_;

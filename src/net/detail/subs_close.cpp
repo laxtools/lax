@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include <lax/net/detail/close_subs.hpp>
+#include <lax/net/detail/subs_close.hpp>
 #include <lax/net/protocol/sys/sys_messages.hpp>
 #include <algorithm>
 
@@ -8,18 +8,18 @@ namespace lax
 namespace net
 {
 
-close_subs::close_subs()
+subs_close::subs_close()
 	: key_seq_(1, UINT16_MAX)
 {
 }
 
-close_subs::~close_subs()
+subs_close::~subs_close()
 {
 	// static으로 사용됨. 따라서, 정리는 필요 없음
 	// 다른 용례 생기면 다시 살핌
 }
 
-close_subs::key_t close_subs::subscribe(sid id, cb_t cb)
+subs_close::key_t subs_close::subscribe(sid_t id, cb_t cb)
 {
 	std::lock_guard<std::recursive_mutex> lock(mutex_);
 
@@ -52,7 +52,7 @@ close_subs::key_t close_subs::subscribe(sid id, cb_t cb)
 	}
 }
 
-void close_subs::unsubscribe(key_t key)
+void subs_close::unsubscribe(key_t key)
 {
 	std::lock_guard<std::recursive_mutex> lock(mutex_);
 
@@ -75,7 +75,7 @@ void close_subs::unsubscribe(key_t key)
 	);
 }
 
-std::size_t close_subs::post(sid id, const asio::error_code& ec)
+std::size_t subs_close::post(sid_t id, const asio::error_code& ec)
 {
 	std::lock_guard<std::recursive_mutex> lock(mutex_);
 

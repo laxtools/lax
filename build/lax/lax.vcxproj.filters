@@ -250,11 +250,11 @@
     <ClInclude Include="..\..\include\lax\net\addr.hpp">
       <Filter>net</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\detail\close_subs.hpp">
-      <Filter>net\detail</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\net\packet.hpp">
       <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\detail\subs_close.hpp">
+      <Filter>net\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,7 +345,7 @@
     <ClCompile Include="..\..\src\net\detail\acceptor.cpp">
       <Filter>net\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\net\detail\close_subs.cpp">
+    <ClCompile Include="..\..\src\net\detail\subs_close.cpp">
       <Filter>net\detail</Filter>
     </ClCompile>
   </ItemGroup>
