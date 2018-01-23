@@ -196,6 +196,9 @@
     <ClInclude Include="..\..\include\lax\net\protocol\protocol_factory.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\sys\sys_messages.hpp" />
     <ClInclude Include="..\..\include\lax\net\protocol\topics.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\util\checksum_modifier.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\util\cipher_modifier.hpp" />
+    <ClInclude Include="..\..\include\lax\net\protocol\util\modifier.hpp" />
     <ClInclude Include="..\..\include\lax\net\reason.hpp" />
     <ClInclude Include="..\..\include\lax\net\service.hpp" />
     <ClInclude Include="..\..\include\lax\net\session.hpp" />
@@ -205,6 +208,7 @@
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
     <ClInclude Include="..\..\include\lax\util\config.hpp" />
+    <ClInclude Include="..\..\include\lax\util\crc32.hpp" />
     <ClInclude Include="..\..\include\lax\util\exception.hpp" />
     <ClInclude Include="..\..\include\lax\util\json.hpp" />
     <ClInclude Include="..\..\include\lax\util\logger.hpp" />

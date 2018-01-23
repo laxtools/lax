@@ -256,6 +256,18 @@
     <ClInclude Include="..\..\include\lax\net\detail\subs_close.hpp">
       <Filter>net\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\cipher_modifier.hpp">
+      <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\modifier.hpp">
+      <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\checksum_modifier.hpp">
+      <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\crc32.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

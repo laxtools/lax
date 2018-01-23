@@ -67,6 +67,10 @@ private:
 	uint32_t get_topic(resize_buffer::iterator& iter) const; 
 
 
+public:
+	/// for test only 
+	void call_recv_test_only(const uint8_t* const bytes, std::size_t len);
+
 private: 
 	resize_buffer recv_buf_;
 };
