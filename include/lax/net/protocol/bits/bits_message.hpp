@@ -17,10 +17,8 @@ namespace net
 /** 
  * Usage: 
  * - subclass
- * - add BITS_BODY macro 
- * - call BITS_ADD( msg ) before using it
- * - define serialize template function in global namespace 
- * - use array, vector only (map is not supported for now)
+ * - add BITS_MSG() or BITS_MSG_DETAIL() with topic group and type
+ * - add BITS_SERIALIZE() with members to serialize
  */
 struct bits_message : public packet
 {
@@ -67,15 +65,6 @@ struct bits_message : public packet
 
 
 /// macros to define a message 
-/**
- * Use BITS_MSG or BITS_MSG_DETAIL
- *
- *
- *
- * BITS_SERIALIZE_TOPIC
- * - use this in serialize function to add topic into serialzed data
- */
-
 
  /// pack / unpack
 #define BITS_MSG_BODY() \

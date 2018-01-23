@@ -53,6 +53,9 @@
     <Filter Include="net\protocol\sys">
       <UniqueIdentifier>{994af1de-7bb5-4460-b2e0-fbd121fb4679}</UniqueIdentifier>
     </Filter>
+    <Filter Include="util\botan">
+      <UniqueIdentifier>{c7cc01db-277f-45a3-9b19-643fbfb50c7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -268,6 +271,9 @@
     <ClInclude Include="..\..\include\lax\util\crc32.hpp">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\botan\botan_all.h">
+      <Filter>util\botan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -360,6 +366,9 @@
     <ClCompile Include="..\..\src\net\detail\subs_close.cpp">
       <Filter>net\detail</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\util\botan\botan_all.cpp">
+      <Filter>util\botan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\lax\util\concurrent_queue.inl">
@@ -374,5 +383,10 @@
     <None Include="..\..\include\lax\actor\construction.md">
       <Filter>actor</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\include\lax\util\botan\license.txt">
+      <Filter>util\botan</Filter>
+    </Text>
   </ItemGroup>
 </Project>

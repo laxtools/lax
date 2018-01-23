@@ -56,8 +56,6 @@ struct bm_flex : public bits_message
 	}
 };
 
-
-
 } // noname
 
 TEST_CASE("bits protocol design")
@@ -155,14 +153,15 @@ TEST_CASE("bits protocol design")
 			REQUIRE(mm->name == mp->name);
 			REQUIRE(mm->items[0].id == 1);
 		}
+	}
 
-		SECTION("cipher")
+	SECTION("packetization")
+	{
+		SECTION("partial buffer accumulation")
 		{
+			BITS_MSG_REG(bm_flex); // ensure
 
-		}
-
-		SECTION("checksum")
-		{
+			// serialize and put bytes 
 
 		}
 	}

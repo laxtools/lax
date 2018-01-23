@@ -22,7 +22,7 @@
     <ProjectGuid>{3A05B5E7-B816-4F30-BAAD-603125377721}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>net</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>lax</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -206,6 +206,7 @@
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
+    <ClInclude Include="..\..\include\lax\util\botan\botan_all.h" />
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
     <ClInclude Include="..\..\include\lax\util\config.hpp" />
     <ClInclude Include="..\..\include\lax\util\crc32.hpp" />
@@ -249,6 +250,7 @@
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
+    <ClCompile Include="..\..\src\util\botan\botan_all.cpp" />
     <ClCompile Include="..\..\src\util\json.cpp" />
     <ClCompile Include="..\..\src\util\logger.cpp" />
     <ClCompile Include="..\..\src\util\macros.cpp" />
@@ -269,6 +271,9 @@
     <None Include="..\..\include\lax\net\construction.md" />
     <None Include="..\..\include\lax\net\session.inl" />
     <None Include="..\..\include\lax\util\concurrent_queue.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\include\lax\util\botan\license.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -57,7 +57,10 @@ protocol::result bits_protocol::send(packet::ptr m)
 	return send_final(mp, buf.data(), size);
 }
 
-protocol::result bits_protocol::send(packet::ptr m, const uint8_t* const data, std::size_t len)
+protocol::result bits_protocol::send(
+	packet::ptr m, 
+	const uint8_t* const data, 
+	std::size_t len)
 {
 	expect(m);
 	expect(data);
@@ -85,7 +88,11 @@ protocol::result bits_protocol::send(packet::ptr m, const uint8_t* const data, s
 	return send_final(mp, data, len);
 }
 
-protocol::result bits_protocol::send_final(bits_message::ptr mp, const uint8_t* const data, std::size_t len)
+protocol::result bits_protocol::send_final(
+	bits_message::ptr mp, 
+	const uint8_t* const data, 
+	std::size_t len
+)
 {
 	uint8_t* const	final_data = const_cast<uint8_t*>(data);
 	std::size_t		final_size = len;
@@ -114,7 +121,9 @@ protocol::result bits_protocol::send_final(bits_message::ptr mp, const uint8_t* 
 	return protocol::send(final_data, final_size);
 }
 
-protocol::result bits_protocol::on_recv(const uint8_t* const bytes, std::size_t len)
+protocol::result bits_protocol::on_recv(
+	const uint8_t* const bytes, 
+	std::size_t len)
 {
 	expect(bytes);
 	expect(len > 0);
@@ -228,6 +237,14 @@ uint32_t bits_protocol::get_topic(resize_buffer::iterator& ri) const
 	topic |= (*ri << 24);		++ri;
 
 	return topic;
+}
+
+protocol::result bits_protocol::call_recv_for_test(
+	const uint8_t* const bytes, 
+	std::size_t len
+)
+{
+	return on_recv(bytes, len);
 }
 
 } // net
