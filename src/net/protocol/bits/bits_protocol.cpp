@@ -156,7 +156,7 @@ protocol::result bits_protocol::on_recv(const uint8_t* const bytes, std::size_t 
 				tp.get_group(), tp.get_type()
 			);
 
-			close();
+			// session will be closed
 
 			return result(false, reason::fail_bits_message_not_registered);
 		}
@@ -173,7 +173,7 @@ protocol::result bits_protocol::on_recv(const uint8_t* const bytes, std::size_t 
 				static_cast<uint8_t>(mp->reader_error)
 			);
 
-			close(); 
+			// session will be closed
 
 			return result(false, reason::fail_bits_unpack_error);
 		}
