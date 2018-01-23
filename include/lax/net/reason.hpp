@@ -33,7 +33,12 @@ enum reason
 	fail_socket_closed, 
 
 	// protocol 
+	fail_null_message_pointer,
+	fail_invalid_message_header,
 	fail_protocol_not_added, 
+	fail_invalid_bits_message, 
+	fail_bits_message_not_registered, 
+	fail_bits_unpack_error
 
 };
 

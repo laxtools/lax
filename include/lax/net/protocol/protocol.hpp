@@ -43,12 +43,15 @@ public:
 	/// send to a session after processing message
 	virtual result send(packet::ptr m) = 0; 
 
+	/// 미리 serialize 된 패킷을 보낸다. m은 메세지 생략 못 하도록 추가 
+	virtual result send(packet::ptr m, const uint8_t* const data, std::size_t len) = 0;
+
 protected:
 	/// bind to session
 	virtual void on_bind() = 0; 
 
 	/// session calls this when received data
-	virtual result on_recv(uint8_t* bytes, std::size_t len) = 0;
+	virtual result on_recv(const uint8_t* const bytes, std::size_t len) = 0;
 
 	/// session calls this when sent data 
 	virtual void on_send(std::size_t len) = 0;
@@ -56,7 +59,14 @@ protected:
 	/// session calls this when error ocurrs
 	virtual void on_error(const asio::error_code& ec) = 0;
 
-protected:
+protected: 
+	/// call session::send() 
+	result send(const uint8_t* const data, std::size_t len);
+
+	/// close session 
+	void close();
+
+	/// get session
 	wptr& get_session() { return session_;  }
 
 private:

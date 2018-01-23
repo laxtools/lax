@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <lax/net/protocol/bits/bits_message_factory.hpp>
+#include <lax/util/logger.hpp>
 
 namespace lax
 {
@@ -17,7 +18,13 @@ void bits_message_factory::add(const packet::topic_t& topic, creator c)
 {
 	auto iter = map_.find(topic);
 
-	check(iter == map_.end());
+	if (iter != map_.end())
+	{
+		util::log()->warn(
+			"bits_message w/ topic[{}:{}] is alreay added!",
+			topic.get_group(), topic.get_type());
+	}
+
 	return_if(iter != map_.end());
 
 	map_[topic] = c;

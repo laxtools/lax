@@ -75,6 +75,9 @@
     <ClCompile Include="..\..\test\net\test_service.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\net\test_bits_protocol_design.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\test\net\test_bits_protocol.cpp">
       <Filter>net</Filter>
     </ClCompile>

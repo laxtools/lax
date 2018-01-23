@@ -43,3 +43,6 @@ lax::net::bits_message_factory::inst().add( \
 	cls::topic_t(cls::topic_key),  \
 	[]() { return std::make_shared<cls>(); } \
 )
+
+#define BITS_MSG_CREATE(topic) \
+lax::net::bits_message_factory::inst().create(lax::net::packet::topic_t(topic))

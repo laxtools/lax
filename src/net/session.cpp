@@ -125,6 +125,11 @@ session::result session::send(packet::ptr m)
 	return protocol_->send(m);
 }
 
+session::result session::send(packet::ptr m, const uint8_t* const data, std::size_t len)
+{
+	return protocol_->send(m, data, len);
+}
+
 void session::close()
 {
 	// 연결이 유효하면 끊고 소멸을 시도한다. 
@@ -152,7 +157,7 @@ void session::close()
 	destroy();
 }
 
-session::result session::send(uint8_t* data, std::size_t len)
+session::result session::send(const uint8_t* const data, std::size_t len)
 {
 	return_if(!socket_.is_open(), result(false, reason::fail_socket_closed));
 
@@ -167,7 +172,7 @@ session::result session::send(uint8_t* data, std::size_t len)
 
 void session::error(const asio::error_code& ec)
 {
-	util::log()->warn(
+	util::log()->info(
 		"session error. id: {0}, reason: {1}",
 		get_id().get_value(),
 		ec.message()

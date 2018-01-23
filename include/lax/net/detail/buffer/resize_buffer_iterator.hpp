@@ -78,19 +78,19 @@ public:
 
 	resize_buffer_iterator<Elem>  operator+(const ptrdiff_t& movement) 
 	{ 
-		auto oldPtr = elem_; 
+		auto old_ptr = elem_; 
 		elem_ += movement; 
 		auto temp(*this); 
-		elem_ = oldPtr; 
+		elem_ = old_ptr; 
 		return temp; 
 	}
 
 	resize_buffer_iterator<Elem>  operator-(const ptrdiff_t& movement) 
 	{ 
-		auto oldPtr = elem_; 
+		auto old_ptr = elem_; 
 		elem_ -= movement; 
 		auto temp(*this); 
-		elem_ = oldPtr; 
+		elem_ = old_ptr; 
 		return temp; 
 	}
 

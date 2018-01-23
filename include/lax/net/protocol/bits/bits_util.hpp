@@ -4,9 +4,14 @@
 #include <bitsery/bitsery.h>
 #include <bitsery/adapter/buffer.h>
 #include <bitsery/flexible.h>
-#include <bitsery/flexible/vector.h>
 #include <bitsery/flexible/array.h>
+#include <bitsery/flexible/deque.h>
+#include <bitsery/flexible/list.h>
+#include <bitsery/flexible/map.h>
+#include <bitsery/flexible/set.h>
 #include <bitsery/flexible/string.h>
+#include <bitsery/flexible/unordered_map.h>
+#include <bitsery/flexible/vector.h>
 #include <bitsery/ext/inheritance.h>
 
 namespace bitsery
@@ -42,3 +47,5 @@ using BitsDeserializer = bitsery::BasicDeserializer <bitsery::AdapterReader<Inpu
 
 } // net 
 } // lax
+
+

@@ -123,6 +123,15 @@ public:
 		cb_t cb
 	);
 
+	static key_t sub(
+		const packet::topic_t::key_t key,
+		cond_t cond,
+		cb_t cb
+	)
+	{
+		return sub(packet::topic_t(key), cond, cb);
+	}
+
 	/// subscribe to a topic without condition 
 	/**
 	* direct mode subscription only. packet is posted immediately
@@ -131,6 +140,14 @@ public:
 		const packet::topic_t& topic,
 		cb_t cb
 	);
+
+	static key_t sub(
+		const packet::topic_t::key_t key,
+		cb_t cb
+	)
+	{
+		return sub(packet::topic_t(key), cb);
+	}
 
 	/// unsubscribe 
 	static bool unsub(key_t key);
@@ -149,6 +166,9 @@ public:
 
 	/// send through a protocol. call following send
 	result send(packet::ptr m);
+
+	/// 미리 serialize 된 패킷을 보낸다. m은 메세지 생략 못 하도록 추가 
+	result send(packet::ptr m, const uint8_t* data, std::size_t len);
 
 	/// close socket (shutdown and close) 
 	void close();
@@ -194,7 +214,7 @@ protected:
 
 private:
 	/// send a packet to socket
-	result send(uint8_t* data, std::size_t len);
+	result send(const uint8_t* const data, std::size_t len);
 
 	/// 에러 처리 함수
 	void error(const asio::error_code& ec);

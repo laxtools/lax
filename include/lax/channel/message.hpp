@@ -32,6 +32,11 @@ public:
 		return topic_;
 	}
 
+	topic_t& get_topic() 
+	{
+		return topic_;
+	}
+
 	bool is_valid_topic(const topic_t& topic) const
 	{
 		return topic.is_valid();
@@ -48,8 +53,8 @@ public:
 		return "message";
 	}
 
-private: 
-	topic_t topic_; // invalid
+protected: 
+	topic_t topic_; // invalid. used in serialization.
 };
 
 } // net

@@ -184,6 +184,7 @@
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
     <ClCompile Include="..\..\test\net\test_bitsery.cpp" />
     <ClCompile Include="..\..\test\net\test_bits_protocol.cpp" />
+    <ClCompile Include="..\..\test\net\test_bits_protocol_design.cpp" />
     <ClCompile Include="..\..\test\net\test_resize_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_service.cpp" />

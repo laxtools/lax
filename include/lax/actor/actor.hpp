@@ -10,6 +10,10 @@ class actor
 {
 public:
 
+	// subclassing 
+	// - comp_* accessed 
+	// - check type and cast
+	// - only once
 };
 
 } // actor 
