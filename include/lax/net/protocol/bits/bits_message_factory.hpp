@@ -36,3 +36,10 @@ private:
 
 } // net
 } // lax
+
+
+#define BITS_MSG_REG(cls) \
+lax::net::bits_message_factory::inst().add( \
+	cls::topic_t(cls::topic_key),  \
+	[]() { return std::make_shared<cls>(); } \
+)

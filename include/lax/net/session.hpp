@@ -78,7 +78,7 @@ public:
 		result send(packet::ptr m);
 
 		/// subscribe for close callback
-		bool sub(cb_t cb);
+		bool sub_close(cb_t cb);
 
 		/// close session
 		void close();

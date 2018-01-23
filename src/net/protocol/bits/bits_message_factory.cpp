@@ -6,7 +6,7 @@ namespace lax
 namespace net
 {
 
-bits_message_factory& inst()
+bits_message_factory& bits_message_factory::inst()
 {
 	static bits_message_factory inst_;
 

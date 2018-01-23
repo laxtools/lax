@@ -112,7 +112,7 @@ TEST_CASE("service")
 				int close_count = 0;
 
 				// called from io thread
-				sref.sub(
+				sref.sub_close(
 					[&sref, &close_count](message::ptr m) {
 					auto pp = std::static_pointer_cast<sys_session_closed>(m);
 					++close_count;

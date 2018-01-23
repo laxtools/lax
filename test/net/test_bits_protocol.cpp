@@ -28,6 +28,24 @@ void serialize(S& ss, bm_derived& m)
 	ss.text1b(m.name, 64);
 }
 
+struct bm_flex : public bits_message
+{
+	BITS_MSG_TOPIC(3, 4);		// group, type
+	BITS_MSG_CLASS(bm_flex); 
+
+	std::string name;
+	int value = 33; 
+
+	template <typename S>
+	void serialize(S& s) 
+	{
+		// 편한 버전. 대부분의 경우 이렇게 하면 됨. 
+		// topic 이 문제다 . 
+
+		s.archive(name, value);
+	}
+};
+
 } // noname
 
 TEST_CASE("bits protocol")
@@ -99,6 +117,28 @@ TEST_CASE("bits protocol")
 			REQUIRE(size > 0);
 
 			auto res = std::make_shared<bm2>();
+			auto rc = res->unpack(buf, buf.begin(), size);
+
+			REQUIRE(res->name == mp->name);
+		}
+
+		SECTION("debugging")
+		{
+			REQUIRE(bm_derived::group_name == "3");
+			REQUIRE(bm_derived::type_name == "3");
+		}
+
+		SECTION("flexible serialization")
+		{
+			auto mp = std::make_shared<bm_flex>();
+			mp->name = "Hello";
+
+			resize_buffer buf;
+
+			auto size = mp->pack(buf);
+			REQUIRE(size > 0);
+
+			auto res = std::make_shared<bm_flex>();
 			auto rc = res->unpack(buf, buf.begin(), size);
 
 			REQUIRE(res->name == mp->name);

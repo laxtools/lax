@@ -108,7 +108,7 @@ const std::string& session::ref::get_desc() const
 }
 
 inline
-bool session::ref::sub(cb_t cb)
+bool session::ref::sub_close(cb_t cb)
 {
 	return_if(!session_, false);
 

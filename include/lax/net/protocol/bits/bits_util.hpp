@@ -3,9 +3,10 @@
 #include <lax/net/detail/buffer/resize_buffer.hpp>
 #include <bitsery/bitsery.h>
 #include <bitsery/adapter/buffer.h>
-#include <bitsery/traits/vector.h>
-#include <bitsery/traits/array.h>
-#include <bitsery/traits/string.h>
+#include <bitsery/flexible.h>
+#include <bitsery/flexible/vector.h>
+#include <bitsery/flexible/array.h>
+#include <bitsery/flexible/string.h>
 #include <bitsery/ext/inheritance.h>
 
 namespace bitsery
