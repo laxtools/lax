@@ -38,8 +38,11 @@ enum reason
 	fail_protocol_not_added, 
 	fail_invalid_bits_message, 
 	fail_bits_message_not_registered, 
-	fail_bits_unpack_error
-
+	fail_bits_pack_error,
+	fail_bits_unpack_error, 
+	fail_invalid_message_sequence, 
+	fail_null_hash_function,
+	fail_incorrect_checksum, 
 };
 
 /// get description from reason

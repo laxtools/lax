@@ -54,9 +54,9 @@ struct bits_message : public packet
 
 
 	/// implementation detail. 
-
-	bool		enable_cipher = false;		
-	bool		enable_checksum = false;
+	bool enable_sequence = false;
+	bool enable_checksum = false;
+	bool enable_cipher = false;		
 	bitsery::ReaderError reader_error = bitsery::ReaderError::NoError;
 };
 
@@ -111,21 +111,22 @@ bool unpack(resize_buffer& buf, resize_buffer::iterator& iter, \
 static constexpr const char* group_name = #group;  \
 static constexpr const char* type_name = #type; 
 
-/// 메세지 생성자와 get_desc() 정의. 암호화 / 체크섬을 클래스에 구성 
-/**
- * BITS_MSG_TOPIC이 먼저 호출되어야 함.
- *
- * 암호화 / CRC의 동적 구성은 불일치가 자주 발생.
- * 클래스 정의할 때 넣고 헤더 버전을 맞추면 일치하도록 함.
- */
-#define BITS_MSG_CLASS_DETAIL(cls, enc, crc) \
+ /// 메세지 생성자와 get_desc() 정의. 암호화 / 체크섬을 클래스에 구성 
+ /**
+  * BITS_MSG_TOPIC이 먼저 호출되어야 함.
+  *
+  * 암호화 / CRC의 동적 구성은 불일치가 자주 발생.
+  * 클래스 정의할 때 넣고 헤더 버전을 맞추면 일치하도록 함.
+  */
+#define BITS_MSG_CLASS_DETAIL(cls, crc, seq, enc) \
 cls() \
 : lax::net::bits_message(topic_key) \
 { \
 	desc = fmt::format("{}:{}:{}",  \
 		#cls, get_topic().get_group(), get_topic().get_type()); \
-	enable_cipher = enc; \
-	enable_checksum = crc; \
+	enable_sequence = (seq); \
+	enable_cipher = (enc); \
+	enable_checksum = (crc); \
 } \
 \
 const char* get_desc() const override \
@@ -135,7 +136,7 @@ const char* get_desc() const override \
 BITS_MSG_BODY()
 
  /// 암호화, CRC를 disable한 간략 버전
-#define BITS_MSG_CLASS(cls) BITS_MSG_CLASS_DETAIL(cls, false, false)
+#define BITS_MSG_CLASS(cls) BITS_MSG_CLASS_DETAIL(cls, false, false, false)
 
 
 /// 간략한 버전. 

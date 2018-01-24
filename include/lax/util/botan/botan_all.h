@@ -29,7 +29,7 @@
 
 /*
 * This file was automatically generated running
-* 'configure.py --amalgamation --single-amalgamation-file --enable-modules=aes,sha1,crc32 --minimized-build'
+* 'configure.py --amalgamation --single-amalgamation-file --minimized-build --enable-modules=aes,sha1,cbc,crc32'
 *
 * Target
 *  - Compiler: cl /MD /bigobj /EHs /GR /O2 /Oi
@@ -44,7 +44,7 @@
 
 #define BOTAN_VERSION_RELEASE_TYPE "unreleased"
 
-#define BOTAN_VERSION_VC_REVISION "git:03256892dc52368154174e85509b662bd426bb2b"
+#define BOTAN_VERSION_VC_REVISION "unknown"
 
 #define BOTAN_DISTRIBUTION_INFO "unspecified"
 
@@ -59,7 +59,7 @@
 #define BOTAN_LINK_FLAGS "/MD /bigobj"
 
 #ifndef BOTAN_DLL
-  #define BOTAN_DLL  //__declspec(dllimport)
+  #define BOTAN_DLL // __declspec(dllimport)
 #endif
 
 /* Target identification and feature test macros */
@@ -104,6 +104,7 @@
 */
 #define BOTAN_HAS_AES 20131128
 #define BOTAN_HAS_BLOCK_CIPHER 20131128
+#define BOTAN_HAS_CIPHER_MODE_PADDING 20131128
 #define BOTAN_HAS_CPUID 20170917
 #define BOTAN_HAS_CRC32 20131128
 #define BOTAN_HAS_ENTROPY_SOURCE 20151120
@@ -111,6 +112,7 @@
 #define BOTAN_HAS_MAC 20150626
 #define BOTAN_HAS_MDX_HASH_FUNCTION 20131128
 #define BOTAN_HAS_MODES 20150626
+#define BOTAN_HAS_MODE_CBC 20131128
 #define BOTAN_HAS_SHA1 20131128
 #define BOTAN_HAS_STREAM_CIPHER 20131128
 #define BOTAN_HAS_UTIL_FUNCTIONS 20171003
@@ -3059,70 +3061,6 @@ BOTAN_PUBLIC_API(2,0) calendar_point calendar_value(
 namespace Botan {
 
 /**
-* Convert a sequence of UCS-2 (big endian) characters to a UTF-8 string
-* This is used for ASN.1 BMPString type
-* @param ucs2 the sequence of UCS-2 characters
-* @param len length of ucs2 in bytes, must be a multiple of 2
-*/
-std::string BOTAN_UNSTABLE_API ucs2_to_utf8(const uint8_t ucs2[], size_t len);
-
-/**
-* Convert a sequence of UCS-4 (big endian) characters to a UTF-8 string
-* This is used for ASN.1 UniversalString type
-* @param ucs4 the sequence of UCS-4 characters
-* @param len length of ucs4 in bytes, must be a multiple of 4
-*/
-std::string BOTAN_UNSTABLE_API ucs4_to_utf8(const uint8_t ucs4[], size_t len);
-
-/**
-* Convert a UTF-8 string to Latin-1
-* If a character outside the Latin-1 range is encountered, an exception is thrown.
-*/
-std::string BOTAN_UNSTABLE_API utf8_to_latin1(const std::string& utf8);
-
-/**
-* The different charsets (nominally) supported by Botan.
-*/
-enum Character_Set {
-   LOCAL_CHARSET,
-   UCS2_CHARSET,
-   UTF8_CHARSET,
-   LATIN1_CHARSET
-};
-
-namespace Charset {
-
-/*
-* Character set conversion - avoid this.
-* For specific conversions, use the functions above like
-* ucs2_to_utf8 and utf8_to_latin1
-*
-* If you need something more complex than that, use a real library
-* such as iconv, Boost.Locale, or ICU
-*/
-std::string BOTAN_PUBLIC_API(2,0)
-   BOTAN_DEPRECATED("Avoid. See comment in header.")
-   transcode(const std::string& str,
-             Character_Set to,
-             Character_Set from);
-
-/*
-* Simple character classifier functions
-*/
-bool BOTAN_PUBLIC_API(2,0) is_digit(char c);
-bool BOTAN_PUBLIC_API(2,0) is_space(char c);
-bool BOTAN_PUBLIC_API(2,0) caseless_cmp(char x, char y);
-
-uint8_t BOTAN_PUBLIC_API(2,0) char2digit(char c);
-char BOTAN_PUBLIC_API(2,0) digit2char(uint8_t b);
-
-}
-
-}
-
-namespace Botan {
-
-/**
 * Interface for cipher modes
 */
 class BOTAN_PUBLIC_API(2,0) Cipher_Mode
@@ -3332,6 +3270,352 @@ BOTAN_PUBLIC_API(2,2)
 Cipher_Mode* get_cipher_mode(const std::string& algo_spec,
                              Cipher_Dir direction,
                              const std::string& provider = "");
+
+}
+
+namespace Botan {
+
+/**
+* Block Cipher Mode Padding Method
+* This class is pretty limited, it cannot deal well with
+* randomized padding methods, or any padding method that
+* wants to add more than one block. For instance, it should
+* be possible to define cipher text stealing mode as simply
+* a padding mode for CBC, which happens to consume the last
+* two block (and requires use of the block cipher).
+*/
+class BOTAN_PUBLIC_API(2,0) BlockCipherModePaddingMethod
+   {
+   public:
+      /**
+      * Add padding bytes to buffer.
+      * @param buffer data to pad
+      * @param final_block_bytes size of the final block in bytes
+      * @param block_size size of each block in bytes
+      */
+      virtual void add_padding(secure_vector<uint8_t>& buffer,
+                               size_t final_block_bytes,
+                               size_t block_size) const = 0;
+
+      /**
+      * Remove padding bytes from block
+      * @param block the last block
+      * @param size the size of the block in bytes
+      * @return number of padding bytes
+      */
+      virtual size_t unpad(const uint8_t block[],
+                           size_t size) const = 0;
+
+      /**
+      * @param block_size of the cipher
+      * @return valid block size for this padding mode
+      */
+      virtual bool valid_blocksize(size_t block_size) const = 0;
+
+      /**
+      * @return name of the mode
+      */
+      virtual std::string name() const = 0;
+
+      /**
+      * virtual destructor
+      */
+      virtual ~BlockCipherModePaddingMethod() = default;
+   };
+
+/**
+* PKCS#7 Padding
+*/
+class BOTAN_PUBLIC_API(2,0) PKCS7_Padding final : public BlockCipherModePaddingMethod
+   {
+   public:
+      void add_padding(secure_vector<uint8_t>& buffer,
+                       size_t final_block_bytes,
+                       size_t block_size) const override;
+
+      size_t unpad(const uint8_t[], size_t) const override;
+
+      bool valid_blocksize(size_t bs) const override { return (bs > 0 && bs < 256); }
+
+      std::string name() const override { return "PKCS7"; }
+   };
+
+/**
+* ANSI X9.23 Padding
+*/
+class BOTAN_PUBLIC_API(2,0) ANSI_X923_Padding final : public BlockCipherModePaddingMethod
+   {
+   public:
+      void add_padding(secure_vector<uint8_t>& buffer,
+                       size_t final_block_bytes,
+                       size_t block_size) const override;
+
+      size_t unpad(const uint8_t[], size_t) const override;
+
+      bool valid_blocksize(size_t bs) const override { return (bs > 0 && bs < 256); }
+
+      std::string name() const override { return "X9.23"; }
+   };
+
+/**
+* One And Zeros Padding (ISO/IEC 9797-1, padding method 2)
+*/
+class BOTAN_PUBLIC_API(2,0) OneAndZeros_Padding final : public BlockCipherModePaddingMethod
+   {
+   public:
+      void add_padding(secure_vector<uint8_t>& buffer,
+                       size_t final_block_bytes,
+                       size_t block_size) const override;
+
+      size_t unpad(const uint8_t[], size_t) const override;
+
+      bool valid_blocksize(size_t bs) const override { return (bs > 0); }
+
+      std::string name() const override { return "OneAndZeros"; }
+   };
+
+/**
+* ESP Padding (RFC 4304)
+*/
+class BOTAN_PUBLIC_API(2,0) ESP_Padding final : public BlockCipherModePaddingMethod
+   {
+   public:
+      void add_padding(secure_vector<uint8_t>& buffer,
+                       size_t final_block_bytes,
+                       size_t block_size) const override;
+
+      size_t unpad(const uint8_t[], size_t) const override;
+
+      bool valid_blocksize(size_t bs) const override { return (bs > 0); }
+
+      std::string name() const override { return "ESP"; }
+   };
+
+/**
+* Null Padding
+*/
+class BOTAN_PUBLIC_API(2,0) Null_Padding final : public BlockCipherModePaddingMethod
+   {
+   public:
+      void add_padding(secure_vector<uint8_t>&, size_t, size_t) const override
+         {
+         /* no padding */
+         }
+
+      size_t unpad(const uint8_t[], size_t size) const override { return size; }
+
+      bool valid_blocksize(size_t) const override { return true; }
+
+      std::string name() const override { return "NoPadding"; }
+   };
+
+/**
+* Get a block cipher padding mode by name (eg "NoPadding" or "PKCS7")
+* @param algo_spec block cipher padding mode name
+*/
+BOTAN_PUBLIC_API(2,0) BlockCipherModePaddingMethod* get_bc_pad(const std::string& algo_spec);
+
+}
+
+namespace Botan {
+
+/**
+* CBC Mode
+*/
+class BOTAN_PUBLIC_API(2,0) CBC_Mode : public Cipher_Mode
+   {
+   public:
+      std::string name() const override;
+
+      size_t update_granularity() const override;
+
+      Key_Length_Specification key_spec() const override;
+
+      size_t default_nonce_length() const override;
+
+      bool valid_nonce_length(size_t n) const override;
+
+      void clear() override;
+
+      void reset() override;
+
+   protected:
+      CBC_Mode(BlockCipher* cipher, BlockCipherModePaddingMethod* padding);
+
+      const BlockCipher& cipher() const { return *m_cipher; }
+
+      const BlockCipherModePaddingMethod& padding() const
+         {
+         BOTAN_ASSERT_NONNULL(m_padding);
+         return *m_padding;
+         }
+
+      secure_vector<uint8_t>& state() { return m_state; }
+
+      size_t block_size() const { return m_state.size(); }
+
+      uint8_t* state_ptr() { return m_state.data(); }
+
+   private:
+      void start_msg(const uint8_t nonce[], size_t nonce_len) override;
+
+      void key_schedule(const uint8_t key[], size_t length) override;
+
+      std::unique_ptr<BlockCipher> m_cipher;
+      std::unique_ptr<BlockCipherModePaddingMethod> m_padding;
+      secure_vector<uint8_t> m_state;
+   };
+
+/**
+* CBC Encryption
+*/
+class BOTAN_PUBLIC_API(2,0) CBC_Encryption : public CBC_Mode
+   {
+   public:
+      /**
+      * @param cipher block cipher to use
+      * @param padding padding method to use
+      */
+      CBC_Encryption(BlockCipher* cipher, BlockCipherModePaddingMethod* padding) :
+         CBC_Mode(cipher, padding) {}
+
+      size_t process(uint8_t buf[], size_t size) override;
+
+      void finish(secure_vector<uint8_t>& final_block, size_t offset = 0) override;
+
+      size_t output_length(size_t input_length) const override;
+
+      size_t minimum_final_size() const override;
+   };
+
+/**
+* CBC Encryption with ciphertext stealing (CBC-CS3 variant)
+*/
+class BOTAN_PUBLIC_API(2,0) CTS_Encryption final : public CBC_Encryption
+   {
+   public:
+      /**
+      * @param cipher block cipher to use
+      */
+      explicit CTS_Encryption(BlockCipher* cipher) : CBC_Encryption(cipher, nullptr) {}
+
+      size_t output_length(size_t input_length) const override;
+
+      void finish(secure_vector<uint8_t>& final_block, size_t offset = 0) override;
+
+      size_t minimum_final_size() const override;
+
+      bool valid_nonce_length(size_t n) const override;
+   };
+
+/**
+* CBC Decryption
+*/
+class BOTAN_PUBLIC_API(2,0) CBC_Decryption : public CBC_Mode
+   {
+   public:
+      /**
+      * @param cipher block cipher to use
+      * @param padding padding method to use
+      */
+      CBC_Decryption(BlockCipher* cipher, BlockCipherModePaddingMethod* padding) :
+         CBC_Mode(cipher, padding), m_tempbuf(update_granularity()) {}
+
+      size_t process(uint8_t buf[], size_t size) override;
+
+      void finish(secure_vector<uint8_t>& final_block, size_t offset = 0) override;
+
+      size_t output_length(size_t input_length) const override;
+
+      size_t minimum_final_size() const override;
+
+      void reset() override;
+
+   private:
+      secure_vector<uint8_t> m_tempbuf;
+   };
+
+/**
+* CBC Decryption with ciphertext stealing (CBC-CS3 variant)
+*/
+class BOTAN_PUBLIC_API(2,0) CTS_Decryption final : public CBC_Decryption
+   {
+   public:
+      /**
+      * @param cipher block cipher to use
+      */
+      explicit CTS_Decryption(BlockCipher* cipher) : CBC_Decryption(cipher, nullptr) {}
+
+      void finish(secure_vector<uint8_t>& final_block, size_t offset = 0) override;
+
+      size_t minimum_final_size() const override;
+
+      bool valid_nonce_length(size_t n) const override;
+   };
+
+}
+
+namespace Botan {
+
+/**
+* Convert a sequence of UCS-2 (big endian) characters to a UTF-8 string
+* This is used for ASN.1 BMPString type
+* @param ucs2 the sequence of UCS-2 characters
+* @param len length of ucs2 in bytes, must be a multiple of 2
+*/
+std::string BOTAN_UNSTABLE_API ucs2_to_utf8(const uint8_t ucs2[], size_t len);
+
+/**
+* Convert a sequence of UCS-4 (big endian) characters to a UTF-8 string
+* This is used for ASN.1 UniversalString type
+* @param ucs4 the sequence of UCS-4 characters
+* @param len length of ucs4 in bytes, must be a multiple of 4
+*/
+std::string BOTAN_UNSTABLE_API ucs4_to_utf8(const uint8_t ucs4[], size_t len);
+
+/**
+* Convert a UTF-8 string to Latin-1
+* If a character outside the Latin-1 range is encountered, an exception is thrown.
+*/
+std::string BOTAN_UNSTABLE_API utf8_to_latin1(const std::string& utf8);
+
+/**
+* The different charsets (nominally) supported by Botan.
+*/
+enum Character_Set {
+   LOCAL_CHARSET,
+   UCS2_CHARSET,
+   UTF8_CHARSET,
+   LATIN1_CHARSET
+};
+
+namespace Charset {
+
+/*
+* Character set conversion - avoid this.
+* For specific conversions, use the functions above like
+* ucs2_to_utf8 and utf8_to_latin1
+*
+* If you need something more complex than that, use a real library
+* such as iconv, Boost.Locale, or ICU
+*/
+std::string BOTAN_PUBLIC_API(2,0)
+   BOTAN_DEPRECATED("Avoid. See comment in header.")
+   transcode(const std::string& str,
+             Character_Set to,
+             Character_Set from);
+
+/*
+* Simple character classifier functions
+*/
+bool BOTAN_PUBLIC_API(2,0) is_digit(char c);
+bool BOTAN_PUBLIC_API(2,0) is_space(char c);
+bool BOTAN_PUBLIC_API(2,0) caseless_cmp(char x, char y);
+
+uint8_t BOTAN_PUBLIC_API(2,0) char2digit(char c);
+char BOTAN_PUBLIC_API(2,0) digit2char(uint8_t b);
+
+}
 
 }
 

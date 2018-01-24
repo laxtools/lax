@@ -1,0 +1,41 @@
+#pragma once 
+
+#include <lax/net/protocol/util/modifier.hpp>
+#include <atomic>
+
+namespace lax
+{
+namespace net
+{
+
+/// single byte sequence check
+class sequencer final : public modifier
+{
+public:
+	virtual result on_bind() override;
+
+	/// after recv. buf has other messages in buffer. 
+	virtual result on_recv(
+		resize_buffer& buf,
+		std::size_t msg_pos,
+		std::size_t msg_len
+	) override;
+
+	/// before send. buf has only this message
+	/** 
+	 * msg size is increased by 1. 
+	 * buf is increase by 1.
+	 */
+	virtual result on_send(
+		resize_buffer& buf,
+		std::size_t msg_pos,
+		std::size_t msg_len
+	) override;
+
+private: 
+	std::atomic<uint8_t> send_seq_ = 0;		 
+	std::atomic<uint8_t> recv_seq_ = 0;	
+};
+
+} // net
+} // lax

@@ -259,20 +259,23 @@
     <ClInclude Include="..\..\include\lax\net\detail\subs_close.hpp">
       <Filter>net\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\util\cipher_modifier.hpp">
-      <Filter>net\protocol\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\util\modifier.hpp">
-      <Filter>net\protocol\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\net\protocol\util\checksum_modifier.hpp">
-      <Filter>net\protocol\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\util\crc32.hpp">
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\util\botan\botan_all.h">
       <Filter>util\botan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\checksum.hpp">
+      <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\cipher.hpp">
+      <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\modifier.hpp">
+      <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\net\protocol\util\sequencer.hpp">
+      <Filter>net\protocol\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -368,6 +371,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\util\botan\botan_all.cpp">
       <Filter>util\botan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\util\cipher.cpp">
+      <Filter>net\protocol\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\util\sequencer.cpp">
+      <Filter>net\protocol\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\util\checksum.cpp">
+      <Filter>net\protocol\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

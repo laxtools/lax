@@ -94,15 +94,21 @@ public:
 	/// change the size of buffer. position is changed.
 	void resize(const std::size_t new_size)
 	{
-		return_if(new_size <= capacity());
+		if (new_size <= capacity())
+		{
+			pos_ = new_size; // change size(). STL
+			return;
+		}
 
 		reserve(new_size - capacity());
 
 		ensure(buf_);
 
-		pos_ = capacity();
+		pos_ = new_size;  
 
-		// memset(buf_->data(), 0, size());
+		// STL resize changes : 
+		// - size(). therfore pos_ 
+		// - elements from prev size up to new size
 	}
 
 	const uint8_t* data() const
@@ -110,6 +116,14 @@ public:
 		return_if(!buf_, nullptr);
 		return buf_->data();
 	}
+
+	/// use this with care
+	uint8_t* data() 
+	{
+		return_if(!buf_, nullptr);
+		return buf_->data();
+	}
+
 
 	const uint8_t& at(std::size_t pos) const
 	{
@@ -123,9 +137,12 @@ public:
 	}
 
 	/// 세그먼트 앞으로 돌린다.
-	void rewind()
+	void rewind(std::size_t pos = 0)
 	{
-		pos_ = 0;
+		expect(pos < size());
+		return_if(pos >= size()); // safe. no effect
+
+		pos_ = pos;
 	}
 
 	/// block에서 count만큼 제거 

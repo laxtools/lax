@@ -11,9 +11,16 @@ namespace net
 
 /// bitsery serialization protocol 
 /** 
+ * Header
  * - length: 4 bytes
- * - encryption per message 
- * - crc32 per message
+ * - topic : 4 bytes
+ * 
+ * Check: 
+ * - crc32 : 4 bytes
+ * - sequence : 1 byte
+ * - cipher (AES128 / CBC)
+ *   - key and IV change on recv and send w/ sha1 and obfusfication
+ *   - initial random cipher message sent
  */
 class bits_protocol final : public protocol
 {
@@ -24,8 +31,11 @@ public:
 		bool enable_cipher = true;
 
 		bool enable_checksum = true;
+
+		bool enable_sequence = true;
 	
 		bool enable_detail_log = false;
+
 		/// 테스트를 위해 send에서 바로 on_recv를 호출
 		bool enable_loopback = false;	
 	};
@@ -61,6 +71,18 @@ private:
 		std::size_t len
 	);
 
+	result send_final(
+		bits_message::ptr mp, 
+		resize_buffer& buf,
+		std::size_t len
+	);
+
+	result send_modified(
+		bits_message::ptr mp, 
+		resize_buffer& buf,
+		std::size_t len
+	);
+
 	/// session is bound
 	virtual void on_bind() override;
 
@@ -80,9 +102,10 @@ private:
 
 	uint32_t get_topic(resize_buffer::iterator& iter) const; 
 
+	bool needs_to_modify(bits_message::ptr m) const;
 
 public:
-	/// for test only 
+	/// for packetiziation test only.  
 	result call_recv_for_test(const uint8_t* const bytes, std::size_t len);     
 
 private: 

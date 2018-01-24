@@ -23,23 +23,23 @@ public:
 
 		buffer(uint8_t* data, std::size_t len)
 			: data_(data)
-			, size_(len)
+			, capacity_(len)
 			, is_alloc_from_os_(true)
 		{
 			expect(data_);
-			expect(size_ > 0);
+			expect(capacity_ > 0);
 
 		}
 
 		buffer(fixed_size_buffer_pool* pool, uint8_t* data, std::size_t len)
 			: pool_(pool)
 			, data_(data)
-			, size_(len)
+			, capacity_(len)
 			, is_alloc_from_os_(false)
 		{
 			expect(pool_);
 			expect(data_);
-			expect(size_ > 0);
+			expect(capacity_ > 0);
 		}
 		
 		~buffer()
@@ -59,7 +59,7 @@ public:
 
 		std::size_t capacity() const
 		{
-			return size_;
+			return capacity_;
 		}
 
 		bool is_allocated_from_os() const
@@ -76,7 +76,7 @@ public:
 		fixed_size_buffer_pool* pool_ = nullptr;
 		bool			is_alloc_from_os_ = false;
 		uint8_t*		data_ = nullptr;
-		std::size_t		size_ = 0;
+		std::size_t		capacity_ = 0;
 	};
 
 	struct stat

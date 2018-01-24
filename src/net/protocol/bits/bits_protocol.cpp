@@ -48,6 +48,13 @@ protocol::result bits_protocol::send(packet::ptr m)
 
 	auto size = mp->pack(buf);
 
+	return_if(
+		size < bits_message::header_length, 
+		result(false, reason::fail_bits_pack_error)
+	);
+
+	buf.rewind(size); // rewind required since pack() changes buffer size 
+
 	auto iter = buf.begin();
 	  iter; *iter = size & 0x000000FF;
 	++iter; *iter = size >> 8 & 0x000000FF;
@@ -89,36 +96,60 @@ protocol::result bits_protocol::send(
 }
 
 protocol::result bits_protocol::send_final(
+	bits_message::ptr mp,
+	resize_buffer& buf,
+	std::size_t len
+)
+{
+	if (!needs_to_modify(mp))
+	{
+		if (cfg.enable_loopback)
+		{
+			// 테스트 모드일 경우 
+			return on_recv(buf.data(), len);
+		}
+
+		// else
+
+		return protocol::send(buf.data(), len);
+	}
+
+	return send_modified(mp, buf, len);
+}
+
+protocol::result bits_protocol::send_modified(
+	bits_message::ptr mp,
+	resize_buffer& buf,
+	std::size_t len
+)
+{
+	return result(false, reason::fail_not_implemented);
+}
+
+protocol::result bits_protocol::send_final(
 	bits_message::ptr mp, 
 	const uint8_t* const data, 
 	std::size_t len
 )
 {
-	uint8_t* const	final_data = const_cast<uint8_t*>(data);
-	std::size_t		final_size = len;
-
-	if (mp->enable_checksum && cfg.enable_checksum)
+	if (!needs_to_modify(mp))
 	{
-		// checksum();
-		// msg 뒤에 4바이트 추가. length에 반영
+		if (cfg.enable_loopback)
+		{
+			// 테스트 모드일 경우 
+			return on_recv(data, len);
+		}
+
+		// else
+
+		return protocol::send(data, len);
 	}
 
-	if (mp->enable_cipher && cfg.enable_cipher)
-	{
-		// encrypt();
-		// 복사 필요
-		// padding 길이등 length에 반영
-	}
+	resize_buffer buf; 
 
-	if (cfg.enable_loopback)
-	{
-		// 테스트 모드일 경우 
-		return on_recv(final_data, final_size);
-	}
+	buf.append(data, len);
 
-	// else
-
-	return protocol::send(final_data, final_size);
+	return send_modified(mp, buf, len);
 }
 
 protocol::result bits_protocol::on_recv(
@@ -246,6 +277,15 @@ protocol::result bits_protocol::call_recv_for_test(
 {
 	return on_recv(bytes, len);
 }
+
+bool bits_protocol::needs_to_modify(bits_message::ptr m) const
+{
+	return
+		(cfg.enable_cipher		&& m->enable_cipher) ||
+		(cfg.enable_checksum	&& m->enable_checksum) ||
+		(cfg.enable_sequence	&& m->enable_sequence);
+}
+
 
 } // net
 } // lax

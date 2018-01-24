@@ -84,6 +84,12 @@
     <ClCompile Include="..\..\test\net\test_botan.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\net\test_packet_security.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\net\test_modifiers.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test\net\construction.md">

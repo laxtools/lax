@@ -90,6 +90,10 @@ bits_message, bits_factory, bits_protocol이 필요. 위를 지원하기 위한
    - 최대한 버그 없게, 디버깅이 쉽게 메세지 정의하기 
 
 
+## cipher 
+
+botan library. configure.py로 빌드가 쉽게 됨. 
+
 ## service / protocol / session / acceptor / connector 
 
 한번에 구현해야 한다. 상호 연관이 밀접하다. 
@@ -129,6 +133,7 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
  protocol_msgpack::sub()를 통해서 수신
 
  protocol::ref를 통해 전송
+
 
 
 ## actor 
