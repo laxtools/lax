@@ -17,16 +17,20 @@ modifier::result sequencer::on_bind()
 modifier::result sequencer::on_recv(
 	resize_buffer& buf,
 	std::size_t msg_pos,
-	std::size_t msg_len
+	std::size_t msg_len, 
+	std::size_t& new_len
 )
 {
+	new_len = msg_len;
+
 	// 항상 msg 마지막이 내 데이터 필드라고 생각하면 됨. 
 	// 순서대로 msg_len을 조절하면서 호출할 것임
 
-	uint8_t seq = buf.data()[msg_pos + msg_len - 1];
+	uint8_t seq = buf.data()[msg_pos + msg_len - sequence_size];
 	
 	if (seq == recv_seq_++)
 	{
+		new_len = msg_len - sequence_size;
 		return result(true, reason::success);
 	}
 
@@ -39,9 +43,11 @@ modifier::result sequencer::on_send(
 	std::size_t msg_len
 )
 {
-	buf.append("a", 1); // ensure 1 more byte
+	buf.append("a", sequence_size); // ensure 1 more byte
 
 	buf.data()[msg_pos + msg_len] = send_seq_++;
+
+	update_length(buf, msg_pos, msg_len + sequence_size);
 
 	return result(true, reason::success);
 }

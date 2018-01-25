@@ -2,6 +2,9 @@
 
 #include <lax/net/protocol/protocol.hpp>
 #include <lax/net/protocol/bits/bits_message.hpp>
+#include <lax/net/protocol/util/sequencer.hpp>
+#include <lax/net/protocol/util/checksum.hpp>
+#include <lax/net/protocol/util/cipher.hpp>
 #include <lax/net/detail/buffer/resize_buffer.hpp>
 
 namespace lax
@@ -36,7 +39,7 @@ public:
 	
 		bool enable_detail_log = false;
 
-		/// 테스트를 위해 send에서 바로 on_recv를 호출
+		/// 테스트를 위해 send에서 on_recv, 생성자에서 on_bind() 호출
 		bool enable_loopback = false;	
 	};
 
@@ -73,14 +76,22 @@ private:
 
 	result send_final(
 		bits_message::ptr mp, 
-		resize_buffer& buf,
+		resize_buffer& buf, 
 		std::size_t len
 	);
 
 	result send_modified(
 		bits_message::ptr mp, 
-		resize_buffer& buf,
+		resize_buffer& buf, 
 		std::size_t len
+	);
+
+	result recv_modified(
+		bits_message::ptr mp, 
+		resize_buffer& buf, 
+		std::size_t msg_pos,  
+		std::size_t msg_len, 
+		std::size_t& final_len
 	);
 
 	/// session is bound
@@ -109,7 +120,10 @@ public:
 	result call_recv_for_test(const uint8_t* const bytes, std::size_t len);     
 
 private: 
-	resize_buffer recv_buf_;
+	resize_buffer	recv_buf_;
+	sequencer		sequencer_;
+	checksum		checksum_;
+	cipher			cipher_;
 };
 
 } // net

@@ -118,7 +118,7 @@ static constexpr const char* type_name = #type;
   * 암호화 / CRC의 동적 구성은 불일치가 자주 발생.
   * 클래스 정의할 때 넣고 헤더 버전을 맞추면 일치하도록 함.
   */
-#define BITS_MSG_CLASS_DETAIL(cls, crc, seq, enc) \
+#define BITS_MSG_CLASS_DETAIL(cls, enc, crc, seq) \
 cls() \
 : lax::net::bits_message(topic_key) \
 { \
@@ -127,6 +127,12 @@ cls() \
 	enable_sequence = (seq); \
 	enable_cipher = (enc); \
 	enable_checksum = (crc); \
+	if ( enc ) \
+	{ \
+		enable_cipher = true; \
+		enable_checksum = true; \
+		enable_sequence = true; \
+	} \
 } \
 \
 const char* get_desc() const override \
@@ -138,16 +144,15 @@ BITS_MSG_BODY()
  /// 암호화, CRC를 disable한 간략 버전
 #define BITS_MSG_CLASS(cls) BITS_MSG_CLASS_DETAIL(cls, false, false, false)
 
-
 /// 간략한 버전. 
 #define BITS_MSG(group, type, cls) \
 	BITS_MSG_TOPIC(group, type); \
 	BITS_MSG_CLASS(cls)
 
 /// 풀 버전. 암호화, crc 체크 옵션 추가
-#define BITS_MSG_DETAIL(group, type, cls, enc, crc) \
+#define BITS_MSG_DETAIL(group, type, cls, enc, crc, seq) \
 	BITS_MSG_TOPIC(group, type); \
-	BITS_MSG_CLASS_DETAIL(cls, enc, crc)
+	BITS_MSG_CLASS_DETAIL(cls, enc, crc, seq) \
 
 
 #define BITS_SERIALIZE(...) \

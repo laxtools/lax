@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <lax/net/protocol/util/checksum.hpp>
+#include <lax/net/protocol/bits/bits_message.hpp>
 #include <lax/util/botan/botan_all.h>
 
 namespace lax
@@ -15,19 +16,31 @@ modifier::result checksum::on_bind()
 modifier::result checksum::on_recv(
 	resize_buffer& buf,
 	std::size_t msg_pos,
-	std::size_t msg_len
+	std::size_t msg_len,
+	std::size_t& new_len
 )
 {
-	expect(msg_len > 0);
-	expect(buf.size() >= msg_pos + msg_len - 1);
+	new_len = msg_len;
+
+	expect(msg_len >= bits_message::header_length);
+
+	// payload 없으면 성공으로 처리
+	return_if(
+		msg_len < bits_message::header_length + checksum_size, 
+		result(true, reason::success)
+	);
 
 	// for thread-safey, create hash function 
-	// android NDK supports it with clang
-	// 
+	// - windows, android, ios, osx, linux supports it
 	static thread_local auto hash = Botan::HashFunction::create("CRC32");
 	return_if(!hash, result(false, reason::fail_null_hash_function));
 
-	hash->update(buf.data() + msg_pos, msg_len - checksum_size);
+	hash->clear();
+
+	hash->update(
+		buf.data() + msg_pos + bits_message::header_length, 
+		msg_len - checksum_size - bits_message::header_length
+	);
 
 	uint8_t crc[checksum_size];
 	hash->final(crc);
@@ -43,6 +56,8 @@ modifier::result checksum::on_recv(
 		return result(false, reason::fail_incorrect_checksum);
 	}
 
+	new_len = msg_len - checksum_size;
+
 	return result(true, reason::success);
 }
 
@@ -52,14 +67,24 @@ modifier::result checksum::on_send(
 	std::size_t msg_len
 )
 {
-	expect(msg_len > 0);
-	expect(buf.size() >= msg_pos + msg_len - 1);
+	expect(msg_len >= bits_message::header_length);
+
+	// payload 없으면 성공으로 처리
+	return_if(
+		msg_len < bits_message::header_length + checksum_size,
+		result(true, reason::success)
+	);
 
 	// for thread-safey, create hash function 
 	static thread_local auto hash = Botan::HashFunction::create("CRC32");
 	return_if(!hash, result(false, reason::fail_null_hash_function));
 
-	hash->update(buf.data() + msg_pos, msg_len);
+	hash->clear();
+
+	hash->update(
+		buf.data() + msg_pos + bits_message::header_length, 
+		msg_len - bits_message::header_length
+	);
 
 	uint8_t crc[checksum_size];
 	hash->final(crc);
@@ -67,6 +92,8 @@ modifier::result checksum::on_send(
 	buf.append("abcd", checksum_size); // resize 
 
 	std::memcpy(buf.data() + msg_pos + msg_len, crc, checksum_size);
+
+	update_length(buf, msg_pos, msg_len + checksum_size);
 
 	return result(true, reason::success);
 }

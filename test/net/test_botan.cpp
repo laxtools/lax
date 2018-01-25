@@ -8,7 +8,7 @@ using namespace lax::net;
 
 TEST_CASE("botan research")
 {
-	SECTION("hash: crc32 / sha1")
+	SECTION("hash: crc32")
 	{
 		// 감동이다! 깔끔한 인터페이스. 숨기기. create의 아규먼트만 교체하면 바뀜
 
@@ -20,6 +20,18 @@ TEST_CASE("botan research")
 		hash1->update(buf.data(), buf.size());
 
 		std::cout << "CRC32: " << Botan::hex_encode(hash1->final()) << std::endl;
+	}
+
+	SECTION("hash: sha1")
+	{
+		std::unique_ptr<Botan::HashFunction> hash1(Botan::HashFunction::create("SHA1"));
+
+		std::vector<uint8_t> buf{ 'a', 1, 23, 4, 5, 6, 7 };
+
+		//update hash computations with read data
+		hash1->update(buf.data(), buf.size());
+
+		std::cout << "Sha1: " << Botan::hex_encode(hash1->final()) << std::endl;
 	}
 
 	SECTION("aes")
@@ -194,7 +206,7 @@ TEST_CASE("botan research")
 
 				REQUIRE(plain_buf.size() % BS == 0);
 
-				std::cout << "original size: " << plain_buf.size() << std::endl;;
+				std::cout << "original size: " << plain_buf.size() << std::endl;
 
 				Botan::secure_vector<uint8_t> final_block;
 

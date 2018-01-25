@@ -16,6 +16,10 @@ bits_protocol::config bits_protocol::cfg;
 
 bits_protocol::bits_protocol()
 {
+	if (cfg.enable_loopback)
+	{
+		on_bind();
+	}
 }
 
 bits_protocol::~bits_protocol()
@@ -24,7 +28,14 @@ bits_protocol::~bits_protocol()
 
 void bits_protocol::on_bind()
 {
-	ensure(get_session());
+	if (!cfg.enable_loopback)
+	{
+		ensure(get_session());
+	}
+
+	sequencer_.bind(this);
+	checksum_.bind(this);
+	cipher_.bind(this);
 }
 
 protocol::result bits_protocol::send(packet::ptr m)
@@ -61,7 +72,7 @@ protocol::result bits_protocol::send(packet::ptr m)
 	++iter; *iter = size >> 8 & 0x000000FF;
 	++iter; *iter = size >> 8 & 0x000000FF;
 
-	return send_final(mp, buf.data(), size);
+	return send_final(mp, buf, size);
 }
 
 protocol::result bits_protocol::send(
@@ -117,14 +128,6 @@ protocol::result bits_protocol::send_final(
 	return send_modified(mp, buf, len);
 }
 
-protocol::result bits_protocol::send_modified(
-	bits_message::ptr mp,
-	resize_buffer& buf,
-	std::size_t len
-)
-{
-	return result(false, reason::fail_not_implemented);
-}
 
 protocol::result bits_protocol::send_final(
 	bits_message::ptr mp, 
@@ -152,6 +155,87 @@ protocol::result bits_protocol::send_final(
 	return send_modified(mp, buf, len);
 }
 
+protocol::result bits_protocol::send_modified(
+	bits_message::ptr mp,
+	resize_buffer& buf,
+	std::size_t len
+)
+{
+	// 여기에 오면 buf는 공유되지 않은 깨끗한 mp의 버퍼이다. 
+	expect(buf.size() == len);
+
+	if (cfg.enable_sequence && mp->enable_sequence)
+	{
+		auto rc = sequencer_.on_send(buf, 0, buf.size());
+
+		return_if(!rc, rc);
+	}
+
+	if (cfg.enable_checksum && mp->enable_checksum)
+	{
+		auto rc = checksum_.on_send(buf, 0, buf.size());
+
+		return_if(!rc, rc);
+	}
+
+	if (cfg.enable_cipher && mp->enable_cipher)
+	{
+		auto rc = cipher_.on_send(buf, 0, buf.size());
+
+		return_if(!rc, rc);
+	}
+
+	if (cfg.enable_loopback)
+	{
+		// 테스트 모드일 경우 
+		return on_recv(buf.data(), buf.size());
+	}
+
+	return protocol::send(buf.data(), buf.size());
+}
+
+protocol::result bits_protocol::recv_modified(
+	bits_message::ptr mp,
+	resize_buffer& buf,
+	std::size_t msg_pos,
+	std::size_t msg_len, 
+	std::size_t& final_len
+)
+{
+	std::size_t new_len = msg_len;
+
+	if (cfg.enable_cipher && mp->enable_cipher)
+	{
+		auto rc = cipher_.on_recv(buf, msg_pos, msg_len, new_len);
+
+		return_if(!rc, rc);
+
+		msg_len = new_len;
+	}
+
+	if (cfg.enable_checksum && mp->enable_checksum)
+	{
+		auto rc = checksum_.on_recv(buf, msg_pos, msg_len, new_len);
+
+		return_if(!rc, rc);
+
+		msg_len = new_len;
+	}
+
+	if (cfg.enable_sequence && mp->enable_sequence)
+	{
+		auto rc = sequencer_.on_recv(buf, msg_pos, msg_len, new_len);
+
+		return_if(!rc, rc);
+
+		msg_len = new_len;
+	}
+
+	final_len = new_len;
+
+	return result(true, reason::success);
+}
+
 protocol::result bits_protocol::on_recv(
 	const uint8_t* const bytes, 
 	std::size_t len)
@@ -177,20 +261,17 @@ protocol::result bits_protocol::on_recv(
 			break;
 		}
 
-		auto topic = get_topic(iter);		// forward iter while getting topic 
+		auto topic = get_topic(iter);			// forward iter while getting topic 
+		auto tp = bits_message::topic_t(topic);
 
 		iter -= bits_message::header_length; // rewind  
 
 		auto msg_begin_iter = iter;
 
-		// TODO: cipher, checksum
-
 		auto mp = BITS_MSG_CREATE(topic);
 
 		if (!mp)
 		{
-			auto tp = bits_message::topic_t(topic);
-
 			util::log()->error(
 				"bits_message for topic[{}:{}] not registered",
 				tp.get_group(), tp.get_type()
@@ -201,7 +282,22 @@ protocol::result bits_protocol::on_recv(
 			return result(false, reason::fail_bits_message_not_registered);
 		}
 
-		auto res = mp->unpack(recv_buf_, iter, msg_len);
+		std::size_t final_len = msg_len;
+
+		auto rc = recv_modified(mp, recv_buf_, processed_len, msg_len, final_len);
+
+		if (!rc)
+		{
+			util::log()->critical(
+				"fail to modify while recv. topic[{}:{}]. error:{} ",
+				tp.get_group(), tp.get_type(), 
+				rc.value // TODO: error string
+			);
+
+			return rc; // close
+		}
+
+		auto res = mp->unpack(recv_buf_, iter, final_len);
 
 		if (!res)
 		{
@@ -213,7 +309,7 @@ protocol::result bits_protocol::on_recv(
 				static_cast<uint8_t>(mp->reader_error)
 			);
 
-			// session will be closed
+			util::log()->flush();
 
 			return result(false, reason::fail_bits_unpack_error);
 		}

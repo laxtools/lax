@@ -94,6 +94,15 @@ bits_message, bits_factory, bits_protocol이 필요. 위를 지원하기 위한
 
 botan library. configure.py로 빌드가 쉽게 됨. 
 
+- modifier로 추상화 
+- 인터페이스에 길이를 받는 것들
+  - 마음에 들지 않음. 
+  - 더 나은 방법은 
+
+- 단위 테스트를 해도 버그가 많다. 
+  - 어떻게 더 깔끔하게 만들 것인가? 
+  - 아주 많은 실행 중 에러 발생 시 디버깅이 쉽게 하기 
+
 ## service / protocol / session / acceptor / connector 
 
 한번에 구현해야 한다. 상호 연관이 밀접하다. 

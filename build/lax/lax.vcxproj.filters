@@ -381,6 +381,9 @@
     <ClCompile Include="..\..\src\net\protocol\util\checksum.cpp">
       <Filter>net\protocol\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\net\protocol\util\modifier.cpp">
+      <Filter>net\protocol\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\lax\util\concurrent_queue.inl">

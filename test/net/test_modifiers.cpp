@@ -24,6 +24,8 @@ struct msg_test : public bits_message
 
 TEST_CASE("modifiers test")
 {
+	bits_protocol::cfg.enable_loopback = true;
+
 	SECTION("sequencer")
 	{
 		SECTION("simple send and recv")
@@ -58,7 +60,8 @@ TEST_CASE("modifiers test")
 			REQUIRE(old_size + 1 == buf.size());
 			REQUIRE(buf.data()[buf.size() - 1] == 1);
 
-			auto rc2 = seq.on_recv(buf, 0, buf.size());
+			std::size_t new_len = 0;
+			auto rc2 = seq.on_recv(buf, 0, buf.size(), new_len);
 			REQUIRE(!!rc2);
 		}
 
@@ -86,9 +89,10 @@ TEST_CASE("modifiers test")
 
 				REQUIRE(!!rc);
 				REQUIRE(old_size + 1 == buf.size());
-				REQUIRE(buf.data()[buf.size() - 1] == ((i+1) % 256));
+				REQUIRE(buf.data()[buf.size() - 1] == ((i + 1) % 256));
 
-				auto rc2 = seq.on_recv(buf, 0, buf.size());
+				std::size_t new_len = 0;
+				auto rc2 = seq.on_recv(buf, 0, buf.size(), new_len);
 				REQUIRE(!!rc2);
 			}
 		}
@@ -115,36 +119,115 @@ TEST_CASE("modifiers test")
 		auto rc = csum.on_send(buf, 0, buf.size());
 
 		REQUIRE(!!rc);
-		REQUIRE(old_size + 4 == buf.size());
 
-		auto rc2 = csum.on_recv(buf, 0, buf.size());
+		auto new_size = buf.size();
+		REQUIRE(old_size + 4 == new_size);
+
+		std::size_t new_len = 0;
+		auto rc2 = csum.on_recv(buf, 0, buf.size(), new_len);
 		REQUIRE(!!rc2);
 	}
 
 	SECTION("cipher")
 	{
-		cipher enc;
+		SECTION("cipher basic")
+		{
+			cipher enc;
 
-		auto pp = std::make_shared<bits_protocol>();
+			auto pp = std::make_shared<bits_protocol>();
 
-		enc.bind(pp.get());
+			enc.bind(pp.get());
 
-		resize_buffer buf;
+			resize_buffer buf;
 
-		auto mp = std::make_shared<msg_test>();
-		mp->a = 3;
-		mp->b = "Hello";
+			auto mp = std::make_shared<msg_test>();
+			mp->a = 3;
+			mp->b = "Hello";
 
-		auto wsize = mp->pack(buf);
-		buf.rewind(wsize);
+			auto wsize = mp->pack(buf);
+			buf.rewind(wsize);
 
-		auto old_size = buf.size();
-		auto rc = enc.on_send(buf, 0, buf.size());
+			auto rc = enc.on_send(buf, 0, buf.size());
+			REQUIRE(!!rc);
 
-		REQUIRE(!!rc);
-		REQUIRE(old_size == buf.size());
+			std::size_t new_len = 0;
+			auto rc2 = enc.on_recv(buf, 0, buf.size(), new_len);
+			REQUIRE(!!rc2);
 
-		auto rc2 = enc.on_recv(buf, 0, buf.size());
-		REQUIRE(!!rc2);
+			auto res = std::make_shared<msg_test>();
+			res->unpack(buf, buf.begin(), buf.size());
+
+			REQUIRE(res->b == "Hello");
+		}
+
+		SECTION("cipher loop")
+		{
+			cipher::cfg.key_change_interval = 8;
+
+			auto pp = std::make_shared<bits_protocol>();
+
+			for (int i = 0; i < 32; ++i)
+			{
+				cipher enc;
+
+
+				enc.bind(pp.get());
+
+				resize_buffer buf;
+
+				auto mp = std::make_shared<msg_test>();
+				mp->a = 3;
+				mp->b = "Hello Loop";
+
+				auto wsize = mp->pack(buf);
+				buf.rewind(wsize);
+
+				auto rc = enc.on_send(buf, 0, buf.size());
+				REQUIRE(!!rc);
+
+				std::size_t new_len = 0;
+				auto rc2 = enc.on_recv(buf, 0, buf.size(), new_len);
+				REQUIRE(!!rc2);
+
+				auto res = std::make_shared<msg_test>();
+				res->unpack(buf, buf.begin(), buf.size());
+
+				REQUIRE(res->b == "Hello Loop");
+			}
+		}
+
+		SECTION("big message")
+		{
+			cipher enc;
+
+			auto pp = std::make_shared<bits_protocol>();
+
+			enc.bind(pp.get());
+
+			resize_buffer buf;
+
+			auto mp = std::make_shared<msg_test>();
+			mp->a = 3;
+
+			for (int i = 0; i < 1024; ++i)
+			{
+				mp->b.append("12345678901234567890123456789012");
+			}
+
+			auto wsize = mp->pack(buf);
+			buf.rewind(wsize);
+
+			auto rc = enc.on_send(buf, 0, buf.size());
+			REQUIRE(!!rc);
+
+			std::size_t new_len = 0;
+			auto rc2 = enc.on_recv(buf, 0, buf.size(), new_len);
+			REQUIRE(!!rc2);
+
+			auto res = std::make_shared<msg_test>();
+			res->unpack(buf, buf.begin(), buf.size());
+
+			REQUIRE(res);
+		}
 	}
 }

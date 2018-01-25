@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <lax/net/protocol/bits/bits_message_factory.hpp>
 #include <lax/util/logger.hpp>
+#include <lax/util/exception.hpp>
 
 namespace lax
 {
@@ -23,6 +24,10 @@ void bits_message_factory::add(const packet::topic_t& topic, creator c)
 		util::log()->warn(
 			"bits_message w/ topic[{}:{}] is alreay added!",
 			topic.get_group(), topic.get_type());
+
+		util::log()->flush();
+
+		// THROW("bits_messag_factory. bits_message already added!");
 	}
 
 	return_if(iter != map_.end());

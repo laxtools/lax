@@ -187,7 +187,6 @@
     <ClCompile Include="..\..\test\net\test_bits_protocol_design.cpp" />
     <ClCompile Include="..\..\test\net\test_botan.cpp" />
     <ClCompile Include="..\..\test\net\test_modifiers.cpp" />
-    <ClCompile Include="..\..\test\net\test_packet_security.cpp" />
     <ClCompile Include="..\..\test\net\test_resize_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_service.cpp" />

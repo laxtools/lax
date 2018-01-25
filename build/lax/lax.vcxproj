@@ -247,6 +247,7 @@
     <ClCompile Include="..\..\src\net\protocol\protocol_factory.cpp" />
     <ClCompile Include="..\..\src\net\protocol\util\checksum.cpp" />
     <ClCompile Include="..\..\src\net\protocol\util\cipher.cpp" />
+    <ClCompile Include="..\..\src\net\protocol\util\modifier.cpp" />
     <ClCompile Include="..\..\src\net\protocol\util\sequencer.cpp" />
     <ClCompile Include="..\..\src\net\reason.cpp" />
     <ClCompile Include="..\..\src\net\service.cpp" />
