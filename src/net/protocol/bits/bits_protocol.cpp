@@ -309,8 +309,6 @@ protocol::result bits_protocol::on_recv(
 				static_cast<uint8_t>(mp->reader_error)
 			);
 
-			util::log()->flush();
-
 			return result(false, reason::fail_bits_unpack_error);
 		}
 

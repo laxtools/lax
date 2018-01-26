@@ -28,8 +28,8 @@ public:
 	}
 
 private:
-	const char* file_; 
-	int line_;
+	const char* file_ = nullptr;
+	int line_ = 0;
 };
 
 } // util

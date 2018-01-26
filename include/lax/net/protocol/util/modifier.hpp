@@ -41,7 +41,10 @@ public:
 
 		protocol_ = proto;
 
-		return on_bind();
+		auto rc = on_bind();
+		bound_ = !!rc;
+
+		return rc;
 	}
 
 	virtual result on_bind() = 0;
@@ -83,11 +86,14 @@ protected:
 	}
 
 	/// update length field to reflect change
-	void update_length(
+	void update_length_field(
 		resize_buffer& buf, 
 		std::size_t msg_pos, 
 		std::size_t new_len
 	);
+
+protected: 
+	std::atomic<bool> bound_ = false;
 
 private: 
 	protocol* protocol_ = nullptr;

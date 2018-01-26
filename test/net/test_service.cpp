@@ -27,10 +27,8 @@ TEST_CASE("service")
 		svc.fini();
 
 		// impl이 디버그에서 잘 안 보이는데 릴리스에서는 오히려 잘 보인다. 
-		// - VS에서 일관되게 그러함 
 		// - VS 포럼에 올라와 있다. 장비마다 다른 경우가 있다고 한다. 
 		// - Visualizer가 제대로 동작하지 않는 문제인데 어딜 봐야할까?
-		// - 일단, 유보
 	}
 
 	SECTION("acctor / connector")

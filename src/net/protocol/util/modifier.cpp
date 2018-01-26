@@ -6,7 +6,7 @@ namespace lax
 namespace net
 {
 
-void modifier::update_length(
+void modifier::update_length_field(
 	resize_buffer& buf,
 	std::size_t msg_pos,
 	std::size_t new_len

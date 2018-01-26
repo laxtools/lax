@@ -41,6 +41,8 @@ public:
 
 		/// 테스트를 위해 send에서 on_recv, 생성자에서 on_bind() 호출
 		bool enable_loopback = false;	
+
+		std::size_t max_packet_length = 512 * 1024;  // 512K
 	};
 
 	static config cfg;

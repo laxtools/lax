@@ -8,7 +8,7 @@ namespace lax
 namespace net
 {
 
-struct cipher_helper;
+struct cipher_impl;
 
 /// encryption / decryption modifier 
 /**
@@ -29,7 +29,7 @@ public:
 
 	cipher(); 
 
-	/// destructor. required to genereate cipher_helper destructor
+	/// destructor. required to genereate cipher_impl destructor
 	~cipher();
 
 	virtual result on_bind() override;
@@ -50,10 +50,10 @@ public:
 	) override;
 
 private: 
-	std::unique_ptr<cipher_helper> receiver_;
-	std::unique_ptr<cipher_helper> sender_;
+	std::unique_ptr<cipher_impl> receiver_;
+	std::unique_ptr<cipher_impl> sender_;
 
-	std::recursive_mutex mutex_;
+	std::recursive_mutex send_mutex_;
 };
 
 } // net

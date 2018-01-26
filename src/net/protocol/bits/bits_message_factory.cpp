@@ -25,8 +25,6 @@ void bits_message_factory::add(const packet::topic_t& topic, creator c)
 			"bits_message w/ topic[{}:{}] is alreay added!",
 			topic.get_group(), topic.get_type());
 
-		util::log()->flush();
-
 		// THROW("bits_messag_factory. bits_message already added!");
 	}
 

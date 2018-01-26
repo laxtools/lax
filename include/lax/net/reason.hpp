@@ -43,6 +43,7 @@ enum reason
 	fail_invalid_message_sequence, 
 	fail_null_hash_function,
 	fail_incorrect_checksum, 
+	fail_incorrect_checksum_length, 
 };
 
 /// get description from reason

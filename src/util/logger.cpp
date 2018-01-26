@@ -49,6 +49,8 @@ void log::init()
 
 	(void)spdlog::create(name, { s1, s2 });
 
+	get()->flush_on(spdlog::level::err);
+
 	initialized_ = true;
 }
 

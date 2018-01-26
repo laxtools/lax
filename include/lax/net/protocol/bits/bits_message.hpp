@@ -19,6 +19,18 @@ namespace net
  * - subclass
  * - add BITS_MSG() or BITS_MSG_DETAIL() with topic group and type
  * - add BITS_SERIALIZE() with members to serialize
+ * 
+ * Modifiers: 
+ * - cipher : aes128/cbc
+ *   - enables with checksum and sequence to verify encryption 
+ * - checksum : crc32
+ * - sequence :1 byte circular sequence
+ *
+ * - 권고 사항 
+ *	 - 클라에서 받는 메세지는 seq와 checksum 모두 켬
+ *   - 아이템 거래, 인증 등은 암호화를 양방향 모두 켬
+ *   - 서버 게임 플레이 메세지는 seq만 켬
+ *   - 이동 등 처리가 많은 메세지는 모두 꺼도 됨
  */
 struct bits_message : public packet
 {

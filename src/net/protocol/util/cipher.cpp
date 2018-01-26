@@ -12,7 +12,7 @@ cipher::config cipher::cfg;
 
 constexpr std::size_t BLOCK_SIZE = Botan::AES_128::BLOCK_SIZE;
 
-struct cipher_helper
+struct cipher_impl
 {
 	std::vector<uint8_t> key;
 	std::vector<uint8_t> nonce;
@@ -20,13 +20,11 @@ struct cipher_helper
 	std::size_t			 count = 0;
 
 	Botan::Cipher_Dir	direction;
-	std::unique_ptr<Botan::Cipher_Mode> algo;
+
 	std::unique_ptr<Botan::HashFunction> hasher; 
 
-	cipher_helper(Botan::Cipher_Dir dir)
-		: algo(Botan::get_cipher_mode("AES-128/CBC/PKCS7", dir))
-		, direction(dir)
-		, hasher(Botan::HashFunction::create("SHA1"))
+	cipher_impl(Botan::Cipher_Dir dir)
+		: hasher(Botan::HashFunction::create("SHA1"))
 	{
 	}
 
@@ -36,9 +34,6 @@ struct cipher_helper
 
 	void complete();
 };
-
-// therea_local here has an issue since protocol::send and recv called
-// from several threads. the object are different for this 
 
 cipher::cipher()
 {
@@ -50,8 +45,10 @@ cipher::~cipher()
 
 modifier::result cipher::on_bind()
 {
-	receiver_ = std::make_unique<cipher_helper>(Botan::Cipher_Dir::DECRYPTION);
-	sender_ = std::make_unique<cipher_helper>(Botan::Cipher_Dir::ENCRYPTION);
+	check(!bound_);
+
+	receiver_ = std::make_unique<cipher_impl>(Botan::Cipher_Dir::DECRYPTION);
+	sender_ = std::make_unique<cipher_impl>(Botan::Cipher_Dir::ENCRYPTION);
 
 	receiver_->key	= Botan::hex_decode("2B7E151628AED2A6ABF7158809CF4F3C");
 	sender_->key	= Botan::hex_decode("2B7E151628AED2A6ABF7158809CF4F3C");
@@ -59,18 +56,12 @@ modifier::result cipher::on_bind()
 	receiver_->nonce= Botan::hex_decode("ACE03D519F3CBA2BF67CF1B7E1C4F02D");
 	sender_->nonce	= Botan::hex_decode("ACE03D519F3CBA2BF67CF1B7E1C4F02D");
 
-	receiver_->algo->set_key(receiver_->key);
-	sender_->algo->set_key(sender_->key);
-
-	// TODO: send a message through protocol to change key / nonce
-	// - random data 
-
 	return result(true, reason::success);
 }
 
 modifier::result cipher::on_recv(
-	resize_buffer& buf, 
-	std::size_t msg_pos, 
+	resize_buffer& buf,
+	std::size_t msg_pos,
 	std::size_t msg_len,
 	std::size_t& new_len
 )
@@ -90,20 +81,30 @@ modifier::result cipher::on_recv(
 	auto cipher_pos = msg_pos + bits_message::header_length;
 	auto final_pos = cipher_pos + cipher_len - BLOCK_SIZE;
 	uint8_t* cipher_ptr = buf.data() + cipher_pos;
-	
+
 	std::size_t pad_size = 0;
 
-	// lock 
+	static thread_local std::unique_ptr<Botan::Cipher_Mode> algo(
+		Botan::get_cipher_mode("AES-128/CBC/PKCS7", Botan::DECRYPTION)
+	);
+
+	// recv는 락 불필요
 	{
-		std::lock_guard<std::recursive_mutex> lock(mutex_);
 
-		receiver_->algo->start(receiver_->nonce);
+		algo->clear();
 
+		algo->start(receiver_->nonce);
+
+		algo->set_key(receiver_->key);
+	}
+
+	// decryption
+	{
 		std::size_t process_len = cipher_len - BLOCK_SIZE;
 
 		if (process_len > 0)
 		{
-			receiver_->algo->process(cipher_ptr, process_len);
+			algo->process(cipher_ptr, process_len);
 		}
 
 		Botan::secure_vector<uint8_t> final_block;
@@ -115,7 +116,7 @@ modifier::result cipher::on_recv(
 			std::back_inserter(final_block)
 		);
 
-		receiver_->algo->finish(final_block);
+		algo->finish(final_block);
 
 		std::memcpy(
 			buf.data() + final_pos,
@@ -124,7 +125,10 @@ modifier::result cipher::on_recv(
 		);
 
 		pad_size = BLOCK_SIZE - final_block.size();
+	}
 
+	// 락 불필요 (한번에 하나씩 처리됨)
+	{
 		receiver_->update_hash(
 			buf,
 			msg_pos + bits_message::header_length,
@@ -161,23 +165,34 @@ modifier::result cipher::on_send(
 	auto final_pos		= cipher_pos + cipher_len - BLOCK_SIZE;		// 최종 블럭 위치	
 	uint8_t* cipher_ptr = buf.data() + cipher_pos;					// 암호화 시작 포인터
 
+	static thread_local std::unique_ptr<Botan::Cipher_Mode> algo(
+		Botan::get_cipher_mode("AES-128/CBC/PKCS7", Botan::ENCRYPTION)
+	);
+
 	// lock 
 	{
-		std::lock_guard<std::recursive_mutex> lock(mutex_);
+		std::lock_guard<std::recursive_mutex> lock(send_mutex_);
+
+		algo->clear(); 
+
+		algo->set_key(sender_->key);
+
+		algo->start(sender_->nonce);
 
 		sender_->update_hash(
 			buf,
 			msg_pos + bits_message::header_length,
 			msg_len - bits_message::header_length
 		);
+	}
 
-		sender_->algo->start(sender_->nonce);
-
+	// encryption 
+	{
 		std::size_t process_len = cipher_len - BLOCK_SIZE;
 
 		if (process_len > 0)
 		{
-			sender_->algo->process(cipher_ptr, process_len);
+			algo->process(cipher_ptr, process_len);
 		}
 
 		Botan::secure_vector<uint8_t> final_block;
@@ -189,7 +204,7 @@ modifier::result cipher::on_send(
 			std::back_inserter(final_block)
 		);
 
-		sender_->algo->finish(final_block);
+		algo->finish(final_block);
 
 		check(final_block.size() == BLOCK_SIZE);
 
@@ -198,16 +213,21 @@ modifier::result cipher::on_send(
 			final_block.data(),
 			final_block.size()
 		);
+	}
+
+	// lock 
+	{
+		std::lock_guard<std::recursive_mutex> lock(send_mutex_);
 
 		sender_->complete();
 	}
 
-	update_length(buf, msg_pos, msg_len + pad_size);
+	update_length_field(buf, msg_pos, msg_len + pad_size);
 
 	return result(true, reason::success);
 }
 
-void cipher_helper::update_hash(
+void cipher_impl::update_hash(
 	resize_buffer& buf, std::size_t msg_pos, std::size_t msg_len)
 {
 	const uint8_t* pd = buf.data() + msg_pos; // msg_pos가 header 길이를 반영 바뀌어 옴
@@ -217,9 +237,11 @@ void cipher_helper::update_hash(
 	hasher->update(pd, len);
 	hasher->update(data);
 	hasher->final(data);
+
+	// 성능 보다 보안이 더 중요하여 CRC32대신 SHA1을 사용한다. 
 }
 
-void cipher_helper::complete()
+void cipher_impl::complete()
 {
 	nonce.clear();
 	std::copy(data.begin(), data.begin() + 16, std::back_inserter(nonce));
@@ -227,17 +249,13 @@ void cipher_helper::complete()
 	// count가 0일 때도 변경
 	if (count % cipher::cfg.key_change_interval == 0)
 	{
-		algo->clear();
-
 		update_key();
-
-		algo->set_key(key);
 	}
 
 	count++;
 }
 
-void cipher_helper::update_key()
+void cipher_impl::update_key()
 {
 	key.clear();
 	std::copy(data.begin(), data.begin() + 16, std::back_inserter(key));
@@ -245,12 +263,3 @@ void cipher_helper::update_key()
 
 } // net
 } // lax
-
-  // TODO: optimization 
-  //
-  // 상태를 분리하면 process()와 finish()를 
-  // 락에서 제외할 수 있을 것으로 보인다. 
-  // 암호화 객체 자체는 TLS로 만들고 
-  // 상태 업데이트만 락을 걸면 좀 더 효율적이 된다. 
-  //
-  // 성능 측정 후에 추가 작업을 한다. 

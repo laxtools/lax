@@ -103,6 +103,10 @@ botan library. configure.py로 빌드가 쉽게 됨.
   - 어떻게 더 깔끔하게 만들 것인가? 
   - 아주 많은 실행 중 에러 발생 시 디버깅이 쉽게 하기 
 
+- 작은 실수들 
+  - pad_size를 해시 생성에 반영하지 않아서 오류 
+  - 생각하는 흐름을 살펴서 개선해야 할 듯
+
 ## service / protocol / session / acceptor / connector 
 
 한번에 구현해야 한다. 상호 연관이 밀접하다. 
@@ -113,7 +117,6 @@ close / destroy 개념 분리로 세션 정리도 괜찮고
 적절하게 에러 처리도 되고 있다.
 
 ### protocol
-
 
 
 ### session 
@@ -134,6 +137,7 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
 
 이렇게 하는 게 좋아 보인다. 
 
+잘 된다. 크게 신경 쓸 게 없고 sub / post 로 잘 동작.
 
 ### service 
 
@@ -142,8 +146,6 @@ close 메세지에 대해 세션 아이디로 체크해서 전달하도록 한다.
  protocol_msgpack::sub()를 통해서 수신
 
  protocol::ref를 통해 전송
-
-
 
 ## actor 
 

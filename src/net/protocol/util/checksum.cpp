@@ -26,7 +26,7 @@ modifier::result checksum::on_recv(
 
 	// payload 없으면 성공으로 처리
 	return_if(
-		msg_len < bits_message::header_length + checksum_size, 
+		msg_len == bits_message::header_length , 
 		result(true, reason::success)
 	);
 
@@ -71,7 +71,7 @@ modifier::result checksum::on_send(
 
 	// payload 없으면 성공으로 처리
 	return_if(
-		msg_len < bits_message::header_length + checksum_size,
+		msg_len == bits_message::header_length, 
 		result(true, reason::success)
 	);
 
@@ -89,11 +89,11 @@ modifier::result checksum::on_send(
 	uint8_t crc[checksum_size];
 	hash->final(crc);
 
-	buf.append("abcd", checksum_size); // resize 
+	buf.append("abcd", checksum_size); // 공간 확보
 
 	std::memcpy(buf.data() + msg_pos + msg_len, crc, checksum_size);
 
-	update_length(buf, msg_pos, msg_len + checksum_size);
+	update_length_field(buf, msg_pos, msg_len + checksum_size);
 
 	return result(true, reason::success);
 }

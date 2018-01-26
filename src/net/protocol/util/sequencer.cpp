@@ -47,7 +47,7 @@ modifier::result sequencer::on_send(
 
 	buf.data()[msg_pos + msg_len] = send_seq_++;
 
-	update_length(buf, msg_pos, msg_len + sequence_size);
+	update_length_field(buf, msg_pos, msg_len + sequence_size);
 
 	return result(true, reason::success);
 }

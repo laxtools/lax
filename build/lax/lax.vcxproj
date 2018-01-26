@@ -160,7 +160,8 @@
     <ClInclude Include="..\..\include\lax\actor\actor_pool.hpp" />
     <ClInclude Include="..\..\include\lax\actor\actor_task.hpp" />
     <ClInclude Include="..\..\include\lax\actor\component.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\scene.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\server.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\service.hpp" />
     <ClInclude Include="..\..\include\lax\channel\channel.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp" />
@@ -210,7 +211,6 @@
     <ClInclude Include="..\..\include\lax\util\botan\botan_all.h" />
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />
     <ClInclude Include="..\..\include\lax\util\config.hpp" />
-    <ClInclude Include="..\..\include\lax\util\crc32.hpp" />
     <ClInclude Include="..\..\include\lax\util\exception.hpp" />
     <ClInclude Include="..\..\include\lax\util\json.hpp" />
     <ClInclude Include="..\..\include\lax\util\logger.hpp" />

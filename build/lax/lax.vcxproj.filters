@@ -205,9 +205,6 @@
     <ClInclude Include="..\..\include\lax\actor\component.hpp">
       <Filter>actor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\scene.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\actor.hpp">
       <Filter>actor</Filter>
     </ClInclude>
@@ -259,9 +256,6 @@
     <ClInclude Include="..\..\include\lax\net\detail\subs_close.hpp">
       <Filter>net\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\util\crc32.hpp">
-      <Filter>util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\util\botan\botan_all.h">
       <Filter>util\botan</Filter>
     </ClInclude>
@@ -276,6 +270,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\net\protocol\util\sequencer.hpp">
       <Filter>net\protocol\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\server.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\service.hpp">
+      <Filter>actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
