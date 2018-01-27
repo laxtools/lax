@@ -20,6 +20,12 @@
     <Filter Include="channel">
       <UniqueIdentifier>{f91170f0-e996-4b2a-be77-5d5572a2387e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="actor">
+      <UniqueIdentifier>{f6451c3b-f2cd-4c9e-bfdf-fc56afa57347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server">
+      <UniqueIdentifier>{ee8bbad0-9ec9-4a16-ac83-bf65e5c2713b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -87,10 +93,22 @@
     <ClCompile Include="..\..\test\net\test_bits_protocol.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\server\test_server.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\actor\test_actor.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test\net\construction.md">
       <Filter>net</Filter>
+    </None>
+    <None Include="..\..\test\actor\construction.md">
+      <Filter>actor</Filter>
+    </None>
+    <None Include="..\..\test\server\construction.md">
+      <Filter>server</Filter>
     </None>
   </ItemGroup>
 </Project>

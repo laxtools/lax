@@ -178,6 +178,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\test\actor\test_actor.cpp" />
     <ClCompile Include="..\..\test\channel\test_channel.cpp" />
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp" />
     <ClCompile Include="..\..\test\db\test_db.cpp" />
@@ -190,6 +191,7 @@
     <ClCompile Include="..\..\test\net\test_resize_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_service.cpp" />
+    <ClCompile Include="..\..\test\server\test_server.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="..\..\test\util\test_logger.cpp" />
@@ -203,7 +205,9 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\test\actor\construction.md" />
     <None Include="..\..\test\net\construction.md" />
+    <None Include="..\..\test\server\construction.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,6 @@
 # actor 
 
- 모든 것이 액터나 액터에서 사용하는 것들이다. 
-
- - task_actor 
- - frame_actor 
- - actor_pool : 중요. 타잎별 할당 개수, 풀에 있는 개수 추적. 
+ 애플리케이션은 액터나 액터에서 사용하는 것들로 구성된다. 
 
 ## component 
 
@@ -25,68 +21,21 @@
  - find them as concepts and as type.
  - find relations between them 
 
+## 타잎 시스템 
+ 
+ 여러 액터들을 처리할 때 타잎을 알아야 할 필요가 있다. 
+ 공통의 인터페이스에 대해 처리할 수 있어야 한다. 
+ C++ 동적인 캐스팅을 통해 가능하다. dynamic_cast를 
+ 사용해도 괜찮은가? is_a( npc ), is_a( boss ) 같은 기능이 필요한가? 
+ 실제 npc, boss 데이터 실행기와 연관된다. 다른 관점이 필요하다. 
 
 
+## 정리 
 
-## server 
+ 액터를 엔진 단에서 구현할 부분은 많지 않다. 
+ 이미 채널을 통해 통신이 가능하고  태스크로 실행 기능을 분리했기 때문이다.
 
-서버. service들 실행. 각 service는 자체 액터 관리. 
+ 단지, 매우 중요한 영역인데 편하게 개발할 수 있는 수단은 
+ 아직 충분하지 않다. 게임을 만들면서 필요한 편의 기능을 확보한다. 
 
-service는 task_actor로 함. 
-
-xml로 구성 파일 작성. 클러스터 관리.  연결 관리. 서비스 상태 관리. 
-
-service는 자체 채널 보유. service_factory에서 생성. 문자열 이름을 사용. 
-
-로컬 / 리모트 serivce warpping. locational transparency 제공. 
-
-- 통신 프로토콜의 실행
-
-- task_scheduler 포함. 
-
-- service 생성과 실행 
-
-- peer들 연결과 관리 
-
-- 로컬 / 리모트 서비스 상태 관리
-
-- 리모트 서비스의 ref 전달 
-
-- 호스트 상태를 관리기에 전달 
-
-  - 메모리 / io / 세션 등 
-  - windows 관리 서비스 연동 
-
-  ?
-
-### service
-
-- server를 통해 peer들에 상태 전파 
-- 관리 기능 실행 
-  - 통지 시작 / 중단 
-  - counter 전달 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 

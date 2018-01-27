@@ -30,6 +30,8 @@ void log::init()
 
 	return_if(initialized_);
 
+	initialized_ = true;
+
 	spdlog::set_pattern(log_pattern);
 
 	auto retry = retry_on_overflow ? 
@@ -51,7 +53,6 @@ void log::init()
 
 	get()->flush_on(spdlog::level::err);
 
-	initialized_ = true;
 }
 
 using namespace std::experimental::filesystem::v1;

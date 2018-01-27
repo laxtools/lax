@@ -30,6 +30,7 @@ public:
 		ptr get() { return operator*(); }
 
 		// note: assignment invalidates rhs object
+		// check following again.
 		ref(ref& rhs) { move(rhs); }
 		ref& operator=(ref& rhs) { return move(rhs); }
 

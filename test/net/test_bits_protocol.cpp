@@ -152,7 +152,7 @@ TEST_CASE("bits protocol")
 
 			auto proto = std::make_shared<bits_protocol>();
 
-			for (int i = 0; i < 10000 ; ++i)
+			for (int i = 0; i < 100 ; ++i)
 			{
 				mp->value = i;
 				auto rc = proto->send(mp); // post in on_recv

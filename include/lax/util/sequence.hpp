@@ -3,6 +3,7 @@
 #include <lax/util/macros.hpp>
 #include <lax/util/null_mutex.hpp>
 
+#include <algorithm>
 #include <deque>
 #include <exception>
 #include <mutex>

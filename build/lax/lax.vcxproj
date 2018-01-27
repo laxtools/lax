@@ -147,6 +147,7 @@
       <PreprocessorDefinitions>ASIO_STANDALONE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -156,12 +157,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\lax\actor\actor.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\actor_factory.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\actor_pool.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\actor_task.hpp" />
     <ClInclude Include="..\..\include\lax\actor\component.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\server.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\service.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\task_adapter.hpp" />
     <ClInclude Include="..\..\include\lax\channel\channel.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp" />
@@ -204,6 +201,14 @@
     <ClInclude Include="..\..\include\lax\net\reason.hpp" />
     <ClInclude Include="..\..\include\lax\net\service.hpp" />
     <ClInclude Include="..\..\include\lax\net\session.hpp" />
+    <ClInclude Include="..\..\include\lax\server\argos\argos_command.hpp" />
+    <ClInclude Include="..\..\include\lax\server\argos\argos_counter.hpp" />
+    <ClInclude Include="..\..\include\lax\server\argos\argos_counter_manager.hpp" />
+    <ClInclude Include="..\..\include\lax\server\argos\argos_directory.hpp" />
+    <ClInclude Include="..\..\include\lax\server\argos\argos_messages.hpp" />
+    <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp" />
+    <ClInclude Include="..\..\include\lax\server\server.hpp" />
+    <ClInclude Include="..\..\include\lax\server\service.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
@@ -230,6 +235,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\actor\actor.cpp" />
+    <ClCompile Include="..\..\src\actor\component.cpp" />
+    <ClCompile Include="..\..\src\actor\task_adapter.cpp" />
     <ClCompile Include="..\..\src\channel\channel.cpp" />
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />
@@ -272,7 +280,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\include\lax\actor\construction.md" />
     <None Include="..\..\include\lax\net\construction.md" />
     <None Include="..\..\include\lax\net\session.inl" />
     <None Include="..\..\include\lax\util\concurrent_queue.inl" />

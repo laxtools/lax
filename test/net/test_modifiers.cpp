@@ -170,7 +170,6 @@ TEST_CASE("modifiers test")
 			{
 				cipher enc;
 
-
 				enc.bind(pp.get());
 
 				resize_buffer buf;
@@ -209,7 +208,7 @@ TEST_CASE("modifiers test")
 			auto mp = std::make_shared<msg_test>();
 			mp->a = 3;
 
-			for (int i = 0; i < 1024; ++i)
+			for (int i = 0; i < 100 ; ++i)
 			{
 				mp->b.append("12345678901234567890123456789012");
 			}

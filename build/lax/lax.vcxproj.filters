@@ -56,6 +56,12 @@
     <Filter Include="util\botan">
       <UniqueIdentifier>{c7cc01db-277f-45a3-9b19-643fbfb50c7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="server">
+      <UniqueIdentifier>{a62fb551-3025-42a6-89bb-8fd4160e035b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server\argos">
+      <UniqueIdentifier>{0443a17e-430d-4bc4-8556-caa35035023c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -199,19 +205,10 @@
     <ClInclude Include="..\..\include\lax\net\protocol\protocol.hpp">
       <Filter>net\protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\actor_task.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\component.hpp">
       <Filter>actor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\actor.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\actor_factory.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\actor_pool.hpp">
       <Filter>actor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\lax\util\multi_object_pool.hpp">
@@ -271,10 +268,31 @@
     <ClInclude Include="..\..\include\lax\net\protocol\util\sequencer.hpp">
       <Filter>net\protocol\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\server.hpp">
-      <Filter>actor</Filter>
+    <ClInclude Include="..\..\include\lax\server\server.hpp">
+      <Filter>server</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\service.hpp">
+    <ClInclude Include="..\..\include\lax\server\service.hpp">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\argos\argos_command.hpp">
+      <Filter>server\argos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\argos\argos_counter.hpp">
+      <Filter>server\argos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\argos\argos_counter_manager.hpp">
+      <Filter>server\argos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\argos\argos_directory.hpp">
+      <Filter>server\argos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\argos\argos_messages.hpp">
+      <Filter>server\argos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp">
+      <Filter>server\argos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\task_adapter.hpp">
       <Filter>actor</Filter>
     </ClInclude>
   </ItemGroup>
@@ -384,6 +402,15 @@
     <ClCompile Include="..\..\src\net\protocol\util\modifier.cpp">
       <Filter>net\protocol\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\actor\actor.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\actor\component.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\actor\task_adapter.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\lax\util\concurrent_queue.inl">
@@ -394,9 +421,6 @@
     </None>
     <None Include="..\..\include\lax\net\construction.md">
       <Filter>net</Filter>
-    </None>
-    <None Include="..\..\include\lax\actor\construction.md">
-      <Filter>actor</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
