@@ -2,6 +2,7 @@
 #include <catch.hpp>
 #include <lax/actor/actor.hpp>
 #include <lax/actor/task_adapter.hpp>
+#include <iostream>
 
 using namespace lax::actor;
 
@@ -39,6 +40,29 @@ public:
 	{
 	}
 };
+
+class skill_comp : public component
+{
+public:
+	COMPONENT_HEAD(skill_comp); // name, ptr, get_owner
+
+	virtual void cast()
+	{
+		std::cout << "skill_comp::cast" << std::endl;
+	}
+};
+
+class pc_skill_comp : public skill_comp
+{
+public:
+	COMPONENT_HEAD_INH(pc_skill_comp, skill_comp); // name, ptr, get_owner
+
+	void cast() override
+	{
+		std::cout << "pc_skill_comp::cast" << std::endl;
+	}
+};
+
 
 } // noname
 
@@ -87,11 +111,15 @@ TEST_CASE("test actor")
 		ap->add_comp<movement_comp>();
 
 		auto movement = ap->get_comp<movement_comp>();
+		REQUIRE(!!movement);
 
 		if (movement)
 		{
 			movement->move();
 		}
+
+		auto skill = ap->get_comp<skill_comp>();
+		REQUIRE(!skill);
 
 		//
 		// 컴포넌트의 사용: 
@@ -107,5 +135,17 @@ TEST_CASE("test actor")
 		// COMPONENT_HEAD()로 함수, 이름, get_owner()를 정의한다. 
 		// get_owner()로 안전하게 참조를 확보한다. 
 		// 
+	}
+
+	SECTION("component inheritance")
+	{
+		auto ap = std::make_shared<test_actor>();
+
+		ap->add_comp<pc_skill_comp>();
+
+		auto base_skill = ap->get_comp<skill_comp>();
+		REQUIRE(base_skill);
+
+		base_skill->cast();
 	}
 }

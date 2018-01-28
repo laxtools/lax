@@ -4,6 +4,7 @@
 #include <lax/actor/tick.hpp>
 #include <lax/util/result.hpp>
 #include <lax/util/sequence.hpp>
+#include <lax/util/exception.hpp>
 #include <typeinfo>
 #include <unordered_map>
 
@@ -39,7 +40,9 @@ public:
 	using vec_t = std::vector<actor::ptr>;
 
 public:
+	/// type은 문자열의 주소 값
 	static constexpr type_t type = "actor";
+	static constexpr type_t type_none = "none";
 
 	actor(weak_ptr parent = weak_ptr());
 
@@ -56,9 +59,20 @@ public:
 
 	/// add component
 	template <class Comp, class... Args>
-	bool add_comp(Args&&... args)
+	typename Comp::ptr add_comp(Args&&... args)
 	{
-		return add_comp(std::make_shared<Comp>(*this, args...));
+		auto cp = std::make_shared<Comp>(*this, args...);
+
+		// is_a() 체크로 전체 컴포넌트 검색
+		// 동일 상속 트리의 클래스 두 번 등록 못 함
+		if (get_comp(Comp::type))
+		{
+			THROW("component type cannot be added twice");
+		}
+
+		(void)add_comp(cp);
+
+		return cp;
 	}
 
 	/// get component
@@ -71,7 +85,6 @@ public:
 	{
 		return std::static_pointer_cast<Comp>(get_comp(Comp::type));
 	}
-
 
 	id_t get_id() const
 	{
@@ -123,11 +136,12 @@ protected:
 	}
 
 private: 
+	/// type_t는 주소가 타잎이다. 주소 비교를 한다.같은 constexpr char* 는 같은 주소를 사용
 	using comp_map = std::unordered_map<component::type_t, component::ptr>;
 
 	component::ptr get_comp(component::type_t type) const;
 
-	bool add_comp(component::ptr comp);
+	component::ptr add_comp(component::ptr comp);
 
 private:
 	static util::sequence<uint32_t, std::recursive_mutex> id_seq_;

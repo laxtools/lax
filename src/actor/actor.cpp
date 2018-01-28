@@ -60,19 +60,33 @@ void actor::on_finish()
 {
 }
 
-bool actor::add_comp(component::ptr comp)
+component::ptr actor::add_comp(component::ptr comp)
 {
-	comps_[comp->type] = comp;
+	comps_[comp->get_type()] = comp;
 
-	return !!comp;
+	return comp;
 }
 
 component::ptr actor::get_comp(component::type_t type) const
 {
 	auto iter = comps_.find(type);
-	return_if(iter == comps_.end(), component::ptr());
 
-	return iter->second;
+	// fast search
+	if (iter != comps_.end())
+	{
+		return iter->second;
+	}
+
+	// full search
+	for (auto& iter : comps_)
+	{
+		if (iter.second->is_a(type))
+		{
+			return iter.second;
+		}
+	}
+
+	return component::ptr();
 }
 
 } // actor 

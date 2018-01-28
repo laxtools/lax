@@ -30,6 +30,19 @@ void component::finish()
 	on_finish();
 }
 
+bool component::is_a(type_t type) const
+{
+	for (auto& stype : types_)
+	{
+		if (stype == type)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool component::on_start()
 {
 	return true;
@@ -42,6 +55,7 @@ void component::on_execute()
 void component::on_finish()
 {
 }
+
 
 } // component 
 } // lax

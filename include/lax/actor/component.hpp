@@ -2,6 +2,7 @@
 #include <lax/util/macros.hpp>
 #include <memory>
 #include <stdint.h>
+#include <vector>
 
 namespace lax
 {
@@ -10,7 +11,7 @@ namespace actor
 
 class actor;
 
-/// componet abstract base for actor to separate concerns
+/// componet base for actor to separate concerns
 /**
  */
 class component 
@@ -20,7 +21,10 @@ public:
 	using type_t = const char *;
 
 public:
+	/// type은 문자열의 주소 값
 	static constexpr type_t type = "component";
+	static constexpr type_t type_none = "none_component";
+	static constexpr type_t base_type = type_none;
 
 	component(actor& owner);
 
@@ -35,10 +39,17 @@ public:
 	/// 종료. on_finish() 호출. 
 	void finish();
 
-	virtual type_t get_type() const
+	type_t get_type() const
 	{
-		return "component";
+		return type;
 	}
+
+	type_t get_base_type() const
+	{
+		return base_type;
+	}
+
+	bool is_a(type_t type) const;
 
 protected:
 	/// 하위 클래스 구현. start()에서 호출
@@ -60,6 +71,9 @@ protected:
 		return owner_;
 	}
 
+protected:
+	std::vector<type_t> types_;
+
 private: 
 	actor& owner_;
 };
@@ -69,8 +83,18 @@ private:
 
 #define COMPONENT_HEAD(cls) \
 static constexpr type_t type = #cls; \
+static constexpr type_t base_type = type_none; \
+using base_class = lax::actor::component; \
 using ptr = std::shared_ptr<cls>; \
-type_t get_type() const override { return type; } \
-cls get_owner() { return get_owner(); } \
-const cls get_owner() const { return get_owner(); } \
-cls(actor& owner) : component(owner) {}
+type_t get_type() const { return type; } \
+type_t get_base_type() const { return base_type; } \
+cls(actor& owner) : component(owner) { types_.push_back(get_type()); }
+
+#define COMPONENT_HEAD_INH(cls, base) \
+static constexpr type_t type = #cls; \
+static constexpr type_t base_type = base::type; \
+using base_class = base; \
+using ptr = std::shared_ptr<cls>; \
+type_t get_type() const { return type; } \
+type_t get_base_type() const { return base_type; } \
+cls(actor& owner) : base(owner) { types_.push_back(get_type()); }

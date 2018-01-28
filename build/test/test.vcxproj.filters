@@ -99,6 +99,9 @@
     <ClCompile Include="..\..\test\actor\test_actor.cpp">
       <Filter>actor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\actor\test_type_system_design.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test\net\construction.md">
