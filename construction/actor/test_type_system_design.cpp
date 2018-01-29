@@ -1,12 +1,90 @@
 #include "stdafx.h"
 #include <catch.hpp>
+#include <vector>
+#include <iostream>
 
 namespace
 {
 
+namespace
+{
+
+struct type
+{
+
+	using vec = std::vector<const std::type_info*>;
+
+	vec types_;
+};
+
+struct object : public type
+{
+	object()
+	{
+		types_.push_back(&typeid(*this));
+	}
+};
+
+struct object2 : public object
+{
+	object2()
+	{
+		types_.push_back(&typeid(*this));
+	}
+};
+
+struct type_container
+{
+	void add(type* v) { objs_.push_back(v); }
+
+	using vec = std::vector<type*>; // type *를 키로 하는 목록 형태로 변경
+
+	vec objs_;
+};
+
+} // anonymous
+
+}
+
+TEST_CASE("type system design - take 2")
+{
+	SECTION("test type basics")
+	{
+		object2 obj2;
+
+		for (auto& tv : obj2.types_)
+		{
+			std::cout << tv->name() << std::endl; // namespace를 포함하는 긴 이름. 
+		}
+
+		bool result = ((*obj2.types_[0]) == typeid(object)); // 생성자 호출 순서에 의존
+
+		REQUIRE(result);
+	}
+
+	SECTION("type multiple inheritance")
+	{
+		// 지원하기가 곤란한 점이 많다. 
+		// 단일 상속 계층만 지원한다. 
+	}
+
+	SECTION("type entry wrapper")
+	{
+		//
+		// type_info*로 map 이나 unordered_map의 키로 
+		// 사용하는 건 권장할만 하지 않다. 
+		// type_info의 연산자를 드러내는 adapter를 작성해서 처리 
+		// 
+
+
+	}
+}
+
+namespace
+{
 struct cls_base
 {
-	using base = cls_base; 
+	using base = cls_base;
 	static constexpr char* base_name = "none";
 	static constexpr char* cls_name = "cls_base";
 
@@ -14,14 +92,15 @@ struct cls_base
 
 struct cls_derived : public cls_base
 {
-	using base = cls_base; 
+	using base = cls_base;
 	static constexpr char* base_name = "cls_base";
 	static constexpr char* cls_name = "cls_derived";
 };
 
-}
+} // anonymous
 
-TEST_CASE("type system design")
+
+TEST_CASE("type system design - take 1")
 {
 	SECTION("conclusion and summary")
 	{
@@ -33,6 +112,11 @@ TEST_CASE("type system design")
 		// - 최종 클래스를 등록한다. 
 		// - 클래스를 찾을 때 없으면 is_a()로 검색한다. 
 		//
+		// 추가: 
+		// - typeid()가 const std::type_info&를 돌려준다. 
+		// - 위 참조는 항상 같은 주소를 같도록 구현되었다. 
+		// - 위의 구현에 의존하는게 좀 더 안전하다. 
+		// - 여전히 쏙 마음에 들지는 않는다. (확신이 없다)
 
 		// 
 		// 제약은 다음과 같다. 
@@ -104,4 +188,15 @@ TEST_CASE("type system design")
 		//
 	}
 
+	SECTION("typeid and type_info")
+	{
+		REQUIRE(typeid(cls_base) == typeid(cls_derived::base));
+
+		std::vector<const std::type_info*> types;
+
+		types.push_back(&typeid(cls_derived));
+		types.push_back(&typeid(cls_base));
+
+		REQUIRE(types[0] == &typeid(cls_derived));
+	}
 }

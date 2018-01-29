@@ -1,4 +1,0 @@
-# Hana 
-
-A metaprogramming library. 
-

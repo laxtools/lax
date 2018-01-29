@@ -159,6 +159,7 @@
     <ClInclude Include="..\..\include\lax\actor\actor.hpp" />
     <ClInclude Include="..\..\include\lax\actor\actor_container.hpp" />
     <ClInclude Include="..\..\include\lax\actor\component.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\detail\component_container.hpp" />
     <ClInclude Include="..\..\include\lax\actor\task_adapter.hpp" />
     <ClInclude Include="..\..\include\lax\channel\channel.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />

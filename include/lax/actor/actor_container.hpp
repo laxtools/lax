@@ -7,3 +7,12 @@
 // - this can be an example of using actors safely  
 //   or means of minimum safety
 //
+
+//
+// index: 
+// - id 
+// - type based ??
+//
+
+// 
+// 

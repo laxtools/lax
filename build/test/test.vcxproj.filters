@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\test\net\test_bits_message.cpp">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\actor\test_type_system.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test\net\construction.md">

@@ -65,6 +65,9 @@
     <Filter Include="server\beast">
       <UniqueIdentifier>{f8520fa3-6955-42d7-b533-fe021f1a676e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="actor\detail">
+      <UniqueIdentifier>{c75cec8c-3c18-4909-bda9-e20da1dd1224}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -300,6 +303,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\actor_container.hpp">
       <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\detail\component_container.hpp">
+      <Filter>actor\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

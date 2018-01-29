@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\boost_1_66_0\;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
@@ -94,7 +94,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\boost_1_66_0\;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
@@ -181,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\actor\test_actor.cpp" />
+    <ClCompile Include="..\..\test\actor\test_type_system.cpp" />
     <ClCompile Include="..\..\test\actor\test_type_system_design.cpp" />
     <ClCompile Include="..\..\test\c++\test_hana.cpp" />
     <ClCompile Include="..\..\test\channel\test_channel.cpp" />
