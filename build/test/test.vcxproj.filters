@@ -26,6 +26,9 @@
     <Filter Include="server">
       <UniqueIdentifier>{ee8bbad0-9ec9-4a16-ac83-bf65e5c2713b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="c++">
+      <UniqueIdentifier>{c6b48b20-de4d-4f71-9151-17310506192a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -101,6 +104,15 @@
     </ClCompile>
     <ClCompile Include="..\..\test\actor\test_type_system_design.cpp">
       <Filter>actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\c++\test_hana.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\server\test_service_actor.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\net\test_bits_message.cpp">
+      <Filter>net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

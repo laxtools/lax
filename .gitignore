@@ -59,3 +59,4 @@ temp
 *.synctex.gz
 *.toc
 /doc/design/*.fdb_latexmk
+/ext/boost_1_66_0

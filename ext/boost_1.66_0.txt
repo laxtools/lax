@@ -1,0 +1,7 @@
+download and unzip boost_1_66_0
+server depends on boost. 
+channel, net, and util do not depend on boost.
+
+
+
+

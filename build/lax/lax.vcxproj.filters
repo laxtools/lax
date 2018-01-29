@@ -62,6 +62,9 @@
     <Filter Include="server\argos">
       <UniqueIdentifier>{0443a17e-430d-4bc4-8556-caa35035023c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="server\beast">
+      <UniqueIdentifier>{f8520fa3-6955-42d7-b533-fe021f1a676e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -295,6 +298,9 @@
     <ClInclude Include="..\..\include\lax\actor\task_adapter.hpp">
       <Filter>actor</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\actor_container.hpp">
+      <Filter>actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -421,6 +427,9 @@
     </None>
     <None Include="..\..\include\lax\net\construction.md">
       <Filter>net</Filter>
+    </None>
+    <None Include="..\..\include\lax\server\beast\construction.md">
+      <Filter>server\beast</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

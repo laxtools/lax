@@ -63,6 +63,8 @@ struct bm_flex_cipher : public bits_message
 	);
 };
 
+
+
 } // noname
 
 TEST_CASE("bits protocol")

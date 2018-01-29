@@ -1,0 +1,25 @@
+# TODOs
+
+- safe static (mostly) type system 
+  - actor_container 
+  - actor for components
+- server / service 
+  - service clustering
+  - service lookup
+  - communication (local / remote)
+- argos
+  - monitor server w/ shells (console, web, etc)
+- network tests
+  - stress tests
+  - performance 
+  - thread scalability
+- change project configuration 
+  - lax_server 
+    - all lax and boost
+  - lax_client 
+    - util, channel, net 
+- bits_message serialization 
+  - enable base class serialization 
+- db
+- embed boost.beast w/ openssl to support web interface 
+- ​

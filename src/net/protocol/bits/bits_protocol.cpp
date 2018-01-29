@@ -380,6 +380,5 @@ bool bits_protocol::needs_to_modify(bits_message::ptr m) const
 		(cfg.enable_sequence	&& m->enable_sequence);
 }
 
-
 } // net
 } // lax

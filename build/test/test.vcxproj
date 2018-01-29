@@ -125,6 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +164,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -180,11 +182,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\test\actor\test_actor.cpp" />
     <ClCompile Include="..\..\test\actor\test_type_system_design.cpp" />
+    <ClCompile Include="..\..\test\c++\test_hana.cpp" />
     <ClCompile Include="..\..\test\channel\test_channel.cpp" />
     <ClCompile Include="..\..\test\channel\test_dispatcher.cpp" />
     <ClCompile Include="..\..\test\db\test_db.cpp" />
     <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
     <ClCompile Include="..\..\test\net\test_bitsery.cpp" />
+    <ClCompile Include="..\..\test\net\test_bits_message.cpp" />
     <ClCompile Include="..\..\test\net\test_bits_protocol.cpp" />
     <ClCompile Include="..\..\test\net\test_bits_protocol_design.cpp" />
     <ClCompile Include="..\..\test\net\test_botan.cpp" />
@@ -193,6 +197,7 @@
     <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
     <ClCompile Include="..\..\test\net\test_service.cpp" />
     <ClCompile Include="..\..\test\server\test_server.cpp" />
+    <ClCompile Include="..\..\test\server\test_service_actor.cpp" />
     <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
     <ClCompile Include="..\..\test\task\test_task.cpp" />
     <ClCompile Include="..\..\test\util\test_logger.cpp" />

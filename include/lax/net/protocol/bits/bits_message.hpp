@@ -130,9 +130,9 @@ static constexpr const char* type_name = #type;
   * 암호화 / CRC의 동적 구성은 불일치가 자주 발생.
   * 클래스 정의할 때 넣고 헤더 버전을 맞추면 일치하도록 함.
   */
-#define BITS_MSG_CLASS_DETAIL(cls, enc, crc, seq) \
+#define BITS_MSG_CLASS_FULL(cls, base_cls, enc, crc, seq) \
 cls() \
-: lax::net::bits_message(topic_key) \
+: base_cls(topic_key) \
 { \
 	desc = fmt::format("{}:{}:{}",  \
 		#cls, get_topic().get_group(), get_topic().get_type()); \
@@ -146,6 +146,7 @@ cls() \
 		enable_sequence = true; \
 	} \
 } \
+using base = base_cls; \
 \
 const char* get_desc() const override \
 { \
@@ -153,8 +154,12 @@ const char* get_desc() const override \
 } \
 BITS_MSG_BODY()
 
+#define BITS_MSG_CLASS_DETAIL(cls, enc, crc, seq) \
+  BITS_MSG_CLASS_FULL(cls, ::lax::net::bits_message, enc, crc, seq)
+
  /// 암호화, CRC를 disable한 간략 버전
-#define BITS_MSG_CLASS(cls) BITS_MSG_CLASS_DETAIL(cls, false, false, false)
+#define BITS_MSG_CLASS(cls) \
+  BITS_MSG_CLASS_FULL(cls, ::lax::net::bits_message, false, false, false)
 
 /// 간략한 버전. 
 #define BITS_MSG(group, type, cls) \
@@ -171,6 +176,40 @@ BITS_MSG_BODY()
 template <typename S> \
 void serialize(S& s) \
 { \
+	s.archive( \
+		__VA_ARGS__ \
+	); \
+}
+
+/// 간략한 버전. 
+#define BITS_MSG_BASE(cls) \
+cls(const topic_t::key_t key) \
+: lax::net::bits_message(topic_t(key)) \
+{ \
+	desc = fmt::format("{}:{}:{}",  \
+		#cls, get_topic().get_group(), get_topic().get_type()); \
+} \
+\
+const char* get_desc() const override \
+{ \
+	return desc.c_str(); \
+} \
+BITS_MSG_BODY()
+
+/// inheritance version of macros
+#define BITS_MSG_INH(group, type, cls, base_cls) \
+	BITS_MSG_TOPIC(group, type); \
+	BITS_MSG_CLASS_FULL(cls, base_cls, false, false, false)
+
+#define BITS_MSG_DETAIL_INH(group, type, cls, base_cls, enc, crc, seq) \
+	BITS_MSG_TOPIC(group, type); \
+	BITS_MSG_CLASS_FULL(group, type, cls, base_cls, enc, crc, seq)
+
+#define BITS_SERIALIZE_INH(...) \
+template <typename S> \
+void serialize(S& s) \
+{ \
+    base::serialize(s); \
 	s.archive( \
 		__VA_ARGS__ \
 	); \
