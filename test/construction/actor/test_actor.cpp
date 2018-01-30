@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include <catch.hpp>
 #include <lax/actor/actor.hpp>
-#include <lax/actor/task_adapter.hpp>
+#include <lax/actor/task_adaptor.hpp>
 #include <iostream>
 
 using namespace lax::actor;
@@ -114,7 +114,7 @@ TEST_CASE("test actor")
 	SECTION("task actor")
 	{
 		auto ap = std::make_shared<test_actor>();
-		auto tp = std::make_shared<task_adapter>(ap);
+		auto tp = std::make_shared<task_adaptor>(ap);
 
 		REQUIRE(tp->start());
 		REQUIRE(ap->is_started());

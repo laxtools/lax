@@ -1,32 +1,32 @@
 #include "stdafx.h"
-#include <lax/actor/task_adapter.hpp>
+#include <lax/actor/task_adaptor.hpp>
 
 namespace lax
 {
 namespace actor
 {
 
-task_adapter::task_adapter(actor::ptr target)
+task_adaptor::task_adaptor(actor::ptr target)
 	: task()
 	, target_(target)
 {
 }
 
-task_adapter::~task_adapter()
+task_adaptor::~task_adaptor()
 {
 }
 
-bool task_adapter::on_start()
+bool task_adaptor::on_start()
 {
 	return target_->start();
 }
 
-void task_adapter::on_execute()
+void task_adaptor::on_execute()
 {
 	target_->execute();
 }
 
-void task_adapter::on_finish()
+void task_adaptor::on_finish()
 {
 	target_->finish();
 }

@@ -161,7 +161,7 @@
     <ClInclude Include="..\..\include\lax\actor\detail\type_info.hpp" />
     <ClInclude Include="..\..\include\lax\actor\detail\type_object.hpp" />
     <ClInclude Include="..\..\include\lax\actor\detail\type_object_container.hpp" />
-    <ClInclude Include="..\..\include\lax\actor\task_adapter.hpp" />
+    <ClInclude Include="..\..\include\lax\actor\task_adaptor.hpp" />
     <ClInclude Include="..\..\include\lax\channel\channel.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\channel_map.hpp" />
     <ClInclude Include="..\..\include\lax\channel\detail\sub_map.hpp" />
@@ -210,6 +210,7 @@
     <ClInclude Include="..\..\include\lax\server\argos\argos_directory.hpp" />
     <ClInclude Include="..\..\include\lax\server\argos\argos_messages.hpp" />
     <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp" />
+    <ClInclude Include="..\..\include\lax\server\cluster.hpp" />
     <ClInclude Include="..\..\include\lax\server\server.hpp" />
     <ClInclude Include="..\..\include\lax\server\service.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
@@ -240,7 +241,7 @@
     <ClCompile Include="..\..\src\actor\actor.cpp" />
     <ClCompile Include="..\..\src\actor\component.cpp" />
     <ClCompile Include="..\..\src\actor\detail\type_info.cpp" />
-    <ClCompile Include="..\..\src\actor\task_adapter.cpp" />
+    <ClCompile Include="..\..\src\actor\task_adaptor.cpp" />
     <ClCompile Include="..\..\src\channel\channel.cpp" />
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />

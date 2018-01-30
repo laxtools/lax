@@ -8,14 +8,14 @@ namespace lax
 namespace actor
 {
 
-class task_adapter : public task::task
+class task_adaptor : public task::task
 {
 public:
 	/// 생성자
-	task_adapter(actor::ptr target);
+	task_adaptor(actor::ptr target);
 
 	/// 소멸자
-	virtual ~task_adapter();
+	virtual ~task_adaptor();
 
 private:
 	/// 하위 클래스 구현. start()에서 호출

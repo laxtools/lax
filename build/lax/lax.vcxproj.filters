@@ -295,9 +295,6 @@
     <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp">
       <Filter>server\argos</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\task_adapter.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\detail\type_object.hpp">
       <Filter>actor\detail</Filter>
     </ClInclude>
@@ -306,6 +303,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\detail\type_info.hpp">
       <Filter>actor\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\cluster.hpp">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\actor\task_adaptor.hpp">
+      <Filter>actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -420,11 +423,11 @@
     <ClCompile Include="..\..\src\actor\component.cpp">
       <Filter>actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\actor\task_adapter.cpp">
-      <Filter>actor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\actor\detail\type_info.cpp">
       <Filter>actor\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\actor\task_adaptor.cpp">
+      <Filter>actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

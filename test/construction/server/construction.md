@@ -1,59 +1,95 @@
 # server 
 
-서버. service들 실행. 각 service는 자체 액터 관리. 
 
-service는 task_actor로 함. 
 
-xml로 구성 파일 작성. 클러스터 관리.  연결 관리. 서비스 상태 관리. 
+## server 
 
-service는 자체 채널 보유. service_factory에서 생성. 문자열 이름을 사용. 
-
-로컬 / 리모트 serivce warpping. locational transparency 제공. 
-
-- 통신 프로토콜의 실행
-
-- task_scheduler 포함. 
-
-- service 생성과 실행 
-
-- peer들 연결과 관리 
-
-- 로컬 / 리모트 서비스 상태 관리
-
-- 리모트 서비스의 ref 전달 
-
-- 호스트 상태를 관리기에 전달 
-
-  - 메모리 / io / 세션 등 
-  - windows 관리 서비스 연동 
-
-  
+- starts net::service
+- listens on protocols
+- connects to peers
+  - send server information
+  - fixed id
+- starts services from json
+  - using task_adaptor
+- starts a task_scheduler
+- manages service_directory
+  - reference to service
+    - local or remote
+    - acquire 
+      - like session::ref
+      - sub to state
+  - state update
+- not a singleton
+  - to test two servers in a unittest
 
 ## service
 
-- server를 통해 peer들에 상태 전파 
-- 관리 기능 실행 
-  - 통지 시작 / 중단 
-  - counter 전달 
+- an actor
+- update state to peers
+  - keepalive_interval
+- that's all
 
 
 
 
+## Instance Architecture
 
+A instance oriented game server. Well known examples are FPS, MORPG, board games, and MOBA games. Most games are instance based except some MMORPGs providing seamless world. But even those MMORPGs can be developed with instances if smooth instance transition is possible under game design.
 
+## Server and Services
 
+- front servers running:
+  - instance_runner_service(s)
+    - runs instance actors from different worlds
+  - lobby_service
+    - keep users
+    - relay backend messages
+  - login_service
+- world backend servers running:
+  - world_service
+    - authorize
+    - keeps users
+    - relays world traffic
+  - guild_service
+  - instance_control_service
+  - world / guild subs to user state messages
+    - copied user state
+- master backend server running:
+  - master_service
+    - controls services 
+      - start / stop services on front servers
 
+## Stability 
 
+world backend services are failure points 
 
+- recovery process
+  - notify users on lobby_service joined the world
+  - keep each instance of the world in suspended mode 
+  - restart the world server 
+  - when services of the world is up 
+    - notify users
+    - update state of user, guild, instance 
+  - when services are up
+    - notify users
+    - resume instances
 
+# Match Making Service
 
+1 billion match making. 
 
-
-
-
-
-
-
+- match_service
+  - 10K match requests per service
+  - dynamic partition of ranges with transition
+- range partition
+  - when flooded
+  - (l, u) -> (l, m) (m, u)
+  - create a new match_service on any server with (m, u)
+  - advertise new range to all related services
+- range merge
+  - when idle for a long time
+    - ask merge of partition
+    - if agreed, then extend range and stop one the two 
 
 
 
