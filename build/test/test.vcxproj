@@ -175,34 +175,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\test\net\bits_message_design.hpp" />
+    <ClInclude Include="..\..\test\construction\net\bits_message_design.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\test\actor\test_actor.cpp" />
-    <ClCompile Include="..\..\test\actor\test_type_system.cpp" />
-    <ClCompile Include="..\..\test\actor\test_type_system_design.cpp" />
-    <ClCompile Include="..\..\test\c++\test_hana.cpp" />
-    <ClCompile Include="..\..\test\channel\test_channel.cpp" />
-    <ClCompile Include="..\..\test\channel\test_dispatcher.cpp" />
-    <ClCompile Include="..\..\test\db\test_db.cpp" />
-    <ClCompile Include="..\..\test\db\test_nanodbc.cpp" />
-    <ClCompile Include="..\..\test\net\test_bitsery.cpp" />
-    <ClCompile Include="..\..\test\net\test_bits_message.cpp" />
-    <ClCompile Include="..\..\test\net\test_bits_protocol.cpp" />
-    <ClCompile Include="..\..\test\net\test_bits_protocol_design.cpp" />
-    <ClCompile Include="..\..\test\net\test_botan.cpp" />
-    <ClCompile Include="..\..\test\net\test_modifiers.cpp" />
-    <ClCompile Include="..\..\test\net\test_resize_buffer.cpp" />
-    <ClCompile Include="..\..\test\net\test_segment_buffer.cpp" />
-    <ClCompile Include="..\..\test\net\test_service.cpp" />
-    <ClCompile Include="..\..\test\server\test_server.cpp" />
-    <ClCompile Include="..\..\test\server\test_service_actor.cpp" />
-    <ClCompile Include="..\..\test\task\test_scheduler.cpp" />
-    <ClCompile Include="..\..\test\task\test_task.cpp" />
-    <ClCompile Include="..\..\test\util\test_logger.cpp" />
-    <ClCompile Include="..\..\test\util\test_string_util.cpp" />
+    <ClCompile Include="..\..\test\construction\actor\test_actor.cpp" />
+    <ClCompile Include="..\..\test\construction\actor\test_type_system.cpp" />
+    <ClCompile Include="..\..\test\construction\actor\test_type_system_design.cpp" />
+    <ClCompile Include="..\..\test\construction\c++\test_hana.cpp" />
+    <ClCompile Include="..\..\test\construction\channel\test_channel.cpp" />
+    <ClCompile Include="..\..\test\construction\channel\test_dispatcher.cpp" />
+    <ClCompile Include="..\..\test\construction\db\test_db.cpp" />
+    <ClCompile Include="..\..\test\construction\db\test_nanodbc.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_bitsery.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_bits_message.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_bits_protocol.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_bits_protocol_design.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_botan.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_modifiers.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_resize_buffer.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_segment_buffer.cpp" />
+    <ClCompile Include="..\..\test\construction\net\test_service.cpp" />
+    <ClCompile Include="..\..\test\construction\server\test_server.cpp" />
+    <ClCompile Include="..\..\test\construction\server\test_service_actor.cpp" />
+    <ClCompile Include="..\..\test\construction\task\test_scheduler.cpp" />
+    <ClCompile Include="..\..\test\construction\task\test_task.cpp" />
+    <ClCompile Include="..\..\test\construction\util\test_logger.cpp" />
+    <ClCompile Include="..\..\test\construction\util\test_string_util.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -212,9 +212,11 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\test\actor\construction.md" />
-    <None Include="..\..\test\net\construction.md" />
-    <None Include="..\..\test\server\construction.md" />
+    <None Include="..\..\test\construction\actor\construction.md" />
+    <None Include="..\..\test\construction\c++\hana.md" />
+    <None Include="..\..\test\construction\net\checksum debugging.md" />
+    <None Include="..\..\test\construction\net\construction.md" />
+    <None Include="..\..\test\construction\server\construction.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

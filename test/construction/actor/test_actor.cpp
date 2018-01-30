@@ -12,7 +12,14 @@ namespace
 class test_actor : public actor
 {
 public:
-	ACTOR_HEAD(test_actor);
+	using ptr = std::shared_ptr<test_actor>;
+
+	// 기본 값이 없으면 shared_ptr 코드 생성이 안 됨 (기본 생성자를 필요로 함)
+	test_actor(weak_ptr parent = weak_ptr())
+		: actor(parent)
+	{
+		push_type<test_actor>();
+	}
 
 private:
 	virtual bool on_start() override
@@ -34,7 +41,13 @@ private:
 class movement_comp : public component
 {
 public:
-	COMPONENT_HEAD(movement_comp); // name, ptr, get_owner
+	using ptr = std::shared_ptr<movement_comp>;
+
+	movement_comp(actor& owner)
+		: component(owner)
+	{
+		push_type<movement_comp>();
+	}
 
 	void move()
 	{
@@ -44,7 +57,13 @@ public:
 class skill_comp : public component
 {
 public:
-	COMPONENT_HEAD(skill_comp); // name, ptr, get_owner
+	using ptr = std::shared_ptr<skill_comp>;
+
+	skill_comp(actor& owner)
+	: component(owner)
+	{
+		push_type<skill_comp>();
+	}
 
 	virtual void cast()
 	{
@@ -55,7 +74,13 @@ public:
 class pc_skill_comp : public skill_comp
 {
 public:
-	COMPONENT_HEAD_INH(pc_skill_comp, skill_comp); // name, ptr, get_owner
+	using ptr = std::shared_ptr<pc_skill_comp>;
+
+	pc_skill_comp(actor& owner)
+		: skill_comp(owner)
+	{
+		push_type<pc_skill_comp>();
+	}
 
 	void cast() override
 	{
@@ -80,8 +105,6 @@ TEST_CASE("test actor")
 		auto ap = std::make_shared<test_actor>();
 
 		REQUIRE(ap->start());
-
-		REQUIRE(ap->get_type() == test_actor::type);
 
 		ap->execute();
 
@@ -108,9 +131,9 @@ TEST_CASE("test actor")
 	{
 		auto ap = std::make_shared<test_actor>();
 
-		ap->add_comp<movement_comp>();
+		ap->add_component<movement_comp>();
 
-		auto movement = ap->get_comp<movement_comp>();
+		auto movement = ap->get_component<movement_comp>();
 		REQUIRE(!!movement);
 
 		if (movement)
@@ -118,34 +141,55 @@ TEST_CASE("test actor")
 			movement->move();
 		}
 
-		auto skill = ap->get_comp<skill_comp>();
+		auto skill = ap->get_component<skill_comp>();
 		REQUIRE(!skill);
 
-		//
-		// 컴포넌트의 사용: 
-		// c++에서 잘못 컨벤션이 잡히면 컴포넌트는 사용하지 않는 게 오히려 낫다.
-		// 그냥 멤버 함수로 하위 클래스를 작성하는 것이 더 나을 수 있다. 
-		// 따라서, 다음과 같이 정리하고 이후 개선해 나간다. 
-		// - actor의 생성자에서만 특별한 경우가 아니라면 add_comp<Comp>()로 
-		//   모두 등록한다. 
-		// - 사용할 때는 get_comp<Comp>()로 하고 포인터 체크 후 사용한다. 
-		// - actor들에 적용할 경우는 actor::for_each<Comp>를 사용한다.
-		//
-		// 컴포넌트의 정의:
-		// COMPONENT_HEAD()로 함수, 이름, get_owner()를 정의한다. 
-		// get_owner()로 안전하게 참조를 확보한다. 
+		// component를 만들 때: 
+		// - using ptr = std::shared_ptr<cls>; 필요 
+		// - 생성자들에서 push_type<cls>(); 해줘야 함 
 		// 
+
+		//
+		// 위 두 가지로 상속 계층 상의 타잎에 대해 
+		// 컴포넌트를 비교적 안전하게 사용 가능
+		//
 	}
 
 	SECTION("component inheritance")
 	{
-		auto ap = std::make_shared<test_actor>();
+		SECTION("single comp")
+		{
+			auto ap = std::make_shared<test_actor>();
 
-		ap->add_comp<pc_skill_comp>();
+			ap->add_component<pc_skill_comp>();
 
-		auto base_skill = ap->get_comp<skill_comp>();
-		REQUIRE(base_skill);
+			auto base_skill = ap->get_component<skill_comp>();
+			REQUIRE(base_skill);
 
-		base_skill->cast();
+			base_skill->cast();
+		}
+
+		SECTION("several same type comp")
+		{
+			auto ap = std::make_shared<test_actor>();
+
+			ap->add_component<pc_skill_comp>();
+
+			ap->add_component<pc_skill_comp>();
+
+			auto vec = ap->get_components<skill_comp>();
+			REQUIRE(vec.size() == 2);
+
+			vec[0]->cast();
+		}
+
+		//
+		// 인터페이스 컴포넌트에 대해 처리 가능해짐
+		//   
+
+		// 
+		// apply_components<skill_comp>()를 사용하면 보다 안전하게 처리 가능 
+		// - 이미 있는 타잎들에 대해서 동작. 
+		//
 	}
 }

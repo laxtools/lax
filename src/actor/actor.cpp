@@ -13,6 +13,7 @@ actor::actor(weak_ptr parent)
 	: parent_(parent)
 	, id_(id_seq_.next())
 {
+	push_type(typeid(actor));
 }
 
 actor::~actor()
@@ -25,10 +26,7 @@ bool actor::start()
 	auto rc = on_start();
 	return_if(!rc, false);
 
-	for (auto& iter : comps_)
-	{
-		rc = rc && iter.second->start();
-	}
+	comps_.apply([](component::ptr comp) { return comp->start(); });
 
 	started_ = rc;
 
@@ -60,34 +58,6 @@ void actor::on_finish()
 {
 }
 
-component::ptr actor::add_comp(component::ptr comp)
-{
-	comps_[comp->get_type()] = comp;
-
-	return comp;
-}
-
-component::ptr actor::get_comp(component::type_t type) const
-{
-	auto iter = comps_.find(type);
-
-	// fast search
-	if (iter != comps_.end())
-	{
-		return iter->second;
-	}
-
-	// full search
-	for (auto& iter : comps_)
-	{
-		if (iter.second->is_a(type))
-		{
-			return iter.second;
-		}
-	}
-
-	return component::ptr();
-}
 
 } // actor 
 } // lax

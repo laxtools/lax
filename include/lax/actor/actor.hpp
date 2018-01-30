@@ -2,6 +2,7 @@
 
 #include <lax/actor/component.hpp>
 #include <lax/actor/tick.hpp>
+#include <lax/actor/detail/type_object_container.hpp>
 #include <lax/util/result.hpp>
 #include <lax/util/sequence.hpp>
 #include <lax/util/exception.hpp>
@@ -15,35 +16,26 @@ namespace actor
 
 /// actor w/ components
 /**
- * task
- * - 어디서나 실행 가능. 
- * - 꼭 task_runner가 아니라도 실행 가능
- *
  * component
  * - actor의 세부 구현을 처리
  * - actor 클래스간 공유를 목적으로 함
  *
  * id 
  * - 32비트 sequence를 사용. 동시 42억개 정도가 제한
- *
- * type
- * - 최종 액터 클래스의 타잎 이름
+ * 
+ * type_object 사용
+ * - 생성자에서 push_type<Class>()로 등록 
  */
-class actor : public std::enable_shared_from_this<actor>
+class actor : public std::enable_shared_from_this<actor>, public type_object
 {
 public: 
 	using ptr = std::shared_ptr<actor>;
 	using weak_ptr = std::weak_ptr<actor>;
 	using result = util::result<bool, std::string>;
 	using id_t = uint32_t;
-	using type_t = const char*;
 	using vec_t = std::vector<actor::ptr>;
 
 public:
-	/// type은 문자열의 주소 값
-	static constexpr type_t type = "actor";
-	static constexpr type_t type_none = "none";
-
 	actor(weak_ptr parent = weak_ptr());
 
 	virtual ~actor();
@@ -59,31 +51,35 @@ public:
 
 	/// add component
 	template <class Comp, class... Args>
-	typename Comp::ptr add_comp(Args&&... args)
+	typename Comp::ptr add_component(Args&&... args)
 	{
 		auto cp = std::make_shared<Comp>(*this, args...);
 
-		// is_a() 체크로 전체 컴포넌트 검색
-		// 동일 상속 트리의 클래스 두 번 등록 못 함
-		if (get_comp(Comp::type))
-		{
-			THROW("component type cannot be added twice");
-		}
-
-		(void)add_comp(cp);
-
-		return cp;
+		return comps_.add<Comp>(cp);
 	}
 
 	/// get component
 	/**
-	 * auto move = get_comp<comp_movement>()
+	 * auto move = get_component<comp_movement>()
 	 * if ( move ) { .. } 
 	 */
 	template <class Comp>
-	typename Comp::ptr get_comp() const
+	typename Comp::ptr get_component() const
 	{
-		return std::static_pointer_cast<Comp>(get_comp(Comp::type));
+		return comps_.get<Comp>();
+	}
+
+	template <class Comp>
+	typename std::vector<typename Comp::ptr> get_components() const
+	{
+		return comps_.get_types<Comp>();
+	}
+
+	/// Func == bool (Base::ptr)
+	template <class Comp, typename Func>
+	std::size_t apply_components(Func func) const
+	{
+		return comps_.apply<Comp>(func);
 	}
 
 	id_t get_id() const
@@ -94,25 +90,6 @@ public:
 	bool is_started() const
 	{
 		return started_;
-	}
-
-	virtual type_t get_type() const
-	{
-		return type;
-	}
-
-	/// apply function to actors
-	template <typename Comp, typename Func>
-	static void for_each(vec_t& actors, Func func)
-	{
-		for (auto& ap : actors)
-		{
-			auto comp = ap->get_comp<Comp>();
-			if (comp)
-			{
-				func(*comp);
-			}
-		}
 	}
 
 protected:
@@ -135,27 +112,16 @@ protected:
 		return parent_;
 	}
 
-private: 
-	/// type_t는 주소가 타잎이다. 주소 비교를 한다.같은 constexpr char* 는 같은 주소를 사용
-	using comp_map = std::unordered_map<component::type_t, component::ptr>;
-
-	component::ptr get_comp(component::type_t type) const;
-
-	component::ptr add_comp(component::ptr comp);
-
 private:
+	using component_container = type_object_container<component>;
+
 	static util::sequence<uint32_t, std::recursive_mutex> id_seq_;
 
 	weak_ptr parent_;
 	uint32_t id_;
-	comp_map comps_;
 	bool started_ = false;
+	component_container comps_;
 };
 
 } // actor 
 } // lax
-
-#define ACTOR_HEAD(cls) \
-static constexpr type_t type = #cls; \
-using ptr = std::shared_ptr<cls>; \
-type_t get_type() const override { return type; } 

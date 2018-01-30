@@ -37,7 +37,7 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\test\net\bits_message_design.hpp">
+    <ClInclude Include="..\..\test\construction\net\bits_message_design.hpp">
       <Filter>net</Filter>
     </ClInclude>
   </ItemGroup>
@@ -48,84 +48,90 @@
     <ClCompile Include="test.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\task\test_scheduler.cpp">
-      <Filter>task</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\task\test_task.cpp">
-      <Filter>task</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\channel\test_channel.cpp">
-      <Filter>channel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\db\test_db.cpp">
-      <Filter>db</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\db\test_nanodbc.cpp">
-      <Filter>db</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\channel\test_dispatcher.cpp">
-      <Filter>channel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\util\test_string_util.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\util\test_logger.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_segment_buffer.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_resize_buffer.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_bitsery.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_service.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_bits_protocol_design.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_botan.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_modifiers.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\net\test_bits_protocol.cpp">
-      <Filter>net</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\server\test_server.cpp">
-      <Filter>server</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\test\actor\test_actor.cpp">
+    <ClCompile Include="..\..\test\construction\actor\test_type_system.cpp">
       <Filter>actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\actor\test_type_system_design.cpp">
+    <ClCompile Include="..\..\test\construction\actor\test_type_system_design.cpp">
       <Filter>actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\c++\test_hana.cpp">
+    <ClCompile Include="..\..\test\construction\actor\test_actor.cpp">
+      <Filter>actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\c++\test_hana.cpp">
       <Filter>c++</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\server\test_service_actor.cpp">
-      <Filter>server</Filter>
+    <ClCompile Include="..\..\test\construction\channel\test_dispatcher.cpp">
+      <Filter>channel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\net\test_bits_message.cpp">
+    <ClCompile Include="..\..\test\construction\channel\test_channel.cpp">
+      <Filter>channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\db\test_db.cpp">
+      <Filter>db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\db\test_nanodbc.cpp">
+      <Filter>db</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_resize_buffer.cpp">
       <Filter>net</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\actor\test_type_system.cpp">
-      <Filter>actor</Filter>
+    <ClCompile Include="..\..\test\construction\net\test_segment_buffer.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_service.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_bits_message.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_bits_protocol.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_bits_protocol_design.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_bitsery.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_botan.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\net\test_modifiers.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\server\test_server.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\server\test_service_actor.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\task\test_scheduler.cpp">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\task\test_task.cpp">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\util\test_logger.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\util\test_string_util.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\test\net\construction.md">
-      <Filter>net</Filter>
-    </None>
-    <None Include="..\..\test\actor\construction.md">
+    <None Include="..\..\test\construction\actor\construction.md">
       <Filter>actor</Filter>
     </None>
-    <None Include="..\..\test\server\construction.md">
+    <None Include="..\..\test\construction\c++\hana.md">
+      <Filter>c++</Filter>
+    </None>
+    <None Include="..\..\test\construction\net\checksum debugging.md">
+      <Filter>net</Filter>
+    </None>
+    <None Include="..\..\test\construction\net\construction.md">
+      <Filter>net</Filter>
+    </None>
+    <None Include="..\..\test\construction\server\construction.md">
       <Filter>server</Filter>
     </None>
   </ItemGroup>
