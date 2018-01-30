@@ -88,9 +88,6 @@
     <ClInclude Include="..\..\include\lax\util\simple_timer.hpp">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp">
-      <Filter>task</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp">
       <Filter>util</Filter>
     </ClInclude>

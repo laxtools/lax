@@ -89,9 +89,9 @@ session::ref service_impl::acquire(const session::id& id)
 void service_impl::error(const session::id& id)
 {
 	util::log()->info(
-		"{0} remove on error. id: {1}",
+		"{0} remove on error. id: {1}/{2}",
 		__FUNCTION__,
-		id.get_value()
+		id.get_index(), id.get_seq()
 	);
 
 	std::unique_lock<std::shared_timed_mutex> lock(mutex_);

@@ -128,6 +128,8 @@ TEST_CASE("service")
 
 			svc.fini();
 
+			svc.wait(1000);
+
 			spdlog::set_level(spdlog::level::info);
 		}
 	}

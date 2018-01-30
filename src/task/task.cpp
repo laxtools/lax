@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <lax/task/task.hpp>
-#include <lax/task/task_exceptions.hpp>
+#include <lax/util/exception.hpp>
 
 namespace lax {
 namespace task {
@@ -28,12 +28,12 @@ void task::execute(uint32_t runner_id)
 {
 	if (state_ != state::ready)
 	{
-		throw new exception_task_not_ready("task not ready in execute");
+		THROW("task not ready in execute");
 	}
 
 	if (affinity_ && !has_right_affinity(runner_id))
 	{
-		throw new exception_task_invalid_affinity("invalid runner affinity");
+		THROW("invalid runner affinity");
 	}
 
 	last_runner_id_ = runner_id;

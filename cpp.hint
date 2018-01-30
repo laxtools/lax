@@ -1,0 +1,3 @@
+#define BITS_MSG_BASE(cls)
+#define BITS_SERIALIZE(...) 
+#define BITS_SERIALIZE_INH(...)

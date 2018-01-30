@@ -214,7 +214,6 @@
     <ClInclude Include="..\..\include\lax\server\service.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
-    <ClInclude Include="..\..\include\lax\task\task_exceptions.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
     <ClInclude Include="..\..\include\lax\util\botan\botan_all.h" />
     <ClInclude Include="..\..\include\lax\util\concurrent_queue.hpp" />

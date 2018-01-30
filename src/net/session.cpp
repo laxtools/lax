@@ -138,8 +138,6 @@ void session::close()
 
 	// close
 	{
-		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
-
 		if (socket_.is_open())
 		{
 			asio::error_code ec;
@@ -173,8 +171,8 @@ session::result session::send(const uint8_t* const data, std::size_t len)
 void session::error(const asio::error_code& ec)
 {
 	util::log()->info(
-		"session error. id: {0}, reason: {1}",
-		get_id().get_value(),
+		"{0} error. reason: {1}",
+		get_desc(), 
 		ec.message()
 	);
 
@@ -209,9 +207,11 @@ void session::destroy(const asio::error_code& ec)
 
 	notify_session_closed(ec);
 
+	auto desc = get_desc();
+
 	service::inst().error(get_id());
 
-	util::log()->debug( "{0} destroyed", get_desc() );
+	util::log()->debug("{0} destroyed", desc);
 }
 
 session::result session::request_recv()

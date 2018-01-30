@@ -18,7 +18,9 @@ component::~component()
 
 bool component::start()
 {
-	return on_start();
+	started_ = on_start();
+
+	return started_;
 }
 
 void component::execute()
@@ -29,6 +31,8 @@ void component::execute()
 void component::finish()
 {
 	on_finish();
+
+	started_ = false;
 }
 
 bool component::on_start()

@@ -24,16 +24,12 @@ struct bm_flex_base : public bits_message
 		bm_flex_base	// class 
 	);
 
-	std::string name;
-	int value = 33;
-	std::vector<item> items;
+	int key = 3;
 
 	BITS_SERIALIZE(
-		name,
-		value,
-		items
+		key
 	);
-};
+}; 
 
 struct bm_flex_inh : public bm_flex_base
 {
@@ -59,10 +55,24 @@ struct bm_flex_inh : public bm_flex_base
 
 TEST_CASE("test bits message")
 {
+	// pack / unpack test
+
 	SECTION("message inheritance")
 	{
 		// pack / unpack message test
+		resize_buffer buf; 
 
-		//
+		auto mp = std::make_shared<bm_flex_inh>();
+
+		mp->key = 55;
+
+		auto size = mp->pack(buf);
+		REQUIRE(size > 0);
+
+		auto res = std::make_shared<bm_flex_inh>();
+		auto rc = res->unpack(buf, buf.begin(), size);
+
+		REQUIRE(rc);
+		REQUIRE(res->key == 55);
 	}
 }

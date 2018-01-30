@@ -118,7 +118,7 @@ private:
 	static util::sequence<uint32_t, std::recursive_mutex> id_seq_;
 
 	weak_ptr parent_;
-	uint32_t id_;
+	uint32_t id_ = 0;
 	bool started_ = false;
 	component_container comps_;
 };

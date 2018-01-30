@@ -34,6 +34,11 @@ public:
 	/// 종료. on_finish() 호출. 
 	void finish();
 
+	bool is_started() const
+	{
+		return started_;
+	}
+
 protected:
 	/// 하위 클래스 구현. start()에서 호출
 	virtual bool on_start();
@@ -56,6 +61,7 @@ protected:
 
 private: 
 	actor& owner_;
+	bool started_ = false;
 };
 
 } // actor

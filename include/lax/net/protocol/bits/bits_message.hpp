@@ -214,3 +214,4 @@ void serialize(S& s) \
 		__VA_ARGS__ \
 	); \
 }
+
