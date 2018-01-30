@@ -3,84 +3,112 @@
 - [ ] server / service 
 
   - service clustering
+    - startup / shutdown / update / TTL and alive message
+    - service directory (local)
   - service lookup
+    - multiple service instances on different servers 
   - local and remote references
     - send to references
     - sub to service channel
-
-- [ ] master_service
-
-      - controls all services 
-      - final decision maker 
-      - recover itself getting states from services
-
-- [ ] argos
-  - monitor server w/ shells (console, web, etc)
-
-- [ ] network tests
-  - stress tests
-  - performance 
-  - thread scalability
-
+- [ ] master_server
+  - service directory (global master)
+  - controls services 
+  - make decisions
+  - recover itself getting states from services
+- [ ] db
+  - query runners
+  - query execution 
+  - query result processing
 - [ ] change project configuration 
-  - lax_server 
-    - all lax and boost
-  - lax_client 
-    - util, channel, net 
 
-- [x] db
-
-- [x] login_service 
-
+      - net
+        - util, channel, net
+      - server
+        - net, actor, service
+      - template  
+        - instance, matcher, guild, 
+        - detour / bullet / octree
+        - item, inventory
+        - character, pc, npc
+- [ ] code template login_service 
   - database based
+- [ ] grinder 
+      - [ ] functional test
+      - [ ] stress test
+- [ ] argos
+  - monitor server w/ shells 
+    - embed boost.beast w/ openssl to support web interface 
+    - web monitoring / management console
+  - game operations 
+    - user monitoring 
+    - game play monitoring 
+    - game asset management 
+      - player characters
+      - money 
+      - items
+- [ ] network tests
+      - stress tests
+      - performance 
+      - thread scalability
+- [ ] meta 
 
-- [x] code template instance
+      - json, excel, csv
+        - 쉽게 사용 가능한 json 라이브러리 찾기
+        - dropbox version 사용성 개선 작업 
+      - conversion flow
+        - json -> excel -> csv
+      - schema merge keeping existing data
+        - keep backups
+        - date based
+        - history log
+- [ ] documentation 
 
-  - instance domain 
+      - doxygen documentation 
+      - wiki 
+        - concepts 
+          - tutorial
+        - samples 
+- [ ] live maintenance
+  - maintenance cycle management
+    - state change per service
+    - notification per service
+      - to services
+      - to users
+  - file copy (svn client)
+  - system / server restart
 
 
-  - instance_control_service
-  - instance_runner_service
-  - instance actor
+  - service restart 
 
-- [x] code template match
+- [ ] support module 
 
-  - match domain
-  - match_maker_service
+      - [ ] detour / bullet / octree
+      - [ ] ... 
 
-- [ ] embed boost.beast w/ openssl to support web interface 
+- [ ] game model 
 
-- [ ] safe static (mostly) type system  : **done**
+      - [ ] demos of game model
+      - [ ] board, strategic rpg, morpg
 
-      - actor_container 
-      - actor for components
+- [x] safe static (mostly) type system
 
-- [ ] bits_message serialization : **done**
+- [x] bits_message serialization
 
-      - enable base class serialization 
-        - test 
+- [x] fix macro intellisense error
 
-- [ ] fix macro intellisense error : **done**
+- [x] clear spdlog allocation error
 
-      - put cpp.hint at root 
-      - delete VC.db, ipch, SDL files 
-      - clear asserts : **done**
-        - serveral assertion errors 
-        - clear each w/ care
+   > 	[*** LOG ERROR ***][system] [bad allocation][2018-01-30 12:56:20]
+   > 	spdlog::logger::_default_err_handler(const std::string &msg)
 
-- [ ] clear spdlog allocation error - **done**
+      - called get_desc() after service::error() get bad_alloc exception
 
-      - ```[*** LOG ERROR ***][system] [bad allocation][2018-01-30 12:56:20]```
-      - spdlog::logger::_default_err_handler(const std::string &msg)
-      - 이미 지워진 session에 대해 처리됨
-      - service::error()를 get_desc() 전에 호출해서 생긴 문제
-
-- [ ] spdlog wchar to utf8 support - **done**
-
+- [x] spdlog wchar to utf8 support 
       - test functionality 
       - define usage 
         - log()->info( L"fmt...", L"character")
-        - console은 utf8이라 출력이 제대로 안 됨
-        - 파일은 출력이 정확하게 됨
+        - works with log file.
 
-      ​
+
+
+
