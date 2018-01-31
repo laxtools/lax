@@ -304,9 +304,6 @@
     <ClInclude Include="..\..\include\lax\actor\detail\type_info.hpp">
       <Filter>actor\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\server\cluster.hpp">
-      <Filter>server</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\task_adaptor.hpp">
       <Filter>actor</Filter>
     </ClInclude>
@@ -428,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\actor\task_adaptor.cpp">
       <Filter>actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\service.cpp">
+      <Filter>server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

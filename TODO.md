@@ -19,6 +19,10 @@
   - query runners
   - query execution 
   - query result processing
+- [ ] Convention cleanup 
+      - [ ] all using types are named *_t 
+      - [ ] configuration
+      - [ ] debug and trace log added
 - [ ] change project configuration 
 
       - net
@@ -33,6 +37,7 @@
 - [ ] code template login_service 
   - database based
 - [ ] grinder 
+      - [ ] action flow based
       - [ ] functional test
       - [ ] stress test
 - [ ] argos
@@ -50,24 +55,24 @@
       - stress tests
       - performance 
       - thread scalability
-- [ ] meta 
+- [ ] meta
 
       - json, excel, csv
         - 쉽게 사용 가능한 json 라이브러리 찾기
-        - dropbox version 사용성 개선 작업 
+        - dropbox version 사용성 개선 작업
       - conversion flow
         - json -> excel -> csv
       - schema merge keeping existing data
         - keep backups
         - date based
         - history log
-- [ ] documentation 
+- [ ] documentation
 
-      - doxygen documentation 
-      - wiki 
-        - concepts 
+      - doxygen documentation
+      - wiki
+        - concepts
           - tutorial
-        - samples 
+        - samples
 - [ ] live maintenance
   - maintenance cycle management
     - state change per service

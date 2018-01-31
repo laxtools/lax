@@ -64,7 +64,7 @@ public:
 		/// post() 루프의 전체 전파 실행 시간이 이 시간을 넘을 경우 로그 남김
 		float time_to_log_when_post_loop_timeover = 0.2f;
 
-		/// shared lock 사용 여부 지정
+		/// shared lock 사용 여부 지정. 
 		bool use_lock = true;
 
 		/// 토픽에 등록된 콜백이 없을 경우 로그 남김

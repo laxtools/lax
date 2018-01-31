@@ -144,6 +144,7 @@ TEST_CASE("test actor")
 		auto skill = ap->get_component<skill_comp>();
 		REQUIRE(!skill);
 
+		//
 		// component를 만들 때: 
 		// - using ptr = std::shared_ptr<cls>; 필요 
 		// - 생성자들에서 push_type<cls>(); 해줘야 함 
@@ -182,14 +183,5 @@ TEST_CASE("test actor")
 
 			vec[0]->cast();
 		}
-
-		//
-		// 인터페이스 컴포넌트에 대해 처리 가능해짐
-		//   
-
-		// 
-		// apply_components<skill_comp>()를 사용하면 보다 안전하게 처리 가능 
-		// - 이미 있는 타잎들에 대해서 동작. 
-		//
 	}
 }

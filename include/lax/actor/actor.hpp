@@ -33,6 +33,7 @@ public:
 	using weak_ptr = std::weak_ptr<actor>;
 	using result = util::result<bool, std::string>;
 	using id_t = uint32_t;
+	using role_t = uint32_t;
 	using vec_t = std::vector<actor::ptr>;
 
 public:

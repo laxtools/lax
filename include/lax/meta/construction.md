@@ -40,12 +40,48 @@
 
 ## CSV 
 
-
-
-- std::wstring for multi-lingual support. 
+- std::wstring or utf8 for multi-lingual support. 
 - language type 
   - main, service attribute 
 - use validation c++ code generated from schema 
+
+
+
+
+# Repeating Chores in Game Dev.
+
+There are always repeating chores in game development. Till AI can do them, we need to handle them. 
+
+- message definition, registration, subscription, handlers (callback)
+- database table design, stored procedure, query, query result processing
+- data table definition, data table loading, data table element structure definition
+
+There are lots of duplicate code. Adding reusable functions are important. It can be achieved at actor level or component level. Some utilities not depending on actors can be provided with system. System means game system. But it is more like helpers. 
+
+Macros, MPL, helper class can make coding more efficient. Whenever there is repetition, try to write re-usable function. 
+
+- helper 
+- MPL 
+- Macro
+
+To automate more, try to find a meta system. Meta programming is everywhere, as more abstract concepts are always found. 
+
+- meta system
+
+To make the repetition efficient, good conventions are very important. Following a good practice is always quick and stable way. 
+
+- good practical convention
+
+
+
+
+
+
+
+
+
+
+
 
 
 
