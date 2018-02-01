@@ -28,7 +28,10 @@ bool actor::start()
 
 	comps_.apply([](component::ptr comp) { return comp->start(); });
 
-	started_ = rc;
+	if (rc)
+	{
+		state_ = state::started;
+	}
 
 	return rc;
 }
@@ -42,7 +45,7 @@ void actor::finish()
 {
 	on_finish();
 
-	started_ = false;
+	state_ = state::finished;
 }
 
 bool actor::on_start()

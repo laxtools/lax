@@ -10,6 +10,7 @@ task_adaptor::task_adaptor(actor::ptr target)
 	: task()
 	, target_(target)
 {
+	set_desc("task_adaptor");
 }
 
 task_adaptor::~task_adaptor()

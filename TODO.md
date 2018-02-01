@@ -66,8 +66,14 @@
         - keep backups
         - date based
         - history log
+- [ ] coding convetion layer
+      - Class and Types 
+        - PascalCase 
+        - Actor / Message / Server / ServiceActor / Channel
+        - Session::Ref, ... 
+        - Functions
+        - Member functions
 - [ ] documentation
-
       - doxygen documentation
       - wiki
         - concepts
@@ -81,8 +87,6 @@
       - to users
   - file copy (svn client)
   - system / server restart
-
-
   - service restart 
 
 - [ ] support module 
@@ -103,10 +107,11 @@
 
 - [x] clear spdlog allocation error
 
-   > 	[*** LOG ERROR ***][system] [bad allocation][2018-01-30 12:56:20]
-   > 	spdlog::logger::_default_err_handler(const std::string &msg)
+   ```
+    	[*** LOG ERROR ***][system] [bad allocation][2018-01-30 12:56:20]
+    	spdlog::logger::_default_err_handler(const std::string &msg)
+   ```
 
-      - called get_desc() after service::error() get bad_alloc exception
 
 - [x] spdlog wchar to utf8 support 
       - test functionality 

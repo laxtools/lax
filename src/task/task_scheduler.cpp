@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <lax/task/task_scheduler.hpp>
+#include <lax/util/logger.hpp>
 
 namespace lax
 {
@@ -38,6 +39,10 @@ bool task_scheduler::start(const config& cfg)
 		}
 	}
 
+	util::log()->info(
+		"task_scheduler started. {} runners", get_runner_count()
+	);
+
 	return get_runner_count() > 0;
 }
 
@@ -73,6 +78,8 @@ void task_scheduler::run()
 
 void task_scheduler::finish()
 {
+	util::log()->info( "task_scheduler finishing..." );
+
 	for (auto& r : runners_)
 	{
 		r->finish();
@@ -90,11 +97,15 @@ void task_scheduler::finish()
 			}
 		}
 	}
+
+	util::log()->info( "task_scheduler finished");
 }
 
 void task_scheduler::run_schedule()
 {
 	task::ptr task;
+
+	std::size_t schedule_count = 0;
 
 	while (queue_.pop(task))
 	{
@@ -118,7 +129,11 @@ void task_scheduler::run_schedule()
 			check(id > 0);
 			runners_[id]->push(task);
 		}
+
+		++schedule_count;
 	}
+
+	util::log()->debug("{} scheduled", schedule_count);
 }
 
 std::size_t task_scheduler::get_task_count() const

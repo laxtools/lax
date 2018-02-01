@@ -90,7 +90,7 @@ public:
 
 	bool is_started() const
 	{
-		return started_;
+		return state_ == state::started;
 	}
 
 protected:
@@ -114,13 +114,20 @@ protected:
 	}
 
 private:
+	enum state
+	{
+		init, 
+		started, 
+		finished
+	};
 	using component_container = type_object_container<component>;
 
+private:
 	static util::sequence<uint32_t, std::recursive_mutex> id_seq_;
 
 	weak_ptr parent_;
 	uint32_t id_ = 0;
-	bool started_ = false;
+	state state_ = state::init;
 	component_container comps_;
 };
 

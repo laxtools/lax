@@ -1,6 +1,6 @@
 #pragma once
 #include <lax/task/task_scheduler.hpp>
-#include <lax/server/service.hpp>
+#include <lax/server/service_actor.hpp>
 
 namespace lax
 {
@@ -11,7 +11,7 @@ namespace server
 class server
 {
 public: 
-	using id_t = service::id_t;
+	using id_t = service_actor::id_t;
 
 	struct peer
 	{
@@ -63,8 +63,22 @@ public:
 		return desc_;
 	}
 
+protected: 
+	/// 하위 클래스 구현. start()에서 호출
+	virtual bool on_start();
+
+	/// 하위 클래스 구현. execute()에서 호출
+	virtual void on_execute();
+
+	/// 하위 클래스 구현. finish()에서 호출
+	virtual void on_finish();
+
 private: 
-	id_t id_;
+	void load_config();
+
+private: 
+	std::string file_;
+	id_t id_ = 0;
 	task::task_scheduler scheduler_;
 	std::string desc_;
 };

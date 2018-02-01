@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <lax/task/task.hpp>
 #include <lax/util/exception.hpp>
+#include <lax/util/logger.hpp>
 
 namespace lax {
 namespace task {
@@ -21,6 +22,8 @@ bool task::start()
 		state_ = state::ready;
 	}
 
+	util::log()->debug("task {} started", get_desc());
+
 	return state_ == state::ready;
 }
 
@@ -40,17 +43,27 @@ void task::execute(uint32_t runner_id)
 
 	execution_timer_.reset();
 
+	util::log()->trace("task {} executing...", get_desc());
+
 	on_execute();
 
 	++execution_count_;
 	last_execution_time_ = execution_timer_.elapsed();
 	total_execution_time_ += last_execution_time_;
 	average_execution_time_ = (average_execution_time_ + last_execution_time_) / 2;
+
+	util::log()->trace(
+		"task {} executed in {} sec", get_desc(), last_execution_time_
+	);
 }
 
 void task::finish()
 {
+	util::log()->debug("task {} finishing...", get_desc());
+
 	on_finish();
+
+	util::log()->debug("task {} finished", get_desc());
 
 	state_ = state::finished;
 }

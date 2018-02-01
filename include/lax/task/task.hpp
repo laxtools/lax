@@ -89,6 +89,17 @@ public:
 		return total_execution_time_;
 	}
 
+protected: 
+	const std::string& get_desc() const
+	{
+		return desc_;
+	}
+
+	void set_desc(const std::string& desc)
+	{
+		desc_ = desc;
+	}
+
 private:
 	/// 하위 클래스 구현. start()에서 호출
 	virtual bool on_start();
@@ -105,6 +116,7 @@ private:
 	state state_ = state::constructed;
 	std::atomic<bool> affinity_ = false;
 	uint32_t last_runner_id_ = 0;
+	std::string desc_ = "task";
 
 	util::simple_timer execution_timer_;
 	unsigned int execution_count_;

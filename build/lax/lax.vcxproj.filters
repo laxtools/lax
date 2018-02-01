@@ -274,9 +274,6 @@
     <ClInclude Include="..\..\include\lax\server\server.hpp">
       <Filter>server</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\server\service.hpp">
-      <Filter>server</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\server\argos\argos_command.hpp">
       <Filter>server\argos</Filter>
     </ClInclude>
@@ -306,6 +303,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\actor\task_adaptor.hpp">
       <Filter>actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\service_actor.hpp">
+      <Filter>server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -426,7 +426,10 @@
     <ClCompile Include="..\..\src\actor\task_adaptor.cpp">
       <Filter>actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\server\service.cpp">
+    <ClCompile Include="..\..\src\server\service_actor.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\server.cpp">
       <Filter>server</Filter>
     </ClCompile>
   </ItemGroup>

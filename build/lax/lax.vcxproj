@@ -211,7 +211,7 @@
     <ClInclude Include="..\..\include\lax\server\argos\argos_messages.hpp" />
     <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp" />
     <ClInclude Include="..\..\include\lax\server\server.hpp" />
-    <ClInclude Include="..\..\include\lax\server\service.hpp" />
+    <ClInclude Include="..\..\include\lax\server\service_actor.hpp" />
     <ClInclude Include="..\..\include\lax\task\detail\task_runner.hpp" />
     <ClInclude Include="..\..\include\lax\task\task.hpp" />
     <ClInclude Include="..\..\include\lax\task\task_scheduler.hpp" />
@@ -263,7 +263,8 @@
     <ClCompile Include="..\..\src\net\reason.cpp" />
     <ClCompile Include="..\..\src\net\service.cpp" />
     <ClCompile Include="..\..\src\net\session.cpp" />
-    <ClCompile Include="..\..\src\server\service.cpp" />
+    <ClCompile Include="..\..\src\server\server.cpp" />
+    <ClCompile Include="..\..\src\server\service_actor.cpp" />
     <ClCompile Include="..\..\src\task\detail\task_runner.cpp" />
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
