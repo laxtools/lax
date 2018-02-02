@@ -68,6 +68,9 @@
     <Filter Include="actor\detail">
       <UniqueIdentifier>{c75cec8c-3c18-4909-bda9-e20da1dd1224}</UniqueIdentifier>
     </Filter>
+    <Filter Include="server\detail">
+      <UniqueIdentifier>{c18b42b2-1067-4e61-ae4e-d99a8b8d7780}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

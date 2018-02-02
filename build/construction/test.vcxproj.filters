@@ -117,6 +117,9 @@
     <ClCompile Include="..\..\test\construction\util\test_string_util.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\construction\c++\test_macro.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test\construction\actor\construction.md">

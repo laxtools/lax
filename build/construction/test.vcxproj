@@ -185,6 +185,7 @@
     <ClCompile Include="..\..\test\construction\actor\test_type_system.cpp" />
     <ClCompile Include="..\..\test\construction\actor\test_type_system_design.cpp" />
     <ClCompile Include="..\..\test\construction\c++\test_hana.cpp" />
+    <ClCompile Include="..\..\test\construction\c++\test_macro.cpp" />
     <ClCompile Include="..\..\test\construction\channel\test_channel.cpp" />
     <ClCompile Include="..\..\test\construction\channel\test_dispatcher.cpp" />
     <ClCompile Include="..\..\test\construction\db\test_db.cpp" />
