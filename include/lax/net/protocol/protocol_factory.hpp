@@ -15,6 +15,7 @@ class protocol_factory
 public: 
 	using creator = std::function<protocol::ptr()>;
 
+public:
 	static protocol_factory& inst();
 
 	/// add a creator for a protocol

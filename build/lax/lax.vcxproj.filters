@@ -310,6 +310,9 @@
     <ClInclude Include="..\..\include\lax\server\service_actor.hpp">
       <Filter>server</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\service_factory.hpp">
+      <Filter>server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -430,6 +433,9 @@
       <Filter>server</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\server.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\service_factory.cpp">
       <Filter>server</Filter>
     </ClCompile>
   </ItemGroup>

@@ -32,6 +32,10 @@ TEST_CASE("test server")
 		auto jserver = jcfg[jname.get<std::string>()];
 
 		CHECK(jserver["id"] == 1);
+
+		lax::server::server server(jserver);
+
+
 	}
 
 	SECTION("test peer connections")

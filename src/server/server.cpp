@@ -6,8 +6,8 @@ namespace lax
 namespace server
 {
 
-server::server(const std::string& file)
-	: file_(file)
+server::server(const nlm::json& config)
+	: config_(config)
 {
 	load_config();
 }

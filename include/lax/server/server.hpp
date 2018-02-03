@@ -34,7 +34,7 @@ public:
 
 public:
 	/// load and create services using configuration
-	server(const std::string& file);
+	server(const nlm::json& config);
 
 	/// destructor
 	~server();
@@ -76,8 +76,11 @@ protected:
 private: 
 	void load_config();
 
+	server(const server& other) = delete;
+	server& operator=(const server& other) = delete;
+
 private: 
-	std::string file_;
+	nlm::json config_;
 	id_t id_ = 0;
 	task::task_scheduler scheduler_;
 	std::string desc_;
