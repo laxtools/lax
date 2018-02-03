@@ -11,14 +11,14 @@ addr::addr(const std::string& s)
 {
 	std::size_t pos = s.find_first_of(':');
 
-	return_if(pos == std::string::npos);
-	return_if(pos + 1 >= s.length());
+	RETURN_IF(pos == std::string::npos);
+	RETURN_IF(pos + 1 >= s.length());
 
 	auto sip = s.substr(0, pos);
 	auto sport = s.substr(pos+1);
 	auto port = ::atoi(sport.c_str());
 
-	return_if(port == 0);
+	RETURN_IF(port == 0);
 
 	asio::error_code ec;
 

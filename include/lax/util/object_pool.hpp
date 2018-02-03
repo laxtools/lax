@@ -30,7 +30,7 @@ public:
 		ptr get() { return operator*(); }
 
 		// note: assignment invalidates rhs object
-		// check following again.
+		// VERIFY following again.
 		ref(ref& rhs) { move(rhs); }
 		ref& operator=(ref& rhs) { return move(rhs); }
 
@@ -137,8 +137,8 @@ object_pool<Obj, Allocator>::ref::ref(ptr p, object_pool* pool)
 	: p_(p)
 	, pool_(pool)
 {
-	check(pool_);
-	check(p_);
+	VERIFY(pool_);
+	VERIFY(p_);
 }
 
 template <typename Obj, typename Allocator>

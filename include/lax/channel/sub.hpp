@@ -40,11 +40,11 @@ public:
 
 	bool post(message::ptr m)
 	{
-		check(topic_.is_valid());
-		check(m->get_topic().is_valid());
+		VERIFY(topic_.is_valid());
+		VERIFY(m->get_topic().is_valid());
 
-		return_if(!topic_.match(m->get_topic()), false);
-		return_if(!cond_(m), false);
+		RETURN_IF(!topic_.match(m->get_topic()), false);
+		RETURN_IF(!cond_(m), false);
 
 		cb_(m);
 

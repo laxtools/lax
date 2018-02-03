@@ -19,11 +19,11 @@ protocol::~protocol()
 
 bool protocol::bind(wptr ss)
 {
-	expect(ss);
-	return_if(!ss, false);
+	EXPECT(ss);
+	RETURN_IF(!ss, false);
 
-	check(!session_);
-	return_if(session_, false);
+	VERIFY(!session_);
+	RETURN_IF(session_, false);
 
 	session_ = ss;
 
@@ -38,7 +38,7 @@ bool protocol::bind(wptr ss)
 
 protocol::result protocol::send(const uint8_t* const data, std::size_t len)
 {
-	return_if(!get_session(), result( false, reason::fail_invalid_session ));
+	RETURN_IF(!get_session(), result( false, reason::fail_invalid_session ));
 
 	return get_session()->send(data, len);
 }

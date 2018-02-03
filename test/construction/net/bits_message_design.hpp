@@ -28,7 +28,7 @@ struct bm : public packet
 
 	bool unpack(resize_buffer::iterator& iter, std::size_t len)
 	{
-		check(len > 0);
+		VERIFY(len > 0);
 
 		BitsDeserializer deserializer{ InputAdapter{ iter, len } };
 		deserializer.object(*this);
@@ -68,8 +68,8 @@ struct bm2 : public packet
 
 	bool unpack(resize_buffer& buf, resize_buffer::iterator& iter, std::size_t len)
 	{
-		check(iter != buf.end());
-		check(len > 0);
+		VERIFY(iter != buf.end());
+		VERIFY(len > 0);
 		// iter에 대한 추가 검증
 
 		BitsDeserializer deserializer{ InputAdapter{ iter, len } };

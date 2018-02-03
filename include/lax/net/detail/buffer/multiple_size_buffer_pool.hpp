@@ -42,9 +42,9 @@ public:
 	multiple_size_buffer_pool()
 		: config_()
 	{
-		expect(config_.steps > 0);
-		expect(config_.steps < 32);
-		expect(config_.start_power_of_2 > 0);
+		EXPECT(config_.steps > 0);
+		EXPECT(config_.steps < 32);
+		EXPECT(config_.start_power_of_2 > 0);
 
 		init_pools();
 	}
@@ -77,9 +77,9 @@ public:
 	{
 		if ( block->is_allocated_from_os() )
 		{ 
-			check(stat_.os_alloc_count > 0);
-			check(stat_.os_alloc_bytes > 0);
-			check(block->get_pool() == nullptr);
+			VERIFY(stat_.os_alloc_count > 0);
+			VERIFY(stat_.os_alloc_bytes > 0);
+			VERIFY(block->get_pool() == nullptr);
 
 			--stat_.os_alloc_count;
 			stat_.os_alloc_bytes -= static_cast<uint32_t>(block->capacity());

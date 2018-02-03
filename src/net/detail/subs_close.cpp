@@ -57,11 +57,11 @@ void subs_close::unsubscribe(key_t key)
 	std::lock_guard<std::recursive_mutex> lock(mutex_);
 
 	auto iter = index_.find(key);
-	return_if(iter == index_.end());
+	RETURN_IF(iter == index_.end());
 
 	auto si = subs_.find(iter->second);
-	check(si != subs_.end());
-	return_if(si == subs_.end());
+	VERIFY(si != subs_.end());
+	RETURN_IF(si == subs_.end());
 
 	auto& v = si->second;
 
@@ -80,7 +80,7 @@ std::size_t subs_close::post(sid_t id, const asio::error_code& ec)
 	std::lock_guard<std::recursive_mutex> lock(mutex_);
 
 	auto si = subs_.find(id);
-	return_if(si == subs_.end(), 0);
+	RETURN_IF(si == subs_.end(), 0);
 
 	auto& v = si->second;
 

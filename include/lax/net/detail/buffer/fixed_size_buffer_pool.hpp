@@ -26,8 +26,8 @@ public:
 			, capacity_(len)
 			, is_alloc_from_os_(true)
 		{
-			expect(data_);
-			expect(capacity_ > 0);
+			EXPECT(data_);
+			EXPECT(capacity_ > 0);
 
 		}
 
@@ -37,9 +37,9 @@ public:
 			, capacity_(len)
 			, is_alloc_from_os_(false)
 		{
-			expect(pool_);
-			expect(data_);
-			expect(capacity_ > 0);
+			EXPECT(pool_);
+			EXPECT(data_);
+			EXPECT(capacity_ > 0);
 		}
 		
 		~buffer()
@@ -123,16 +123,16 @@ public:
 
 	void release(const buffer::ptr& block)
 	{
-		return_if(!block->data());
-		return_if(block->capacity() != length_);
+		RETURN_IF(!block->data());
+		RETURN_IF(block->capacity() != length_);
 
 		--stat_.alloc_count;
 		++stat_.total_release_count;
 
 		blocks_.push(block);
 
-		ensure(stat_.total_alloc_count >= stat_.total_release_count);
-		ensure(blocks_.unsafe_size() > 0);
+		ENSURE(stat_.total_alloc_count >= stat_.total_release_count);
+		ENSURE(blocks_.unsafe_size() > 0);
 	}
 
 	const stat& get_stat() const

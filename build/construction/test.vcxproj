@@ -199,6 +199,7 @@
     <ClCompile Include="..\..\test\construction\net\test_resize_buffer.cpp" />
     <ClCompile Include="..\..\test\construction\net\test_segment_buffer.cpp" />
     <ClCompile Include="..\..\test\construction\net\test_service.cpp" />
+    <ClCompile Include="..\..\test\construction\server\test_json_config.cpp" />
     <ClCompile Include="..\..\test\construction\server\test_server.cpp" />
     <ClCompile Include="..\..\test\construction\server\test_service_actor.cpp" />
     <ClCompile Include="..\..\test\construction\task\test_scheduler.cpp" />

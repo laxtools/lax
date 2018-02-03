@@ -269,7 +269,6 @@
     <ClCompile Include="..\..\src\task\task.cpp" />
     <ClCompile Include="..\..\src\task\task_scheduler.cpp" />
     <ClCompile Include="..\..\src\util\botan\botan_all.cpp" />
-    <ClCompile Include="..\..\src\util\json.cpp" />
     <ClCompile Include="..\..\src\util\logger.cpp" />
     <ClCompile Include="..\..\src\util\macros.cpp" />
     <ClCompile Include="..\..\src\util\platform.cpp" />

@@ -360,9 +360,6 @@
     <ClCompile Include="..\..\src\util\logger.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\util\json.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\net\detail\buffer\resize_buffer.cpp">
       <Filter>net\detail\buffer</Filter>
     </ClCompile>

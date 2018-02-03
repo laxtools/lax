@@ -27,21 +27,21 @@ public:
 
 	state_lambda& set_enter(action act)
 	{
-		check(!enter_);
+		VERIFY(!enter_);
 		enter_ = act;
 		return *this;
 	}
 
 	state_lambda& set_execute(action act)
 	{
-		check(!exec_);
+		VERIFY(!exec_);
 		exec_ = act;
 		return *this;
 	}
 
 	state_lambda& set_exit(action act)
 	{
-		check(!exit_);
+		VERIFY(!exit_);
 		exit_ = act;
 		return *this;
 	}

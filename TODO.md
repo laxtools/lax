@@ -2,15 +2,8 @@
 
 - [ ] server / service 
 
+  - - - - ​
   - channel timer subscribe and callback
-  - json 
-    - debugging. 
-      - get values while debugging. 
-      - exception handling
-    - loading
-    - syntax 
-      - support for easier syntax 
-        - { name with space and without quotation : number without quotation }
   - service clustering
     - startup / shutdown / update / TTL and alive message
     - service directory (local)
@@ -28,10 +21,14 @@
 
 
   - query runners
+
   - query execution 
+
   - query result processing
+
   - code generation in c++
     - MPL, macros
+
   - performance testing
 
 - [ ] Convention cleanup 
@@ -122,6 +119,18 @@
 
       - [ ] demos of game model
       - [ ] board, strategic rpg, morpg
+
+- [x] json 
+
+   - nlohmann's json 
+     - just great!
+   - debugging. 
+     - get values while debugging. 
+     - exception handling
+   - loading
+   - syntax 
+     - support for easier syntax 
+       - { name with space and without quotation : number without quotation }
 
 - [x] safe static (mostly) type system
 

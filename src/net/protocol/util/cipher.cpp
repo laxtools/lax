@@ -45,7 +45,7 @@ cipher::~cipher()
 
 modifier::result cipher::on_bind()
 {
-	check(!bound_);
+	VERIFY(!bound_);
 
 	receiver_ = std::make_unique<cipher_impl>(Botan::Cipher_Dir::DECRYPTION);
 	sender_ = std::make_unique<cipher_impl>(Botan::Cipher_Dir::ENCRYPTION);
@@ -69,13 +69,13 @@ modifier::result cipher::on_recv(
 	new_len = msg_len;
 
 	// header를 제외하고 암호화 
-	check(msg_len >= bits_message::header_length);
+	VERIFY(msg_len >= bits_message::header_length);
 
 	auto payload_size = msg_len - bits_message::header_length;
-	return_if(payload_size == 0, result(true, reason::success)); // no data 
+	RETURN_IF(payload_size == 0, result(true, reason::success)); // no data 
 
 	// 암호화 할 때 블럭에 맞춤
-	check(payload_size % BLOCK_SIZE == 0);
+	VERIFY(payload_size % BLOCK_SIZE == 0);
 
 	auto cipher_len = msg_len - bits_message::header_length;
 	auto cipher_pos = msg_pos + bits_message::header_length;
@@ -150,10 +150,10 @@ modifier::result cipher::on_send(
 )
 {
 	// header를 제외하고 암호화 
-	check(msg_len >= bits_message::header_length);
+	VERIFY(msg_len >= bits_message::header_length);
 
 	auto payload_size = msg_len - bits_message::header_length;
-	return_if(payload_size == 0, result(true, reason::success)); // no data 
+	RETURN_IF(payload_size == 0, result(true, reason::success)); // no data 
 
 	auto pad_size = BLOCK_SIZE - payload_size % BLOCK_SIZE;
 
@@ -206,7 +206,7 @@ modifier::result cipher::on_send(
 
 		algo->finish(final_block);
 
-		check(final_block.size() == BLOCK_SIZE);
+		VERIFY(final_block.size() == BLOCK_SIZE);
 
 		std::memcpy(
 			buf.data() + final_pos,

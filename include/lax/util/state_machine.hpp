@@ -68,7 +68,7 @@ public:
 	{
 		auto target = root_->find(parent);
 
-		check(target.get() != nullptr); 
+		VERIFY(target.get() != nullptr); 
 		if (target)
 		{
 			target->add(child);
@@ -124,9 +124,9 @@ void state_machine<Key>::process_transitions()
 template <typename Key>
 void state_machine<Key>::tran_to(Key target)
 {
-	check(has(target));
-	check(current_);
-	check(current_->active());
+	VERIFY(has(target));
+	VERIFY(current_);
+	VERIFY(current_->active());
 
 	if (current_->key() == target)
 	{

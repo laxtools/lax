@@ -36,8 +36,8 @@ public:
 
 	result bind(protocol* proto)
 	{
-		expect(proto);
-		return_if(!proto, result(false, reason::fail_null_pointer));
+		EXPECT(proto);
+		RETURN_IF(!proto, result(false, reason::fail_null_pointer));
 
 		protocol_ = proto;
 

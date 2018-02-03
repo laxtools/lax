@@ -134,7 +134,7 @@ void session::close()
 {
 	// 연결이 유효하면 끊고 소멸을 시도한다. 
 
-	return_if(destroyed_);
+	RETURN_IF(destroyed_);
 
 	// close
 	{
@@ -150,14 +150,14 @@ void session::close()
 	}
 
 	// socket is closed. 
-	// check for destroy
+	// VERIFY for destroy
 
 	destroy();
 }
 
 session::result session::send(const uint8_t* const data, std::size_t len)
 {
-	return_if(!socket_.is_open(), result(false, reason::fail_socket_closed));
+	RETURN_IF(!socket_.is_open(), result(false, reason::fail_socket_closed));
 
 	// append 
 	{
@@ -188,7 +188,7 @@ void session::destroy(const asio::error_code& ec)
 	// - recv_comp -> error -> close -> destroy 또는 
 	// - send_comp -> error -> close -> destroy 이다
 
-	// check
+	// VERIFY
 	{
 		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
 
@@ -216,13 +216,13 @@ void session::destroy(const asio::error_code& ec)
 
 session::result session::request_recv()
 {
-	return_if(!is_open(), result(false, reason::fail_socket_closed));
+	RETURN_IF(!is_open(), result(false, reason::fail_socket_closed));
 
-	// check recv
+	// VERIFY recv
 	{
 		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
 
-		check(!recving_);
+		VERIFY(!recving_);
 
 		if (recving_)
 		{
@@ -246,9 +246,9 @@ session::result session::request_recv()
 
 session::result session::request_send()
 {
-	return_if(!is_open(), result(false, reason::fail_socket_closed));
+	RETURN_IF(!is_open(), result(false, reason::fail_socket_closed));
 
-	// check send
+	// VERIFY send
 	{
 		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
 
@@ -257,7 +257,7 @@ session::result session::request_send()
 			return result(true, reason::success_session_already_sending);
 		}
 
-		// check data available
+		// VERIFY data available
 		{
 			std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
 
@@ -274,9 +274,9 @@ session::result session::request_send()
 	{
 		std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
 
-		check(send_buffer_.size() > 0);
-		check(sending_segs_.empty());
-		check(sending_bufs_.empty());
+		VERIFY(send_buffer_.size() > 0);
+		VERIFY(sending_segs_.empty());
+		VERIFY(sending_bufs_.empty());
 
 		sending_bufs_.clear();
 		sending_segs_.clear();
@@ -285,8 +285,8 @@ session::result session::request_send()
 		sending_segs_ = send_buffer_.transfer();
 	}
 
-	check(send_buffer_.size() == 0);
-	check(!sending_segs_.empty());
+	VERIFY(send_buffer_.size() == 0);
+	VERIFY(!sending_segs_.empty());
 
 	send_request_size_ = 0;
 
@@ -296,8 +296,8 @@ session::result session::request_send()
 		send_request_size_ += b->get().size();
 	}
 
-	check(!sending_bufs_.empty());
-	check(send_request_size_ > 0);
+	VERIFY(!sending_bufs_.empty());
+	VERIFY(send_request_size_ > 0);
 
 	util::log()->debug( 
 		"{0} request send. {1} bytes", 
@@ -320,13 +320,13 @@ void session::on_recv_completed(asio::error_code& ec, std::size_t len)
 	// make recv false
 	{
 		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
-		check(recving_);
+		VERIFY(recving_);
 		recving_ = false;
 	}
 
 	if (!ec)
 	{
-		check(len > 0);
+		VERIFY(len > 0);
 
 		auto rc = protocol_->on_recv(recv_buf_.data(), len);
 
@@ -356,11 +356,11 @@ void session::on_send_completed(asio::error_code& ec, std::size_t len)
 	// release segs before try sending again
 	{
 		std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
-		check(!sending_segs_.empty());
+		VERIFY(!sending_segs_.empty());
 
 		if (!ec)
 		{
-			check(send_request_size_ == len);
+			VERIFY(send_request_size_ == len);
 		}
 
 		send_buffer_.release(sending_segs_);
@@ -372,7 +372,7 @@ void session::on_send_completed(asio::error_code& ec, std::size_t len)
 	// make send false
 	{
 		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
-		check(sending_);
+		VERIFY(sending_);
 		sending_ = false;
 	}
 

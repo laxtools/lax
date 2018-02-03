@@ -24,9 +24,9 @@ task_runner::~task_runner()
 
 bool task_runner::start(const config& cfg)
 {
-	check(cfg.idle_check_threshold_time >= 0.f);
-	check(cfg.single_loop_run_limit >= 0);
-	check(stop_);
+	VERIFY(cfg.idle_check_threshold_time >= 0.f);
+	VERIFY(cfg.single_loop_run_limit >= 0);
+	VERIFY(stop_);
 
 	config_ = cfg;
 	stop_ = false;
@@ -43,7 +43,7 @@ void task_runner::push(task::ptr task)
 
 void task_runner::finish()
 {
-	check(!stop_);
+	VERIFY(!stop_);
 
 	stop_ = true;
 	thread_.join();

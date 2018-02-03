@@ -28,7 +28,7 @@ void bits_message_factory::add(const packet::topic_t& topic, creator c)
 		// THROW("bits_messag_factory. bits_message already added!");
 	}
 
-	return_if(iter != map_.end());
+	RETURN_IF(iter != map_.end());
 
 	map_[topic] = c;
 }
@@ -36,7 +36,7 @@ void bits_message_factory::add(const packet::topic_t& topic, creator c)
 bits_message::ptr  bits_message_factory::create(const packet::topic_t& topic) const
 {
 	auto iter = map_.find(topic);
-	return_if(iter == map_.end(), bits_message::ptr());
+	RETURN_IF(iter == map_.end(), bits_message::ptr());
 
 	return iter->second();
 }

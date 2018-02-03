@@ -22,7 +22,7 @@ session::id::id(uint16_t seq, uint16_t index)
 	: seq_(seq)
 	, index_(index)
 {
-	check(is_valid());
+	VERIFY(is_valid());
 }
 
 inline
@@ -71,7 +71,7 @@ inline
 session::ref::ref(session::ptr ss)
 	: session_(ss)
 {
-	check(session_);
+	VERIFY(session_);
 }
 
 inline
@@ -87,7 +87,7 @@ session::ref::~ref()
 inline
 session::result session::ref::send(packet::ptr m)
 {
-	return_if(
+	RETURN_IF(
 		!is_valid(), 
 		session::result(false, reason::fail_invalid_session)
 	);
@@ -110,7 +110,7 @@ const std::string& session::ref::get_desc() const
 inline
 bool session::ref::sub_close(cb_t cb)
 {
-	return_if(!session_, false);
+	RETURN_IF(!session_, false);
 
 	key_ = session::sub_close(
 		session_->get_id().get_value(),

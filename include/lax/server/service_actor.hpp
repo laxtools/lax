@@ -2,6 +2,7 @@
 #include <lax/actor/actor.hpp>
 #include <lax/channel/channel.hpp>
 #include <lax/net/session.hpp>
+#include <lax/util/json.hpp>
 
 namespace lax
 {
@@ -48,7 +49,7 @@ public:
 
 public:
 	/// constructor
-	service_actor(server& _server, const config& _config);
+	service_actor(server& _server, const nlm::json& _config);
 
 	/// destructor
 	virtual ~service_actor();
@@ -91,7 +92,7 @@ private:
 
 private:
 	server& server_;
-	config config_;
+	nlm::json config_;
 	std::string desc_;
 	channel::channel channel_;
 };

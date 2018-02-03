@@ -83,7 +83,7 @@ struct bits_message : public packet
 std::size_t pack(resize_buffer& buf) override \
 { \
 	topic = get_topic().get_key(); \
-	check(topic > 0); \
+	VERIFY(topic > 0); \
 	BitsSerializer serializer{ buf }; \
 	serializer.value4b(length); \
 	serializer.value4b(topic); \
@@ -98,13 +98,13 @@ std::size_t pack(resize_buffer& buf) override \
 bool unpack(resize_buffer& buf, resize_buffer::iterator& iter, \
 			std::size_t len) override \
 { \
-	check(iter != buf.end()); \
-	check(len > 0); \
+	VERIFY(iter != buf.end()); \
+	VERIFY(len > 0); \
 	BitsDeserializer deserializer{ InputAdapter{ iter, len } }; \
 	deserializer.value4b(length); \
 	deserializer.value4b(topic); \
 	deserializer.object(*this); \
-	check(topic > 0); \
+	VERIFY(topic > 0); \
 	\
 	auto& reader = bitsery::AdapterAccess::getReader(deserializer); \
 	reader_error = reader.error(); \

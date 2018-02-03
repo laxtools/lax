@@ -33,7 +33,7 @@ public:
 	std::size_t apply(Func func) const
 	{
 		auto iter = map_.find(typeid(Type));
-		return_if(iter == map_.end(), 0);
+		RETURN_IF(iter == map_.end(), 0);
 
 		auto& vec = iter->second.ptrs;
 
@@ -156,7 +156,7 @@ private:
 	ptr_t get_type(const type_info& info) const
 	{
 		auto iter = map_.find(info);
-		return_if(iter == map_.end(), ptr_t());
+		RETURN_IF(iter == map_.end(), ptr_t());
 
 		return iter->second.ptrs[0];
 	}
@@ -164,7 +164,7 @@ private:
 	const std::vector<ptr_t>& get_types(const type_info& info) const
 	{
 		auto iter = map_.find(info);
-		return_if(iter == map_.end(), null_);
+		RETURN_IF(iter == map_.end(), null_);
 
 		return iter->second.ptrs;
 	}
@@ -172,7 +172,7 @@ private:
 	std::vector<ptr_t>& get_types(const type_info& info) 
 	{
 		auto iter = map_.find(info);
-		return_if(iter == map_.end(), null_);
+		RETURN_IF(iter == map_.end(), null_);
 
 		return iter->second.ptrs;
 	}

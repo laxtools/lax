@@ -30,16 +30,16 @@ public:
 		, reserve_(reserve)
 		, current_(begin)
 	{
-		check(begin_ < end_);
-		check(current_ == begin_);
-		check(reserve_ < (end_ - begin_ + 1));
+		VERIFY(begin_ < end_);
+		VERIFY(current_ == begin_);
+		VERIFY(reserve_ < (end_ - begin_ + 1));
 
 		// clamp 
 		reserve_ = std::min<Seq>(end - begin, reserve_);
 
 		acquire(reserve_);
 
-		check(!seqs_.empty());
+		VERIFY(!seqs_.empty());
 	}
 
 	/// 사용 가능한 다음 차례의 숫자 돌려줌. 
@@ -79,8 +79,8 @@ public:
 
 	void release(Seq seq)
 	{
-		check(begin_ <= seq && seq < end_);
-		return_if(!(begin_ <= seq && seq < end_));
+		VERIFY(begin_ <= seq && seq < end_);
+		RETURN_IF(!(begin_ <= seq && seq < end_));
 
 		std::lock_guard<Mutex> lock(mutex_);
 		seqs_.push_back(seq);

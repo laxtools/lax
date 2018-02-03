@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include <catch.hpp>
 #include <lax/server/service_actor.hpp>
+#include <catch.hpp>
 
 using namespace lax::server;
 

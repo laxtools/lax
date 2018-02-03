@@ -20,7 +20,7 @@ class segment
 		ptr(const uint8_t* data, std::size_t len)
 			: data_(data), len_(len) 
 		{
-			check(data_);
+			VERIFY(data_);
 		}
 
 		const uint8_t* data() const { return data_; }
@@ -40,7 +40,7 @@ public:
 	{
 		auto possible_len = std::min(len, Length - pos_);
 
-		return_if(possible_len == 0, 0);
+		RETURN_IF(possible_len == 0, 0);
 
 		uint8_t* dest = buf_.data() + pos_;
 
@@ -117,7 +117,7 @@ private:
 	{
 		pos_ += len;
 
-		check(pos_ <= Length);
+		VERIFY(pos_ <= Length);
 	}
 
 private:

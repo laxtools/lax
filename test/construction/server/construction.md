@@ -146,6 +146,20 @@ Order of testing :
   - property class in simple way 
 
 
+## Utilities
+
+- json
+- channel 
+  - timer
+
+### json
+
+- debugging
+
+- loading from file 
+
+  ​
+
 
 # Examples 
 

@@ -8,13 +8,14 @@ namespace lax
 namespace server
 {
 
-service_actor::service_actor(server& _server, const config& _config)
+service_actor::service_actor(server& _server, const nlm::json& _config)
 	: actor()
 	, server_(_server)
 	, config_(_config)
-	, desc_(_config.name + "." + std::to_string(get_id()))
-	, channel_(desc_, _config.channel)
+	, desc_(config_["name"] + "." + std::to_string(get_id()))
+	, channel_(desc_)
 {
+	// change channel's configuration
 }
 
 service_actor::~service_actor()

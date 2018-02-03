@@ -28,7 +28,7 @@ void log::init()
 	// 초기화 중 여러 곳에서 호출할 경우 블럭 시킴
 	std::lock_guard<std::recursive_mutex> lock(mutex_);
 
-	return_if(initialized_);
+	RETURN_IF(initialized_);
 
 	initialized_ = true;
 

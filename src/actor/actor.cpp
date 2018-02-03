@@ -24,7 +24,7 @@ actor::~actor()
 bool actor::start()
 {
 	auto rc = on_start();
-	return_if(!rc, false);
+	RETURN_IF(!rc, false);
 
 	comps_.apply([](component::ptr comp) { return comp->start(); });
 

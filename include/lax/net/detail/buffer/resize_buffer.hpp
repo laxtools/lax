@@ -31,9 +31,9 @@ public:
 	resize_buffer(std::size_t initial_size = 8*1024)
 		: initial_size_(initial_size)
 	{
-		expect(initial_size_ > 0);
-		expect(pos_ == 0);
-		expect(!buf_);
+		EXPECT(initial_size_ > 0);
+		EXPECT(pos_ == 0);
+		EXPECT(!buf_);
 	}
 
 	~resize_buffer()
@@ -44,25 +44,25 @@ public:
 			buf_.reset();
 		}
 
-		ensure(!buf_);
+		ENSURE(!buf_);
 	}
 
 	/// len만큼 쓴다. seg 부족하면 풀에서 할당
 	std::size_t append(const uint8_t* p, std::size_t len)
 	{
-		expect(p != nullptr);
-		expect(len > 0);
+		EXPECT(p != nullptr);
+		EXPECT(len > 0);
 
 		reserve(len);
 
-		check(buf_);
-		check(buf_->capacity() >= pos_ + len);
+		VERIFY(buf_);
+		VERIFY(buf_->capacity() >= pos_ + len);
 
 		::memcpy_s(buf_->data() + pos_, buf_->capacity() - pos_, p, len);
 
 		pos_ += len;
 
-		ensure(pos_ <= buf_->capacity());
+		ENSURE(pos_ <= buf_->capacity());
 
 		return len;
 	}
@@ -87,7 +87,7 @@ public:
 
 	std::size_t capacity() const
 	{
-		return_if(!buf_, 0);
+		RETURN_IF(!buf_, 0);
 		return buf_->capacity();
 	}
 
@@ -102,7 +102,7 @@ public:
 
 		reserve(new_size - capacity());
 
-		ensure(buf_);
+		ENSURE(buf_);
 
 		pos_ = new_size;  
 
@@ -113,25 +113,25 @@ public:
 
 	const uint8_t* data() const
 	{
-		return_if(!buf_, nullptr);
+		RETURN_IF(!buf_, nullptr);
 		return buf_->data();
 	}
 
 	/// use this with care
 	uint8_t* data() 
 	{
-		return_if(!buf_, nullptr);
+		RETURN_IF(!buf_, nullptr);
 		return buf_->data();
 	}
 
 
 	const uint8_t& at(std::size_t pos) const
 	{
-		check(buf_);
-		return_if(!buf_, 0); 
+		VERIFY(buf_);
+		RETURN_IF(!buf_, 0); 
 
-		check(pos < size());
-		return_if(pos >= size(), 0);
+		VERIFY(pos < size());
+		RETURN_IF(pos >= size(), 0);
 		
 		return buf_->data()[pos];
 	}
@@ -139,8 +139,8 @@ public:
 	/// 세그먼트 앞으로 돌린다.
 	void rewind(std::size_t pos = 0)
 	{
-		expect(pos < size());
-		return_if(pos >= size()); // safe. no effect
+		EXPECT(pos < size());
+		RETURN_IF(pos >= size()); // safe. no effect
 
 		pos_ = pos;
 	}
@@ -152,11 +152,11 @@ public:
 	 */
 	void pop_front(std::size_t count)
 	{
-		check(buf_);
-		return_if(!buf_);
+		VERIFY(buf_);
+		RETURN_IF(!buf_);
 
-		check(count > 0);
-		return_if(count == 0);
+		VERIFY(count > 0);
+		RETURN_IF(count == 0);
 
 		count = std::min(count, size());
 
@@ -170,25 +170,25 @@ public:
 
 	iterator begin() 
 	{ 
-		return_if(!buf_, 0);
+		RETURN_IF(!buf_, 0);
 		return iterator(buf_->data()); 
 	}
 
 	iterator end() 
 	{ 
-		return_if(!buf_, 0);
+		RETURN_IF(!buf_, 0);
 		return iterator(&buf_->data()[pos_]); 
 	}
 
 	const_iterator cbegin() 
 	{ 
-		return_if(!buf_, 0);
+		RETURN_IF(!buf_, 0);
 		return const_iterator(buf_->data()); 
 	}
 
 	const_iterator cend() 
 	{ 
-		return_if(!buf_, 0);
+		RETURN_IF(!buf_, 0);
 		return const_iterator(&buf_->data()[pos_]); 
 	}
 
@@ -201,10 +201,10 @@ public:
 private: 
 	void reserve(std::size_t len)
 	{
-		expect(len > 0); 
+		EXPECT(len > 0); 
 		if (!buf_)
 		{
-			check(pos_ == 0);
+			VERIFY(pos_ == 0);
 			buf_ = pool_.alloc(std::max<std::size_t>(len, initial_size_));
 		}
 		else
@@ -221,8 +221,8 @@ private:
 			}
 		}
 
-		ensure(buf_);
-		ensure(capacity() >= len);
+		ENSURE(buf_);
+		ENSURE(capacity() >= len);
 	}
 
 private: 

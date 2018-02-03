@@ -19,7 +19,7 @@ task_scheduler::~task_scheduler()
 
 bool task_scheduler::start(const config& cfg)
 {
-	check(cfg.runner_count > 0);
+	VERIFY(cfg.runner_count > 0);
 
 	config_ = cfg; 
 
@@ -109,7 +109,7 @@ void task_scheduler::run_schedule()
 
 	while (queue_.pop(task))
 	{
-		check(task->get_state() == task::state::ready);
+		VERIFY(task->get_state() == task::state::ready);
 
 		if (task->is_runner_affinity_set())
 		{
@@ -120,13 +120,13 @@ void task_scheduler::run_schedule()
 				id = get_target_runner_id();
 			}
 
-			check(id > 0);
+			VERIFY(id > 0);
 			runners_[id-1]->push(task);
 		}
 		else
 		{
 			auto id = get_target_runner_id();
-			check(id > 0);
+			VERIFY(id > 0);
 			runners_[id]->push(task);
 		}
 

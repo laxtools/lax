@@ -26,9 +26,9 @@ public:
 public: 
 	segment_buffer() 
 	{
-		expect(Length > 0);
-		expect(pos_ == 0);
-		expect(segs_.empty());
+		EXPECT(Length > 0);
+		EXPECT(pos_ == 0);
+		EXPECT(segs_.empty());
 
 		segs_.reserve(256);
 	}
@@ -41,8 +41,8 @@ public:
 	/// len만큼 쓴다. seg 부족하면 풀에서 할당
 	std::size_t append(const uint8_t* p, std::size_t len)
 	{
-		expect(p != nullptr);
-		expect(len > 0);
+		EXPECT(p != nullptr);
+		EXPECT(len > 0);
 
 		// 세그먼트 부족하면 확보
 		reserve(len);	
@@ -55,21 +55,21 @@ public:
 
 			if (seg->size() == Length)
 			{
-				check(get_write_seg() + 1 < segs_.size());
+				VERIFY(get_write_seg() + 1 < segs_.size());
 
 				// 현재 세그먼트에 공간이 부족하면 다음으로 이동
 				seg = segs_[get_write_seg() + 1];
 			}
 			
 			auto wl = seg->append((p + written), len - written);
-			check(wl > 0);
+			VERIFY(wl > 0);
 
 			advance(wl);
 			
 			written += wl;
 		}
 
-		ensure(written == len);
+		ENSURE(written == len);
 
 		return written;
 	}
@@ -95,11 +95,11 @@ public:
 	/// 값 접근. 주로 테스트용
 	const uint8_t at(std::size_t pos) const
 	{
-		expect(pos < pos_);
-		return_if(pos >= pos_, 0);
+		EXPECT(pos < pos_);
+		RETURN_IF(pos >= pos_, 0);
 
-		check(!segs_.empty());
-		return_if(segs_.empty(), 0);
+		VERIFY(!segs_.empty());
+		RETURN_IF(segs_.empty(), 0);
 
 		auto seg_index = pos / Length;
 		auto offset = pos % Length;
@@ -175,7 +175,7 @@ private:
 
 	void reserve(std::size_t len)
 	{
-		expect(len > 0); 
+		EXPECT(len > 0); 
 
 		auto total_segs = (pos_ + len) / Length + 1;
 		auto required_segs = total_segs - segs_.size();

@@ -51,10 +51,10 @@ public:
 	/// post.
 	std::size_t post(message::ptr m)
 	{
-		return_if(!m->get_topic().is_valid(), 0);
+		RETURN_IF(!m->get_topic().is_valid(), 0);
 
 		auto iter = subs_.find(m->get_topic());
-		return_if(iter == subs_.end(), 0);
+		RETURN_IF(iter == subs_.end(), 0);
 
 		int count = 0;
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include <catch.hpp>
 #include <lax/net/protocol/bits/bits_message.hpp>
+#include <catch.hpp>
 
 using namespace lax::net;
 

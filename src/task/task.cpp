@@ -8,7 +8,7 @@ namespace task {
 
 task::task()
 {
-	check(state_ == state::constructed);
+	VERIFY(state_ == state::constructed);
 }
 
 task::~task()

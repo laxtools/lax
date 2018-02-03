@@ -24,7 +24,7 @@ acceptor::~acceptor()
 
 service::result acceptor::listen()
 {
-	return_if(
+	RETURN_IF(
 		!addr_.is_valid(),
 		service::result(false, reason::fail_invalid_address)
 	);
@@ -81,7 +81,7 @@ service::result acceptor::listen()
 
 void acceptor::do_accept()
 {
-	return_if(!acceptor_.is_open());
+	RETURN_IF(!acceptor_.is_open());
 
 	acceptor_.async_accept(
 		socket_,

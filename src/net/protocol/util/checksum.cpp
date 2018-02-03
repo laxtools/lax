@@ -22,10 +22,10 @@ modifier::result checksum::on_recv(
 {
 	new_len = msg_len;
 
-	expect(msg_len >= bits_message::header_length);
+	EXPECT(msg_len >= bits_message::header_length);
 
 	// payload 없으면 성공으로 처리
-	return_if(
+	RETURN_IF(
 		msg_len == bits_message::header_length , 
 		result(true, reason::success)
 	);
@@ -33,7 +33,7 @@ modifier::result checksum::on_recv(
 	// for thread-safey, create hash function 
 	// - windows, android, ios, osx, linux supports it
 	static thread_local auto hash = Botan::HashFunction::create("CRC32");
-	return_if(!hash, result(false, reason::fail_null_hash_function));
+	RETURN_IF(!hash, result(false, reason::fail_null_hash_function));
 
 	hash->clear();
 
@@ -67,17 +67,17 @@ modifier::result checksum::on_send(
 	std::size_t msg_len
 )
 {
-	expect(msg_len >= bits_message::header_length);
+	EXPECT(msg_len >= bits_message::header_length);
 
 	// payload 없으면 성공으로 처리
-	return_if(
+	RETURN_IF(
 		msg_len == bits_message::header_length, 
 		result(true, reason::success)
 	);
 
 	// for thread-safey, create hash function 
 	static thread_local auto hash = Botan::HashFunction::create("CRC32");
-	return_if(!hash, result(false, reason::fail_null_hash_function));
+	RETURN_IF(!hash, result(false, reason::fail_null_hash_function));
 
 	hash->clear();
 

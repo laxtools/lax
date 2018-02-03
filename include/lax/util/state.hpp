@@ -72,11 +72,11 @@ public:
 
 	bool add(state_ptr state)
 	{
-		check(state);
-		return_if(!state, false);
+		VERIFY(state);
+		RETURN_IF(!state, false);
 
-		check(!has(state->key()));
-		return_if(has(state->key()), false);
+		VERIFY(!has(state->key()));
+		RETURN_IF(has(state->key()), false);
 
 		childs_.insert(state_map::value_type(state->key(), state));
 
@@ -87,13 +87,13 @@ public:
 
 	void enter()
 	{
-		check(!active());
+		VERIFY(!active());
 		active_ = true;
 
 		if (parent_)
 		{
-			check(parent_->active());
-			check(parent_->active_child_.get() != this);
+			VERIFY(parent_->active());
+			VERIFY(parent_->active_child_.get() != this);
 
 			parent_->active_child_ = shared_from_this();
 		}
@@ -106,8 +106,8 @@ public:
 	/// 상태 실행 처리
 	void execute()
 	{
-		check(active());
-		return_if(!active());
+		VERIFY(active());
+		RETURN_IF(!active());
 
 		on_execute();
 
@@ -122,7 +122,7 @@ public:
 	/// 상태 나가기 처리
 	void exit()
 	{
-		check(active());
+		VERIFY(active());
 
 		active_ = false;
 

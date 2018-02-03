@@ -1,0 +1,18 @@
+{
+  "server_1": {
+    "id": 1,
+    "listens": [
+      {
+        "protocol": "bits",
+        "port": 7777
+      }
+    ],
+    "peers": [
+      {
+        "protocol": "bits",
+        "address": "127.0.0.1:7778"
+      }
+    ]
+  },
+  "local": { "name": "server_1" }
+}

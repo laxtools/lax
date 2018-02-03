@@ -10,7 +10,7 @@ void check_(bool cond, const char* msg, const char* func, const char* file, int 
 }
 
 #ifdef _DEBUG
-	#define check(c) (void)(!!(c) || (lax::check_(!!(c), #c, __FUNCTION__, __FILE__, __LINE__), 0)); assert(c);
+	#define VERIFY(c) (void)(!!(c) || (lax::check_(!!(c), #c, __FUNCTION__, __FILE__, __LINE__), 0)); assert(c);
 #else 
 	#if LAX_ENABLE_RELEASE_CHECK  == 0
 		#define check(c) 
@@ -20,10 +20,10 @@ void check_(bool cond, const char* msg, const char* func, const char* file, int 
 #endif 
 
 /// precondition
-#define expect(c) check(c)		 
+#define EXPECT(c) VERIFY(c)		 
 /// post condition
-#define ensure(c) check(c)
+#define ENSURE(c) VERIFY(c)
 
-#define return_if(c, v) if ((c)) return v
-#define break_if(c, v) if ((c)) break 
-#define continue_if(c, v) if ((c)) continue 
+#define RETURN_IF(c, v) if ((c)) return v
+#define BREAK_IF(c, v) if ((c)) break 
+#define CONTINUE_IF(c, v) if ((c)) continue 

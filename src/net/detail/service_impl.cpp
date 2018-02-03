@@ -79,7 +79,7 @@ session::ref service_impl::acquire(const session::id& id)
 {
 	std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 
-	return_if(id.get_index() > sessions_.size(), session::ref());
+	RETURN_IF(id.get_index() > sessions_.size(), session::ref());
 
 	auto& sp = sessions_[id.index_];
 
@@ -98,7 +98,7 @@ void service_impl::error(const session::id& id)
 
 	auto idx = id.get_index();
 
-	return_if(idx >= sessions_.size());
+	RETURN_IF(idx >= sessions_.size());
 
 	sessions_[idx].session.reset();
 
@@ -214,9 +214,9 @@ bool service_impl::init()
 		n = std::thread::hardware_concurrency();
 	}
 
-	check(n > 0);
-	check(stop_);
-	return_if(!stop_, true); // alreay running. no effect
+	VERIFY(n > 0);
+	VERIFY(stop_);
+	RETURN_IF(!stop_, true); // alreay running. no effect
 
 	stop_ = false;
 
@@ -248,7 +248,7 @@ void service_impl::run()
 
 void service_impl::fini()
 {
-	return_if(stop_);
+	RETURN_IF(stop_);
 	stop_ = true;
 
 	// post to all threads
@@ -287,7 +287,7 @@ void service_impl::on_new_socket(const std::string& protocol, tcp::socket&& soc,
 	seq = sessions_[slot_idx].seq++;
 	seq = (seq == 0 ? sessions_[slot_idx].seq++ : seq);
 
-	check(seq > 0);
+	VERIFY(seq > 0);
 
 	mutex_.unlock(); // session 생성이 느림
 
@@ -305,8 +305,8 @@ void service_impl::on_new_socket(const std::string& protocol, tcp::socket&& soc,
 	sessions_[slot_idx].session = sp;
 	session_count_++;
 
-	ensure(sessions_[slot_idx].session);
-	ensure(session_count_ > 0);
+	ENSURE(sessions_[slot_idx].session);
+	ENSURE(session_count_ > 0);
 
 	mutex_.unlock();
 }
@@ -315,7 +315,7 @@ uint16_t service_impl::get_free_slot()
 {
 	// 외부에서 unique 락 거는 것으로 가정
 
-	check(sessions_.size() < UINT16_MAX);
+	VERIFY(sessions_.size() < UINT16_MAX);
 
 	if (sessions_.size() >= UINT16_MAX)
 	{
@@ -333,7 +333,7 @@ uint16_t service_impl::get_free_slot()
 
 	free_slots_.pop_front();
 
-	check(index < sessions_.size());
+	VERIFY(index < sessions_.size());
 
 	return index;
 }

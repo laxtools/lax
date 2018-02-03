@@ -59,8 +59,8 @@ bool sub_map::unsubscribe(sub::key_t key)
 	use_lock_unique lock(use_lock_, mutex_);
 
 	auto iter = keys_.find(key);
-	check(iter != keys_.end());
-	return_if(iter == keys_.end(),false);
+	VERIFY(iter != keys_.end());
+	RETURN_IF(iter == keys_.end(),false);
 
 	if (iter->second.mode == sub::mode::immediate)
 	{
@@ -133,7 +133,7 @@ std::size_t sub_map::get_subscription_count(const message::topic_t& topic, sub::
 	}
 
 	auto iter = target->find(topic);
-	return_if(iter == target->end(), 0);
+	RETURN_IF(iter == target->end(), 0);
 
 	return iter->second.subs.size();
 }
@@ -177,7 +177,7 @@ sub::key_t sub_map::subscribe(
 	);
 
 	auto ki = keys_.find(key);
-	check(ki == keys_.end());
+	VERIFY(ki == keys_.end());
 
 	keys_[key] = entry_link{ topic, mode };
 
@@ -187,8 +187,8 @@ sub::key_t sub_map::subscribe(
 bool sub_map::unsubscribe(entry_map& em, sub::key_t key)
 {
 	auto iter = keys_.find(key);
-	check(iter != keys_.end());
-	return_if(iter == keys_.end(), false);
+	VERIFY(iter != keys_.end());
+	RETURN_IF(iter == keys_.end(), false);
 
 	auto topic = iter->second.topic;
 
@@ -196,8 +196,8 @@ bool sub_map::unsubscribe(entry_map& em, sub::key_t key)
 	seq_.release(key);
 
 	auto ei = em.find(topic);
-	check(ei != em.end());
-	return_if(ei == em.end(), false);
+	VERIFY(ei != em.end());
+	RETURN_IF(ei == em.end(), false);
 
 	auto& subs = ei->second.subs;
 
@@ -243,10 +243,10 @@ std::size_t sub_map::post(entry_map& em, message::ptr m)
 std::size_t sub_map::post_on_topic(entry_map& em, const message::topic_t& topic, message::ptr m)
 {
 	// 테스트 용도 등으로 valid 하지 않은 경우 발생 
-	return_if(!topic.is_valid(), 0);
+	RETURN_IF(!topic.is_valid(), 0);
 
 	auto iter = em.find(topic);
-	return_if(iter == em.end(), 0);
+	RETURN_IF(iter == em.end(), 0);
 
 	int count = 0;
 

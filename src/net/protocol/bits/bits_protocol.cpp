@@ -30,7 +30,7 @@ void bits_protocol::on_bind()
 {
 	if (!cfg.enable_loopback)
 	{
-		ensure(get_session());
+		ENSURE(get_session());
 	}
 
 	sequencer_.bind(this);
@@ -40,8 +40,8 @@ void bits_protocol::on_bind()
 
 protocol::result bits_protocol::send(packet::ptr m)
 {
-	expect(m);
-	return_if(!m, result(false, reason::fail_null_message_pointer));
+	EXPECT(m);
+	RETURN_IF(!m, result(false, reason::fail_null_message_pointer));
 
 	auto mp = std::static_pointer_cast<bits_message>(m);
 
@@ -59,7 +59,7 @@ protocol::result bits_protocol::send(packet::ptr m)
 
 	auto size = mp->pack(buf);
 
-	return_if(
+	RETURN_IF(
 		size < bits_message::header_length, 
 		result(false, reason::fail_bits_pack_error)
 	);
@@ -80,13 +80,13 @@ protocol::result bits_protocol::send(
 	const uint8_t* const data, 
 	std::size_t len)
 {
-	expect(m);
-	expect(data);
-	expect(len > 0);
+	EXPECT(m);
+	EXPECT(data);
+	EXPECT(len > 0);
 
-	return_if(!m, result(false, reason::fail_null_message_pointer));
-	return_if(!data, result(false, reason::fail_null_pointer));
-	return_if(
+	RETURN_IF(!m, result(false, reason::fail_null_message_pointer));
+	RETURN_IF(!data, result(false, reason::fail_null_pointer));
+	RETURN_IF(
 		len < bits_message::header_length, 
 		result(false, reason::fail_invalid_message_header)
 	);
@@ -162,27 +162,27 @@ protocol::result bits_protocol::send_modified(
 )
 {
 	// 여기에 오면 buf는 공유되지 않은 깨끗한 mp의 버퍼이다. 
-	expect(buf.size() == len);
+	EXPECT(buf.size() == len);
 
 	if (cfg.enable_sequence && mp->enable_sequence)
 	{
 		auto rc = sequencer_.on_send(buf, 0, buf.size());
 
-		return_if(!rc, rc);
+		RETURN_IF(!rc, rc);
 	}
 
 	if (cfg.enable_checksum && mp->enable_checksum)
 	{
 		auto rc = checksum_.on_send(buf, 0, buf.size());
 
-		return_if(!rc, rc);
+		RETURN_IF(!rc, rc);
 	}
 
 	if (cfg.enable_cipher && mp->enable_cipher)
 	{
 		auto rc = cipher_.on_send(buf, 0, buf.size());
 
-		return_if(!rc, rc);
+		RETURN_IF(!rc, rc);
 	}
 
 	if (cfg.enable_loopback)
@@ -208,7 +208,7 @@ protocol::result bits_protocol::recv_modified(
 	{
 		auto rc = cipher_.on_recv(buf, msg_pos, msg_len, new_len);
 
-		return_if(!rc, rc);
+		RETURN_IF(!rc, rc);
 
 		msg_len = new_len;
 	}
@@ -217,7 +217,7 @@ protocol::result bits_protocol::recv_modified(
 	{
 		auto rc = checksum_.on_recv(buf, msg_pos, msg_len, new_len);
 
-		return_if(!rc, rc);
+		RETURN_IF(!rc, rc);
 
 		msg_len = new_len;
 	}
@@ -226,7 +226,7 @@ protocol::result bits_protocol::recv_modified(
 	{
 		auto rc = sequencer_.on_recv(buf, msg_pos, msg_len, new_len);
 
-		return_if(!rc, rc);
+		RETURN_IF(!rc, rc);
 
 		msg_len = new_len;
 	}
@@ -240,10 +240,10 @@ protocol::result bits_protocol::on_recv(
 	const uint8_t* const bytes, 
 	std::size_t len)
 {
-	expect(bytes);
-	expect(len > 0);
-	return_if(!bytes, result(false, reason::fail_null_pointer));
-	return_if(len == 0, result(false, reason::fail_zero_size_data));
+	EXPECT(bytes);
+	EXPECT(len > 0);
+	RETURN_IF(!bytes, result(false, reason::fail_null_pointer));
+	RETURN_IF(len == 0, result(false, reason::fail_zero_size_data));
 
 	recv_buf_.append(bytes, len);
 
