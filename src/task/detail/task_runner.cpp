@@ -72,14 +72,7 @@ void task_runner::run()
 		{
 			task->execute(id_);
 
-			if (!stop_)
-			{
-				scheduler_.schedule(task);
-			}
-			else
-			{
-				scheduler_.pass(task);
-			}
+			scheduler_.pass(task);
 
 			++loop_count;
 			++task_run_count_;

@@ -1,6 +1,6 @@
 #pragma once
-#include <lax/task/task_scheduler.hpp>
 #include <lax/server/service_actor.hpp>
+#include <lax/task/task_scheduler.hpp>
 
 namespace lax
 {

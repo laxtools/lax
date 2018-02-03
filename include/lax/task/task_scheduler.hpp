@@ -37,9 +37,6 @@ public:
 
 		/// schedule() 호출 시 스케줄 할 지 여부
 		bool run_schedule_when_schedule_called = true;
-
-		/// finish 중에 ready인 태스크들을 종료 시킴 
-		bool finish_ready_task_during_finish = true;
 	};
 
 public: 

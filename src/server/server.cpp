@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <lax/server/server.hpp>
+#include <lax/net/service.hpp>
 
 namespace lax
 {
@@ -18,21 +19,29 @@ server::~server()
 
 bool server::start()
 {
-	// start task_scheduler
+	net::service::inst().init();
+
+	scheduler_.start();
+
+	// listen
 
 	return on_start();
 }
 
 void server::execute()
 {
+	scheduler_.run();
+
 	on_execute();
 }
 
 void server::finish()
 {
-	// finish task_scheduler
-
 	on_finish();
+
+	scheduler_.finish();
+
+	net::service::inst().fini();
 }
 
 bool server::on_start()

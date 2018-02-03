@@ -1,0 +1,24 @@
+{
+  "server_1": {
+    "id": 1,
+    "listens": [
+      {
+        "protocol": "bits",
+        "port": 7777
+      }
+    ],
+    "scheduler": {
+      "runner_count": 2,
+      "idle_check_threshold_time": 0.001,
+      "single_loop_run_limit": 0,
+      "start_task_when_schedule_called": true
+    },
+    "peers": [
+      {
+        "protocol": "bits",
+        "address": "127.0.0.1:7778"
+      }
+    ]
+  },
+  "local": { "name": "server_1" }
+}

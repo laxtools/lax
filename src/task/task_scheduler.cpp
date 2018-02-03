@@ -91,10 +91,7 @@ void task_scheduler::finish()
 	{
 		if (task->get_state() == task::state::ready )
 		{
-			if (config_.finish_ready_task_during_finish)
-			{
-				task->finish();
-			}
+			task->finish();
 		}
 	}
 
