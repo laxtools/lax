@@ -216,6 +216,7 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\grinder\construction.md" />
     <None Include="..\..\test\construction\actor\construction.md" />
     <None Include="..\..\test\construction\c++\hana.md" />
     <None Include="..\..\test\construction\net\checksum debugging.md" />

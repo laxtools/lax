@@ -1,8 +1,6 @@
 # TODOs
 
 - [ ] server / service 
-
-  - - - - ​
   - channel timer subscribe and callback
   - service clustering
     - startup / shutdown / update / TTL and alive message
@@ -16,19 +14,12 @@
     - efficiency / easiness 
 
 - [ ] db_service
-
   - configure with json
-
-
   - query runners
-
   - query execution 
-
   - query result processing
-
   - code generation in c++
     - MPL, macros
-
   - performance testing
 
 - [ ] Convention cleanup 
@@ -37,7 +28,6 @@
       - [ ] debug and trace log added
 
 - [ ] change project configuration 
-
       - net
         - util, channel, net
       - server
@@ -74,7 +64,6 @@
       - thread scalability
 
 - [ ] meta
-
       - json, excel, csv
         - 쉽게 사용 가능한 json 라이브러리 찾기
         - dropbox version 사용성 개선 작업
@@ -111,17 +100,14 @@
   - service restart 
 
 - [ ] support module 
-
       - [ ] detour / bullet / octree
       - [ ] ... 
 
 - [ ] game model 
-
       - [ ] demos of game model
       - [ ] board, strategic rpg, morpg
 
 - [x] json 
-
    - nlohmann's json 
      - just great!
    - debugging. 

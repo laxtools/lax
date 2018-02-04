@@ -276,9 +276,6 @@
     <ClCompile Include="..\..\src\util\logger.cpp" />
     <ClCompile Include="..\..\src\util\macros.cpp" />
     <ClCompile Include="..\..\src\util\platform.cpp" />
-    <ClCompile Include="..\..\src\util\sequence.cpp" />
-    <ClCompile Include="..\..\src\util\state.cpp" />
-    <ClCompile Include="..\..\src\util\state_machine.cpp" />
     <ClCompile Include="..\..\src\util\string_util.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -80,6 +80,9 @@
     <Filter Include="template\instance">
       <UniqueIdentifier>{8b102bea-7ff3-4d79-8117-345ae2da327b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="grinder">
+      <UniqueIdentifier>{337a8a3d-7c5a-4e52-aa21-e2384f884c3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -342,16 +345,7 @@
     <ClCompile Include="..\..\src\util\macros.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\util\state.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\util\state_machine.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\util\platform.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\util\sequence.cpp">
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\channel\channel.cpp">

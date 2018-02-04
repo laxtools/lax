@@ -29,6 +29,18 @@
     <Filter Include="c++">
       <UniqueIdentifier>{c6b48b20-de4d-4f71-9151-17310506192a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="grinder">
+      <UniqueIdentifier>{5f032e3a-aa6a-4114-9fcf-ddc58831e215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template">
+      <UniqueIdentifier>{af4111f8-9f78-4628-a266-db4a401cce43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template\sample">
+      <UniqueIdentifier>{e5dcc0be-e511-4741-97ed-f385d25189a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template\instance">
+      <UniqueIdentifier>{bdc2c40a-fc13-492f-805b-8397b0e056bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -142,6 +154,9 @@
     </None>
     <None Include="..\..\test\construction\server\construction.md">
       <Filter>server</Filter>
+    </None>
+    <None Include="..\..\src\grinder\construction.md">
+      <Filter>grinder</Filter>
     </None>
   </ItemGroup>
 </Project>
