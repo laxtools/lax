@@ -156,7 +156,7 @@ TEST_CASE("test channel")
 			REQUIRE(cp->push(mp) == 0);
 
 			// post
-			REQUIRE(cp->post() == 1);
+			REQUIRE(cp->execute() == 1);
 
 			REQUIRE(value == 1);
 
@@ -187,7 +187,7 @@ TEST_CASE("test channel")
 		REQUIRE(cp->push(mp) == 0);
 
 		// post
-		REQUIRE(cp->post() == 1);
+		REQUIRE(cp->execute() == 1);
 
 		REQUIRE(value == 1);
 
@@ -226,7 +226,7 @@ TEST_CASE("test channel")
 			REQUIRE(cp->push(mp) == 0);
 
 			// post
-			REQUIRE(cp->post() == 1);
+			REQUIRE(cp->execute() == 1);
 
 			REQUIRE(value == i+1);
 		}

@@ -1,78 +1,63 @@
 #pragma once 
 
-#include <lax/util/macros.h>
-#include <lax/util/sequence.h>
-#include <lax/util/result.h>
+#include <lax/util/macros.hpp>
+#include <lax/util/sequence.hpp>
+#include <lax/util/result.hpp>
+#include <lax/util/simple_timer.hpp>
 #include <functional>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 
 namespace lax
 {
-namespace actor
+namespace channel
 {
 
-class actor;
-
-/// actor timer that checks efficiently
-/** 
- * interval based timer for actor
- * 
- * 기능: 
- *   - 지정된 간격으로 타이머들 실행 
- *   - 우선순위 큐로 가장 빨리 실행되어야 하는 순으로 실행
- * 
- * Usage: 
- *   auto id = get_timer().set( 10, .... )    // 10초마다 실행
- *   get_timer().add( id, on_update_state )   // 실행 함수 추가
- *
- *   on_update_state( id )
- *   {
- *      send_to_servers( state )
- *   }
- *
- * 특성: 
- *  - update 호출에서 tick에 관계 없이 한번만 실행 
- *  - 콜백 호출이 오래 걸려도 한번만 실행 (무한 루프 제거)
- *  - 요청한 간격의 절반으로 체크 진행. (호출 분산)
- *  - 콜백 함수에서 타이머 추가나 취소 가능
+/// cron like interface to handle wall time events
+/**
+ * TODO: implement later after finishing server, service and templates
  */
-class timer
+class wall_timer
 {
 public: 
-	static const float forever;
 
-	using action = std::function<void(int)>;
+	using id_t = int;
+	using tick_t = float;
+	using action = std::function<void(id_t)>;
 	using actions = std::vector<action>;
+
+	static constexpr tick_t forever = 0.f;
+	static constexpr tick_t min_interval = 0.01f;
 
 public:
 	/// constructor
-	timer(actor* owner);
+	wall_timer();
 
 	/// check slots to run 
-	void update(float tick);
+	void update();
 
 	/// sets interval
-	int set(
-		float interval,
-		float duration = forever,
+	id_t set(
+		tick_t interval,
+		tick_t duration = forever,
 		bool repeat = true,
-		float after = 0.f);
-
-	/// check 
-	bool has(int id) const;
+		tick_t after = 0.f);
 
 	/// add callback action to id req 
-	bool add(int id, action& act);
+	bool add(id_t id, action act);
 	
-	/// cancel the req
-	bool cancel(int id);
+	/// cancel the req (remove)
+	bool cancel(id_t id);
+
+	/// VERIFY 
+	bool has(id_t id) const;
 
 	/// get last run tick
-	float get_last_run_tick(int id) const;
+	tick_t get_last_run_tick(id_t id) const;
 
 	/// get next scheduled tick
-	float get_next_run_tick(int id) const;
+	tick_t get_next_run_tick(id_t id) const;
 
 	/// test purpose
 	std::size_t get_slot_count() const 
@@ -87,7 +72,7 @@ public:
 	}
 
 	/// test purpose
-	std::size_t get_run_count(int id) const;
+	std::size_t get_run_count(id_t id) const;
 
 private:
 	struct req
@@ -96,9 +81,14 @@ private:
 
 		req() = default;
 			
-		req(timer& t,
-			int id, 
-			float interval, float duration, float after, bool repeat);
+		req(wall_timer& t,
+			id_t id, 
+			tick_t interval, tick_t duration, tick_t after, bool repeat);
+
+		~req()
+		{
+			release();
+		}
 
 		/// add callback actions
 		req& add(action& act)
@@ -110,7 +100,7 @@ private:
 		/// call back 
 		void run();
 
-		/// release timer id
+		/// release wall_timer id
 		void release();
 
 		/// disable copy && assignment
@@ -119,20 +109,20 @@ private:
 
 		// members.
 
-		timer& timer_;
-		int id_ = 0;
-		float interval_ = 0.f;
-		float duration_ = forever;
-		float after_ = 0.f;
+		wall_timer& timer_;
+		id_t id_ = 0;
+		tick_t interval_ = 0.f;
+		tick_t duration_ = forever;
+		tick_t after_ = 0.f;
 		bool repeat_ = true;
 		actions actions_;
 
-		float last_run_tick_ = 0.f;
-		float next_run_tick_ = 0.f;
-		float end_run_tick_ = 0.f;
+		tick_t last_run_tick_ = 0.f;
+		tick_t next_run_tick_ = 0.f;
+		tick_t end_run_tick_ = 0.f;
 
 		bool cancel_ = false;
-		int run_count_ = 0;
+		std::size_t run_count_ = 0;
 	};
 
 	struct slot
@@ -152,45 +142,50 @@ private:
 			}
 		};
 
-		float interval_ = 0.f;
-		float last_run_tick_ = 0.f;
+		tick_t interval_ = 0.f;
+		tick_t last_run_tick_ = 0.f;
 		std::priority_queue<entry> reqs_;
 	};
 
 	using slots = std::vector<slot>;
-	using reqs = std::unordered_map<int, req::ptr>;
+	using reqs = std::unordered_map<id_t, req::ptr>;
 
 private: 
-	static const float min_interval; 
-
 	/// 적절한 interval 간격 슬롯이 있는 지 찾고 없으면 생성
-	slot& create_slot(float interval);
+	slot& create_slot(tick_t interval);
 
 	/// 슬롯 타이머 처리
-	void update_slot(slot& slt, float tick);
+	void update_slot(slot& slt, tick_t tick);
 
 	/// remove req
-	void remove_end_req(int id);
+	void remove_end_req(id_t id);
+
+	tick_t get_current_tick() const
+	{
+		return timer_.elapsed();
+	}
 
 private:
-	actor* owner_ = nullptr;
+	util::simple_timer timer_;
 	slots slots_;
 	reqs reqs_;
-	util::sequence<uint32_t> seq_; // timer id 생성기
+	util::sequence<uint32_t> seq_; // wall_timer id sequence
 };
 
 
-inline void timer::update(float tick)
+inline void wall_timer::update()
 {
+	auto tick = get_current_tick();
+
 	for (auto& sl : slots_)
 	{
 		update_slot(sl, tick);
 	}
 }
 
-inline void timer::update_slot(slot& sl, float now)
+inline void wall_timer::update_slot(slot& sl, tick_t now)
 {
-	check(sl.interval_ > min_interval);
+	VERIFY(sl.interval_ > min_interval);
 
 	if ((sl.last_run_tick_ + sl.interval_) > now )
 	{
@@ -199,7 +194,7 @@ inline void timer::update_slot(slot& sl, float now)
 
 	sl.last_run_tick_ = now;
 
-	return_if(sl.reqs_.empty());
+	RETURN_IF(sl.reqs_.empty());
 
 	auto e = sl.reqs_.top();
 
@@ -225,11 +220,11 @@ inline void timer::update_slot(slot& sl, float now)
 			}
 		}
 
-		break_if(sl.reqs_.empty());
+		BREAK_IF(sl.reqs_.empty());
 
 		e = sl.reqs_.top();
 	}
 }
 
-} // actor 
+} // channel
 } // lax

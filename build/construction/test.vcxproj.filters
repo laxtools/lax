@@ -123,6 +123,9 @@
     <ClCompile Include="..\..\test\construction\server\test_json_config.cpp">
       <Filter>server</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\test\construction\channel\test_timer.cpp">
+      <Filter>channel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\test\construction\actor\construction.md">

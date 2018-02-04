@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <lax/server/server.hpp>
 #include <lax/net/service.hpp>
+#include <lax/util/logger.hpp>
 
 namespace lax
 {
@@ -21,7 +22,7 @@ bool server::start()
 {
 	net::service::inst().init();
 
-	scheduler_.start();
+	// scheduler_.start();
 
 	// listen
 
@@ -30,7 +31,7 @@ bool server::start()
 
 void server::execute()
 {
-	scheduler_.run();
+	scheduler_.execute();
 
 	on_execute();
 }
@@ -59,7 +60,15 @@ void server::on_finish()
 
 void server::load_config()
 {
+	util::log()->info("loading server...");
 
+	auto sconfig = config_.dump(4);
+
+	util::log()->info(sconfig);
+
+
+
+	util::log()->info("loaded."); 
 }
 
 } // server 

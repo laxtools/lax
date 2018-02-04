@@ -1,28 +1,17 @@
 #include "stdafx.h"
-#include "timer.h"
-#include <lax/actor/actor.h>
+#include <lax/channel/timer.hpp>
 
 namespace lax
 {
-namespace actor
+namespace channel
 {
 
-const float timer::forever = 0.f;
-const float timer::min_interval = 0.01f; 
-
-timer::timer(actor* owner)
+timer::timer()
 	: seq_(1, UINT32_MAX, 16)
-	, owner_(owner)
 {
-	check(owner_);
-
-	if (!owner_)
-	{
-		throw std::exception("timer must have a valid owner");
-	}
 }
 
-int timer::set(float interval, float duration, bool repeat, float after)
+int timer::set(tick_t interval, tick_t duration, bool repeat, tick_t after)
 {
 	auto si = min_interval;
 	auto fi = si;
@@ -34,8 +23,8 @@ int timer::set(float interval, float duration, bool repeat, float after)
 		si *= 2;
 	}
 
-	check(fi <= interval);
-	check(fi <= target_interval);
+	VERIFY(fi <= interval);
+	VERIFY(fi <= target_interval);
 
 	auto& slt = create_slot(fi);
 
@@ -48,27 +37,27 @@ int timer::set(float interval, float duration, bool repeat, float after)
 	return rp->id_;
 }
 
-bool timer::has(int id) const
+bool timer::has(id_t id) const
 {
 	return reqs_.find(id) != reqs_.end();
 }
 
-bool timer::add(int id, action& act)
+bool timer::add(id_t id, action act)
 {
 	auto iter = reqs_.find(id);
 
-	return_if(iter == reqs_.end(), false);
+	RETURN_IF(iter == reqs_.end(), false);
 
 	iter->second->add(act);
 
 	return true;
 }
 
-bool timer::cancel(int id)
+bool timer::cancel(id_t id)
 {
 	auto iter = reqs_.find(id);
 
-	return_if(iter == reqs_.end(), false);
+	RETURN_IF(iter == reqs_.end(), false);
 
 	iter->second->cancel_ = true;	// 취소된 요청들은 slot 실행할 때 제거
 
@@ -78,42 +67,42 @@ bool timer::cancel(int id)
 	return true;
 }
 
-float timer::get_next_run_tick(int id) const
+timer::tick_t timer::get_next_run_tick(id_t id) const
 {
 	auto iter = reqs_.find(id);
 
-	return_if(iter == reqs_.end(), 0.f);
+	RETURN_IF(iter == reqs_.end(), 0.f);
 
 	return iter->second->next_run_tick_;
 }
 
-float timer::get_last_run_tick(int id) const
+timer::tick_t timer::get_last_run_tick(id_t id) const
 {
 	auto iter = reqs_.find(id);
 
-	return_if(iter == reqs_.end(), 0.f);
+	RETURN_IF(iter == reqs_.end(), 0.f);
 
 	return iter->second->last_run_tick_;
 }
 
-std::size_t timer::get_run_count(int id) const
+std::size_t timer::get_run_count(id_t id) const
 {
 	auto iter = reqs_.find(id);
 
-	return_if(iter == reqs_.end(), 0);
+	RETURN_IF(iter == reqs_.end(), 0);
 
 	return iter->second->run_count_;
 }
 
-timer::slot& timer::create_slot(float interval)
+timer::slot& timer::create_slot(tick_t interval)
 {
-	check(interval >= min_interval);
+	VERIFY(interval >= min_interval);
 
 	// interval 보다 작은 간격의 슬롯들 중 최대 슬롯을 찾는다. 
 	// 슬롯은 정렬되어 있지 않다.
 
 	slot* found = nullptr;
-	float found_interval = 0;
+	tick_t found_interval = 0;
 
 	for (auto& slt : slots_)
 	{
@@ -140,23 +129,23 @@ timer::slot& timer::create_slot(float interval)
 		return *slots_.rbegin();
 	}
 
-	check(found);
+	VERIFY(found);
 
 	return *found;
 }
 
-void timer::remove_end_req(int id)
+void timer::remove_end_req(id_t id)
 {
 	auto iter = reqs_.find(id);
 
-	return_if(iter == reqs_.end());
+	RETURN_IF(iter == reqs_.end());
 
 	reqs_.erase(iter);
 }
 
 timer::req::req(timer& t,
-	int id, 
-	float interval, float duration, float after, bool repeat)
+	id_t id, 
+	tick_t interval, tick_t duration, tick_t after, bool repeat)
 	: timer_(t)
 	, id_(id)
 	, interval_(interval)
@@ -164,20 +153,20 @@ timer::req::req(timer& t,
 	, after_(after)
 	, repeat_(repeat)
 {
-	check(id_ > 0);
-	check(interval_ > 0);
-	check(duration_ >= 0);
-	check(after_ >= 0);
+	VERIFY(id_ > 0);
+	VERIFY(interval_ > 0);
+	VERIFY(duration_ >= 0);
+	VERIFY(after_ >= 0);
 
 	interval_ = std::max(min_interval, interval_);			// clamp
 
-	next_run_tick_ = timer_.owner_->get_current_tick() + after_ + interval_;
-	end_run_tick_ = timer_.owner_->get_current_tick() + after_ + duration_;
+	next_run_tick_ = t.get_current_tick() + after_ + interval_;
+	end_run_tick_ = t.get_current_tick() + after_ + duration_;
 }
 
 void timer::req::run()
 {
-	check(id_ > 0);
+	VERIFY(id_ > 0);
 
 	for (auto& act : actions_)
 	{
@@ -193,8 +182,10 @@ void timer::req::release()
 	{
 		timer_.seq_.release(id_);
 	}
+
+	id_ = 0;
 }
 
 
-} // actor 
+} // channel
 } // lax

@@ -48,7 +48,7 @@ public:
 
 	void schedule(task::ptr task);
 
-	void run();
+	void execute();
 
 	void finish();
 

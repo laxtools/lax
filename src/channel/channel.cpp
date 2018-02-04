@@ -35,7 +35,7 @@ channel::~channel()
 	{
 		while (q_.unsafe_size() > 0)
 		{
-			post();
+			execute();
 		}
 	}
 }
@@ -77,7 +77,7 @@ bool channel::unsubscribe(sub::key_t key)
 	return map_.unsubscribe(key);
 }
 
-std::size_t channel::post()
+std::size_t channel::execute()
 {
 	message::ptr m;
 

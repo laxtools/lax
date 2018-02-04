@@ -185,7 +185,7 @@ public:
 	/**
 	 * sub::mode::delayed subscriptions are handled for messages
 	 */
-	std::size_t post();
+	std::size_t execute();
 
 	/// post with a message not from a queue. (for net)
 	std::size_t post(message::ptr m);

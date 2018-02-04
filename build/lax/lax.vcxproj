@@ -169,6 +169,7 @@
     <ClInclude Include="..\..\include\lax\channel\dispatcher.hpp" />
     <ClInclude Include="..\..\include\lax\channel\message.hpp" />
     <ClInclude Include="..\..\include\lax\channel\sub.hpp" />
+    <ClInclude Include="..\..\include\lax\channel\timer.hpp" />
     <ClInclude Include="..\..\include\lax\channel\topic.hpp" />
     <ClInclude Include="..\..\include\lax\db\detail\db_connection.hpp" />
     <ClInclude Include="..\..\include\lax\db\detail\db_connection_pool.hpp" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\..\src\channel\channel.cpp" />
     <ClCompile Include="..\..\src\channel\detail\channel_map.cpp" />
     <ClCompile Include="..\..\src\channel\detail\sub_map.cpp" />
+    <ClCompile Include="..\..\src\channel\timer.cpp" />
     <ClCompile Include="..\..\src\db\nanodbc.cpp" />
     <ClCompile Include="..\..\src\net\addr.cpp" />
     <ClCompile Include="..\..\src\net\detail\acceptor.cpp" />

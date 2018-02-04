@@ -71,6 +71,15 @@
     <Filter Include="server\detail">
       <UniqueIdentifier>{c18b42b2-1067-4e61-ae4e-d99a8b8d7780}</UniqueIdentifier>
     </Filter>
+    <Filter Include="template">
+      <UniqueIdentifier>{5ee8b57f-60cf-4cd1-9333-dc3736a9d63e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template\sample">
+      <UniqueIdentifier>{bebe32f5-92d3-4932-86ba-17ae84ba44f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template\instance">
+      <UniqueIdentifier>{8b102bea-7ff3-4d79-8117-345ae2da327b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -313,6 +322,9 @@
     <ClInclude Include="..\..\include\lax\server\service_factory.hpp">
       <Filter>server</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\channel\timer.hpp">
+      <Filter>channel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -437,6 +449,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\service_factory.cpp">
       <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\channel\timer.cpp">
+      <Filter>channel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

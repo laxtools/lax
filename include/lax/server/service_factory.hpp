@@ -15,8 +15,6 @@ public:
 public:
 	static service_factory& inst();
 
-	~service_factory();
-
 	/// add a creator for a protocol
 	void add(const std::string& name, creator c);
 

@@ -71,7 +71,7 @@ void task_scheduler::schedule(task::ptr task)
 	}
 }
 
-void task_scheduler::run()
+void task_scheduler::execute()
 {
 	run_schedule();
 }

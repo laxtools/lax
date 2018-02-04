@@ -31,7 +31,7 @@ bool service_actor::on_start()
 
 void service_actor::on_execute()
 {
-	get_channel().post();
+	get_channel().execute();
 }
 
 void service_actor::on_finish()

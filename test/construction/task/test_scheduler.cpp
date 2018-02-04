@@ -19,6 +19,8 @@ TEST_CASE("scheduler")
 		auto task1 = std::make_shared<task>();
 		scheduler.schedule(task1);
 
+		scheduler.execute();
+
 		// wait for task1 executed
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
