@@ -14,10 +14,16 @@
     - efficiency / easiness 
 
 - [ ] db_service
+
   - configure with json
   - query runners
   - query execution 
   - query result processing
+  - sharding / re-hash
+  - date 
+    - https://github.com/HowardHinnant/date
+    - wall_timer
+      - cron syntax extended
   - code generation in c++
     - MPL, macros
   - performance testing
@@ -53,16 +59,15 @@
    - thread scalability
 
 - [ ] meta
-
-      - json, excel, csv
-        - nlohmann's json library is great
-        - excel editing interface is the core
-      - conversion flow
-        - json -> excel -> binary / text json format
-      - schema merge keeping existing data
-        - keep backups
-        - date based
-        - history log
+   - json, excel, csv
+     - nlohmann's json library is great
+     - excel editing interface is the core
+   - conversion flow
+     - json -> excel -> binary / text json format
+   - schema merge keeping existing data
+     - keep backups
+     - date based
+     - history log
 
 - [ ] argos
 
@@ -78,12 +83,12 @@
        - items
 
 - [ ] coding convetion layer
-      - Class and Types 
-        - PascalCase 
-        - Actor / Message / Server / ServiceActor / Channel
-        - Session::Ref, ... 
-        - Functions
-        - Member functions
+   - Class and Types 
+     - PascalCase 
+     - Actor / Message / Server / ServiceActor / Channel
+     - Session::Ref, ... 
+     - Functions
+     - Member functions
 
 - [ ] documentation
       - doxygen documentation
