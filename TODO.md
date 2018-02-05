@@ -1,4 +1,4 @@
-# TODOs
+#  TODOs
 
 - [ ] server / service 
   - channel timer subscribe and callback
@@ -46,33 +46,36 @@
       - [ ] functional test
       - [ ] stress test
 
-- [ ] argos
-  - monitor server w/ shells 
-    - embed boost.beast w/ openssl to support web interface 
-    - web monitoring / management console
-  - game operations 
-    - user monitoring 
-    - game play monitoring 
-    - game asset management 
-      - player characters
-      - money 
-      - items
-
 - [ ] network tests
-      - stress tests
-      - performance 
-      - thread scalability
+
+   - stress tests
+   - performance 
+   - thread scalability
 
 - [ ] meta
+
       - json, excel, csv
-        - 쉽게 사용 가능한 json 라이브러리 찾기
-        - dropbox version 사용성 개선 작업
+        - nlohmann's json library is great
+        - excel editing interface is the core
       - conversion flow
-        - json -> excel -> csv
+        - json -> excel -> binary / text json format
       - schema merge keeping existing data
         - keep backups
         - date based
         - history log
+
+- [ ] argos
+
+   - monitor server w/ shells 
+     - embed boost.beast w/ openssl to support web interface 
+     - web monitoring / management console
+   - game operations 
+     - user monitoring 
+     - game play monitoring 
+     - game asset management 
+       - player characters
+       - money 
+       - items
 
 - [ ] coding convetion layer
       - Class and Types 
@@ -95,7 +98,7 @@
     - notification per service
       - to services
       - to users
-  - file copy (svn client)
+  - file copy (embedded svn client)
   - system / server restart
   - service restart 
 
