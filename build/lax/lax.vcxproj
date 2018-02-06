@@ -211,6 +211,7 @@
     <ClInclude Include="..\..\include\lax\server\argos\argos_directory.hpp" />
     <ClInclude Include="..\..\include\lax\server\argos\argos_messages.hpp" />
     <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp" />
+    <ClInclude Include="..\..\include\lax\server\detail\peer_session_manager.hpp" />
     <ClInclude Include="..\..\include\lax\server\server.hpp" />
     <ClInclude Include="..\..\include\lax\server\service_actor.hpp" />
     <ClInclude Include="..\..\include\lax\server\service_factory.hpp" />
@@ -266,6 +267,7 @@
     <ClCompile Include="..\..\src\net\reason.cpp" />
     <ClCompile Include="..\..\src\net\service.cpp" />
     <ClCompile Include="..\..\src\net\session.cpp" />
+    <ClCompile Include="..\..\src\server\detail\peer_session_manager.cpp" />
     <ClCompile Include="..\..\src\server\server.cpp" />
     <ClCompile Include="..\..\src\server\service_actor.cpp" />
     <ClCompile Include="..\..\src\server\service_factory.cpp" />

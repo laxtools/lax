@@ -328,6 +328,9 @@
     <ClInclude Include="..\..\include\lax\channel\timer.hpp">
       <Filter>channel</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\detail\peer_session_manager.hpp">
+      <Filter>server\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -446,6 +449,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\channel\timer.cpp">
       <Filter>channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\detail\peer_session_manager.cpp">
+      <Filter>server\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,28 +13,10 @@ class server
 public: 
 	using id_t = service_actor::id_t;
 
-	struct peer
-	{
-		enum state
-		{
-			init,
-			connecting,
-			connected,
-			up, 
-			down,
-			disconnected,  
-		};
-
-		std::string addr;
-		state state = state::init;
-		id_t node;					
-		// TODO: more properties
-		net::session::ref sref;
-	};
 
 public:
 	/// load and create services using configuration
-	server(const nlm::json& config);
+	server(const std::string& name, const nlm::json& config);
 
 	/// destructor
 	~server();
@@ -82,6 +64,8 @@ private:
 private: 
 	nlm::json config_;
 	id_t id_ = 0;
+
+	task::task_scheduler::config scheduler_config_;
 	task::task_scheduler scheduler_;
 	std::string desc_;
 };

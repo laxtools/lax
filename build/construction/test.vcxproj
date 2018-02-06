@@ -191,6 +191,7 @@
     <ClCompile Include="..\..\test\construction\channel\test_timer.cpp" />
     <ClCompile Include="..\..\test\construction\db\test_db.cpp" />
     <ClCompile Include="..\..\test\construction\db\test_nanodbc.cpp" />
+    <ClCompile Include="..\..\test\construction\meta\test_json_schema.cpp" />
     <ClCompile Include="..\..\test\construction\net\test_bitsery.cpp" />
     <ClCompile Include="..\..\test\construction\net\test_bits_message.cpp" />
     <ClCompile Include="..\..\test\construction\net\test_bits_protocol.cpp" />

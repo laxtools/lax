@@ -19,10 +19,6 @@ service_impl::service_impl(service& svc)
 
 service_impl::~service_impl()
 {
-	// fini()를 외부에서 호출해서 정리한다. 
-	// - unique_ptr로 관리할 때 프로세스 나가면서 호출된다. 
-	// - 이 때 메모리가 해제되어 있다. 
-	// - 왜 그런가????
 }
 
 service::result service_impl::listen(const std::string& addr, const std::string& protocol)
@@ -268,8 +264,7 @@ void service_impl::fini()
 
 void service_impl::cleanup()
 {
-	// 꼭 필요한 구현은 아니지만 명시적으로 
-	// 정리하면 안정성 관련 오류를 찾기 쉽다.
+	// 명시적으로 정리하면 안정성 관련 오류를 찾기 쉽다.
 
 	sessions_.clear();
 	acceptors_.clear();

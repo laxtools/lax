@@ -24,8 +24,13 @@
     - https://github.com/HowardHinnant/date
     - wall_timer
       - cron syntax extended
+  - guid 
+    - key for objects 
+      - players, items, guilds
+    - esstential to enable sharding and tracking
+    - rather big (16 bytes)
   - code generation in c++
-    - MPL, macros
+    - MPL, macros, compiler
   - performance testing
 
 - [ ] Convention cleanup 
@@ -55,8 +60,13 @@
 - [ ] network tests
 
    - stress tests
-   - performance 
+   - performance
    - thread scalability
+
+- [ ] 30,000 session broadcasting
+
+   - chatting
+   - measure the limit of a single server on 8 core x64 windows
 
 - [ ] meta
    - json, excel, csv
@@ -71,8 +81,14 @@
 
 - [ ] argos
 
-   - monitor server w/ shells 
+   - shell 
+     - command line interface
+     - encrypted communication 
+     - string based (json?)
+     - cheat console
+   - monitor server 
      - embed boost.beast w/ openssl to support web interface 
+       - pause / resume with shell commands
      - web monitoring / management console
    - game operations 
      - user monitoring 
@@ -81,14 +97,6 @@
        - player characters
        - money 
        - items
-
-- [ ] coding convetion layer
-   - Class and Types 
-     - PascalCase 
-     - Actor / Message / Server / ServiceActor / Channel
-     - Session::Ref, ... 
-     - Functions
-     - Member functions
 
 - [ ] documentation
       - doxygen documentation
@@ -99,21 +107,45 @@
 
 - [ ] live maintenance
   - maintenance cycle management
+    - scheduling
     - state change per service
     - notification per service
       - to services
       - to users
-  - file copy (embedded svn client)
+  - file copy (embedded svn client and server)
   - system / server restart
   - service restart 
 
-- [ ] support module 
-      - [ ] detour / bullet / octree
-      - [ ] ... 
-
 - [ ] game model 
-      - [ ] demos of game model
-      - [ ] board, strategic rpg, morpg
+      - demos of game model
+        - board, strategic rpg, morpg
+      - support module 
+           - detour / bullet / octree
+           - 1 bit voxel map : possible? 
+      - content coding convention 
+        - making abstract concepts
+        - using higher level concepts
+        - avoid script coding (long scenario based code manipulation)
+
+- [ ] version and configuration management 
+
+   - db schema
+   - message
+   - code change
+   - development model 
+   - tools to support
+
+- [ ] cache_service
+
+   - distributed with hash
+   - algorithm 
+     - TTL
+     - check before loading 
+     - update on change (loading, modification)
+   - rocksdb?
+     - embedded storage
+   - still useful??? 
+     - not sure... it can be. but cons are very strong.
 
 - [x] json 
    - nlohmann's json 

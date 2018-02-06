@@ -39,7 +39,7 @@ TEST_CASE("test server")
 
 		CHECK(jserver["id"] == 1);
 
-		lax::server::server server(jserver);
+		lax::server::server server("name", jserver);
 
 		CHECK(server.get_id() == 1);
 

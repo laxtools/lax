@@ -41,6 +41,9 @@
     <Filter Include="template\instance">
       <UniqueIdentifier>{bdc2c40a-fc13-492f-805b-8397b0e056bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="meta">
+      <UniqueIdentifier>{83aefe1b-fcd2-4c93-806f-a61fd295b3ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -137,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="..\..\test\construction\channel\test_timer.cpp">
       <Filter>channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\construction\meta\test_json_schema.cpp">
+      <Filter>meta</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

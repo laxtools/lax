@@ -8,7 +8,7 @@ namespace lax
 namespace server
 {
 
-server::server(const nlm::json& config)
+server::server(const std::string& name, const nlm::json& config)
 	: config_(config)
 {
 	load_config();
@@ -20,9 +20,21 @@ server::~server()
 
 bool server::start()
 {
-	net::service::inst().init();
+	auto rc = net::service::inst().init();
 
-	// scheduler_.start();
+	if (!rc)
+	{
+		util::log()->error( "failed to init net::service" );
+		return false;
+	}
+
+	rc = scheduler_.start();
+
+	if (!rc)
+	{
+		util::log()->error("failed to start task_scheduler");
+		return false;
+	}
 
 	// listen
 
@@ -66,7 +78,7 @@ void server::load_config()
 
 	util::log()->info(sconfig);
 
-
+	// 
 
 	util::log()->info("loaded."); 
 }
