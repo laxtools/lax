@@ -2,19 +2,32 @@
 
 Load test tool with functional tests. 
 
-- Agent
-- Bot
-- Flow
-  - Actions
-  - Json configured
-- Controller
-  - Update
-    - Download from server
-  - Report
-    - CSV report
-    - graph
+## Iteration 1 Spec. 
 
-Platforms:
+- agent
+- bot
+- flow
+  - actions
+  - json configured
+
+platforms:
 - standalone executable
-- unreal 4 integration
+
+## Iteration 2 Spec.
+
+- grinder_control_service
+
+- command support
+- update
+  - download from server
+  - visual svn server
+  - grinder agent has svn client embedded
+- report
+  - csv report
+  - graph
+
+platforms: 
+- unreal 4 
+  - ui control and real time report
+
 

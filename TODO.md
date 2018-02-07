@@ -53,9 +53,28 @@
   - database based
 
 - [ ] grinder 
-      - [ ] action flow based
-      - [ ] functional test
-      - [ ] stress test
+      - action flow based
+      - functional test
+      - stress test
+
+- [ ] argos
+
+   - shell 
+     - command line interface
+     - encrypted communication 
+     - string based (json?)
+     - cheat console
+   - monitor server 
+     - embed boost.beast w/ openssl to support web interface 
+       - pause / resume with shell commands
+     - web monitoring / management console
+   - game operations 
+     - user monitoring 
+     - game play monitoring 
+     - game asset management 
+       - player characters
+       - money 
+       - items
 
 - [ ] network tests
 
@@ -79,24 +98,7 @@
      - date based
      - history log
 
-- [ ] argos
-
-   - shell 
-     - command line interface
-     - encrypted communication 
-     - string based (json?)
-     - cheat console
-   - monitor server 
-     - embed boost.beast w/ openssl to support web interface 
-       - pause / resume with shell commands
-     - web monitoring / management console
-   - game operations 
-     - user monitoring 
-     - game play monitoring 
-     - game asset management 
-       - player characters
-       - money 
-       - items
+- [ ] - - - ​
 
 - [ ] documentation
       - doxygen documentation

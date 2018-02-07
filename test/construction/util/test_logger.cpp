@@ -16,6 +16,8 @@ TEST_CASE("logger")
 	{
 		// spdlog의 tweakme.h에 WIDE to UTF8 지원을 켜면 UTF8 문자열로 출력됨 
 		// 콘솔은 당연히 보이지 않고 파일 로그에서는 잘 보임
-		log::get()->info(L"hello {0}", L"한글 문자");
+		#ifdef SPDLOG_WCHAR_TO_UTF8_SUPPORT
+			log::get()->info(L"hello {0}", L"한글 문자");
+		#endif
 	}
 }

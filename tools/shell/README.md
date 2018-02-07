@@ -5,6 +5,18 @@
   - query based
   - session kept 
 
+shell uses argos_service to monitor. 
+
+argos_service uses service_directory to forward commands and relay reponse to a shell. 
+
+command : msg_service_base
+
+- context { user or shell, ... }
+- req : string (json)
+- res : string (json)
+
+
+
 ## Usage
 
 ### CLI: 

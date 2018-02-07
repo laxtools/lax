@@ -14,18 +14,32 @@
  - actor 
    - actor 
    - component 
-   - service 
-   - server 
-   - argos : monitoring service 
- - burn 
-   - flow based stress test framework 
-     
-  
+- server 
+  - service 
+  - argos 
+    - monitoring service 
+    - command service
+      - json
+  - beast
+    - web server
+    - ssl (https)
+    - pause, resume with argos commands
+- db
+  - odbc
+  - query : message
+  - db_service
+    - task_scheduler inside
+- meta
+  - game data and code generation tool
+  - game data management 
+
 # construction / dependency order
 
  - util 
  - channel, task 
  - net 
- - actor, db 
- - burn 
+ - actor
+ - server  
+    - db
+ - meta 
 
