@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <exception>
+#include <spdlog/fmt/fmt.h>
 
 namespace lax
 {
@@ -12,24 +13,17 @@ class exception : public std::exception
 public: 
 	explicit exception(char const* const m, const char* file, int line) throw()
 		: std::exception(m)
-		, file_(file)
-		, line_(line)
 	{
+		desc_ = fmt::format("exception: {} on {}:{}", std::exception::what(), file, line);
 	}
 
-	const char* get_file() const 
+	virtual char const* what() const override
 	{
-		return file_;
-    }
-
-	int get_line() const 
-	{
-	 	return line_;
+		return desc_.c_str();
 	}
 
 private:
-	const char* file_ = nullptr;
-	int line_ = 0;
+	std::string desc_;
 };
 
 } // util

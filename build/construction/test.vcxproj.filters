@@ -63,9 +63,6 @@
     <ClCompile Include="test.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\test\construction\actor\test_type_system.cpp">
-      <Filter>actor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\test\construction\actor\test_type_system_design.cpp">
       <Filter>actor</Filter>
     </ClCompile>

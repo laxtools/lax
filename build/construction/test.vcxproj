@@ -182,7 +182,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\construction\actor\test_actor.cpp" />
-    <ClCompile Include="..\..\test\construction\actor\test_type_system.cpp" />
     <ClCompile Include="..\..\test\construction\actor\test_type_system_design.cpp" />
     <ClCompile Include="..\..\test\construction\c++\test_hana.cpp" />
     <ClCompile Include="..\..\test\construction\c++\test_macro.cpp" />

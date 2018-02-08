@@ -18,6 +18,8 @@ actor::actor(weak_ptr parent)
 
 actor::~actor()
 {
+	finish(); // make it sure
+
 	id_seq_.release(id_);
 }
 
@@ -38,11 +40,16 @@ bool actor::start()
 
 void actor::execute()
 {
+	VERIFY(state_ == state::started);
+
 	on_execute();
 }
 
 void actor::finish()
 {
+	RETURN_IF(state_ == state::init);
+	RETURN_IF(state_ == state::finished);
+
 	on_finish();
 
 	state_ = state::finished;

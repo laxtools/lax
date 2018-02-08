@@ -14,4 +14,10 @@ TEST_CASE("c++ macros")
 			return;
 		);
 	}
+
+	SECTION("reference")
+	{
+		int* i = nullptr;
+		int& v = *i;
+	}
 }

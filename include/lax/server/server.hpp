@@ -56,6 +56,13 @@ protected:
 	virtual void on_finish();
 
 private: 
+	enum state
+	{
+		init,
+		started,
+		finished
+	};
+
 	void load_config();
 
 	server(const server& other) = delete;
@@ -64,6 +71,7 @@ private:
 private: 
 	nlm::json config_;
 	id_t id_ = 0;
+	state state_ = state::init;
 
 	task::task_scheduler::config scheduler_config_;
 	task::task_scheduler scheduler_;

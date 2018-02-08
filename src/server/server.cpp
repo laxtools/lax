@@ -16,6 +16,7 @@ server::server(const std::string& name, const nlm::json& config)
 
 server::~server()
 {
+	finish();
 }
 
 bool server::start()
@@ -38,11 +39,18 @@ bool server::start()
 
 	// listen
 
-	return on_start();
+	rc = on_start();
+	RETURN_IF(!rc, false);
+
+	state_ = state::started;
+
+	return state_ == state::started;
 }
 
 void server::execute()
 {
+	VERIFY(state_ == state::started);
+
 	scheduler_.execute();
 
 	on_execute();
@@ -50,11 +58,16 @@ void server::execute()
 
 void server::finish()
 {
+	RETURN_IF(state_ == state::init);
+	RETURN_IF(state_ == state::finished);
+
 	on_finish();
 
 	scheduler_.finish();
 
 	net::service::inst().fini();
+
+	state_ = state::finished;
 }
 
 bool server::on_start()
@@ -78,7 +91,8 @@ void server::load_config()
 
 	util::log()->info(sconfig);
 
-	// 
+
+	auto jlistens = config_["listens"];
 
 	util::log()->info("loaded."); 
 }

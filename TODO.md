@@ -61,14 +61,19 @@
 
    - shell 
      - command line interface
-     - encrypted communication 
+     - authentication with hash key and password per user
+       - change key every version
+     - encrypted communication
      - string based (json?)
      - cheat console
+   - performance counter 
+     - macro based recording 
+     - realtime report to shell(s)
    - monitor server 
      - embed boost.beast w/ openssl to support web interface 
        - pause / resume with shell commands
      - web monitoring / management console
-   - game operations 
+   - game operations
      - user monitoring 
      - game play monitoring 
      - game asset management 
@@ -96,9 +101,7 @@
    - schema merge keeping existing data
      - keep backups
      - date based
-     - history log
-
-- [ ] - - - â€‹
+     - history logâ€
 
 - [ ] documentation
       - doxygen documentation
@@ -179,7 +182,5 @@
       - define usage 
         - log()->info( L"fmt...", L"character")
         - works with log file.
-
-
 
 
