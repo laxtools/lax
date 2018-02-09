@@ -11,7 +11,7 @@
     - send to references
     - sub to service channel
   - broadcast / multicast handling 
-    - efficiency / easiness 
+    - efficiency / easiness
 
 - [ ] db_service
 
@@ -19,23 +19,24 @@
   - query runners
   - query execution 
   - query result processing
-  - sharding / re-hash
   - date 
     - https://github.com/HowardHinnant/date
     - wall_timer
       - cron syntax extended
-  - guid 
-    - key for objects 
-      - players, items, guilds
-    - esstential to enable sharding and tracking
-    - rather big (16 bytes)
+  - sharding / re-hash
+    - guid 
+      - key for objects 
+        - players, items, guilds
+      - esstential to enable sharding and tracking
+      - rather big (16 bytes)
+  - performance testing
   - code generation in c++
     - MPL, macros, compiler
-  - performance testing
 
-- [ ] Convention cleanup 
-      - [ ] all using types are named *_t 
-      - [ ] configuration
+- [ ] convention cleanup 
+      - all struct types are named *_t 
+        - ?? 
+      - configuration
       - [ ] debug and trace log added
 
 - [ ] change project configuration 
@@ -74,11 +75,11 @@
        - pause / resume with shell commands
      - web monitoring / management console
    - game operations
-     - user monitoring 
-     - game play monitoring 
-     - game asset management 
+     - user monitoring
+     - game play monitoring
+     - game asset management
        - player characters
-       - money 
+       - money
        - items
 
 - [ ] network tests
@@ -101,7 +102,7 @@
    - schema merge keeping existing data
      - keep backups
      - date based
-     - history log�
+     - history logâ€
 
 - [ ] documentation
       - doxygen documentation
