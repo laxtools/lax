@@ -52,6 +52,12 @@ public:
 	/// called when connect failed
 	void on_connect_failed(key k, const asio::error_code& ec);
 
+	/// get acceptor count 
+	uint16_t get_acceptor_count() const;
+
+	/// get connector count 
+	uint16_t get_connector_count() const;
+
 	/// internal use only
 	asio::io_service& get_ios() 
 	{
@@ -74,7 +80,7 @@ private:
 
 private:
 	/// start
-	bool init();
+	bool start();
 
 	/// add default protocols. bits, .
 	void init_protocols();
@@ -83,7 +89,7 @@ private:
 	void run();
 
 	/// io_service 쓰레드 대기. service에서 호출
-	void fini();
+	void finish();
 
 	/// cleanup all
 	void cleanup();
@@ -101,7 +107,7 @@ private:
 	service&			svc_;
 	asio::io_service	ios_;
 
-	std::shared_timed_mutex mutex_;			/// use shared lock for container access. 
+	mutable std::shared_timed_mutex mutex_;	/// use shared lock for container access. 
 											/// recursive lock이 아니므로 주의
 
 	acceptors				acceptors_;
@@ -116,7 +122,9 @@ private:
 	threads					threads_;
 	std::shared_ptr<spdlog::logger> logger_;
 
-	uint16_t				session_count_;
+	uint16_t				session_count_ = 0;
+	uint16_t				acceptor_count_ = 0;
+	uint16_t				connector_count_ = 0;
 };
 
 } // net

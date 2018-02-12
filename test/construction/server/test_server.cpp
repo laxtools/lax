@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <lax/server/server.hpp>
 #include <lax/util/logger.hpp>
+#include <lax/net/service.hpp>
 #include <catch.hpp>
 
 TEST_CASE("test server")
@@ -10,7 +11,7 @@ TEST_CASE("test server")
 		auto cfg = R"(
 {
   "server_1": {
-    "id": 1,
+    "id": 77,
     "listens": [
       {
         "protocol": "bits",
@@ -18,15 +19,22 @@ TEST_CASE("test server")
       }
     ],
     "scheduler": {
-      "runner_count": 2,
+      "runner_count": 1,
       "idle_check_threshold_time": 0.001,
       "single_loop_run_limit": 0,
-      "start_task_when_schedule_called": true
+      "start_task_when_schedule_called": false
     },
     "peers": [
       {
         "protocol": "bits",
         "address": "127.0.0.1:7778"
+      }
+    ], 
+    "services": [
+      {
+        "name": "dummy",
+		"config" : {
+	    }
       }
     ]
   },
@@ -41,14 +49,19 @@ TEST_CASE("test server")
 			auto jname = jlocal["name"];
 			auto jserver = jcfg[jname.get<std::string>()];
 
-			CHECK(jserver["id"] == 1);
+			CHECK(jserver["id"] == 77);
 
 			lax::server::server server("name", jserver);
 
-			CHECK(server.get_id() == 1);
+			CHECK(server.get_id() == 77);
 
-			server.start();
+			bool rc = server.start();
+
+			REQUIRE(rc);
+			REQUIRE(lax::net::service::inst().get_acceptor_count() == 1);
+
 			server.execute();
+
 			server.finish();
 		}
 		catch (nlm::json::exception& ex)
@@ -73,6 +86,7 @@ TEST_CASE("test server")
 
 	SECTION("test service announcement")
 	{
+
 	}
 
 	SECTION("source monitor")

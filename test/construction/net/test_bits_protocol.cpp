@@ -184,7 +184,7 @@ TEST_CASE("bits protocol")
 
 			auto& svc = service::inst();
 
-			svc.init();
+			svc.start();
 
 			svc.listen("127.0.0.1:7777", "bits");
 
@@ -198,7 +198,7 @@ TEST_CASE("bits protocol")
 
 			// check recv
 
-			svc.fini();
+			svc.finish();
 		}
 	}
 }

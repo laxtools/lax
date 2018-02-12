@@ -63,17 +63,21 @@ private:
 		finished
 	};
 
+	bool start_scheduler();
+
+	bool start_listeners();
+
 	void load_config();
 
 	server(const server& other) = delete;
 	server& operator=(const server& other) = delete;
 
 private: 
+	std::string name_;
 	nlm::json config_;
 	id_t id_ = 0;
 	state state_ = state::init;
 
-	task::task_scheduler::config scheduler_config_;
 	task::task_scheduler scheduler_;
 	std::string desc_;
 };

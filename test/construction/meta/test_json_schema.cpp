@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-TEST_CASE("test json usage")
+TEST_CASE("test json schema")
 {
 	SECTION("research")
 	{

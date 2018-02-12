@@ -9,7 +9,8 @@ namespace server
 {
 
 server::server(const std::string& name, const nlm::json& config)
-	: config_(config)
+	: name_(name)
+	, config_(config)
 {
 	load_config();
 }
@@ -21,23 +22,19 @@ server::~server()
 
 bool server::start()
 {
-	auto rc = net::service::inst().init();
+	auto rc = net::service::inst().start();
 
 	if (!rc)
 	{
-		util::log()->error( "failed to init net::service" );
+		util::log()->error("failed to init net::service");
 		return false;
 	}
 
-	rc = scheduler_.start();
+	rc = start_scheduler();
+	RETURN_IF(!rc, false);
 
-	if (!rc)
-	{
-		util::log()->error("failed to start task_scheduler");
-		return false;
-	}
-
-	// listen
+	rc = start_listeners();
+	RETURN_IF(!rc, false);
 
 	rc = on_start();
 	RETURN_IF(!rc, false);
@@ -65,7 +62,7 @@ void server::finish()
 
 	scheduler_.finish();
 
-	net::service::inst().fini();
+	net::service::inst().finish();
 
 	state_ = state::finished;
 }
@@ -83,6 +80,68 @@ void server::on_finish()
 {
 }
 
+bool server::start_scheduler()
+{
+	auto jscheduler = config_["scheduler"];
+	task::task_scheduler::config config;
+
+	auto iter_runner_count = jscheduler.find("runner_count");
+	if (iter_runner_count != jscheduler.end())
+	{
+		config.runner_count = iter_runner_count->get<int>();
+	}
+
+	auto iter_idle_check = jscheduler.find("idle_check_threshold_time");
+	if (iter_idle_check != jscheduler.end())
+	{
+		config.idle_check_threshold_time = iter_idle_check->get<float>();
+	}
+
+	auto iter_single_loop_run = jscheduler.find("single_loop_run_limie");
+	if (iter_single_loop_run != jscheduler.end())
+	{
+		config.single_loop_run_limit = iter_single_loop_run->get<unsigned int>();
+	}
+
+	auto iter_start_task = jscheduler.find("start_task_when_schedule_called");
+	if (iter_start_task != jscheduler.end())
+	{
+		config.start_task_when_schedule_called = iter_start_task->get<bool>();
+	}
+
+	bool rc = scheduler_.start(config);
+
+	if (!rc)
+	{
+		util::log()->error("failed to start task_scheduler");
+		return false;
+	}
+
+	return rc;
+}
+
+bool server::start_listeners()
+{
+	int listener_count = 0;
+
+	auto iter = config_["peers"];
+
+	for (auto& peer : iter)
+	{
+		std::string addr = peer["address"].get<std::string>();
+		std::string protocol = peer["protocol"].get<std::string>();
+
+		auto rc = net::service::inst().listen(addr, protocol);
+
+		if (rc)
+		{
+			listener_count++;
+		}
+	}
+
+	return listener_count > 0;
+}
+
 void server::load_config()
 {
 	util::log()->info("loading server...");
@@ -91,8 +150,10 @@ void server::load_config()
 
 	util::log()->info(sconfig);
 
-
-	auto jlistens = config_["listens"];
+	// load id
+	auto jid = config_["id"];
+	id_ = jid.get<id_t>();
+	desc_ = fmt::format("{}/id{}", name_, id_);
 
 	util::log()->info("loaded."); 
 }

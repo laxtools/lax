@@ -47,10 +47,10 @@ public:
 	~service();
 
 	/// start
-	bool init();
+	bool start();
 
 	/// finish
-	void fini();
+	void finish();
 
 	/// wait for ms
 	void wait(unsigned int ms);
@@ -63,6 +63,12 @@ public:
 
 	/// get a ref to send and subscribe for close / error
 	session::ref acquire(const session::id& id);
+
+	/// get acceptor count. 
+	uint16_t get_acceptor_count() const;
+
+	/// get connector count. 
+	uint16_t get_connector_count() const;
 
 	/// get # of sessions (for debug and test)
 	std::size_t get_session_count() const;

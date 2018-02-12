@@ -26,16 +26,16 @@ service::~service()
 {
 }
 
-bool service::init()
+bool service::start()
 {
 	impl_ = std::make_unique<service_impl>(*this);
 
-	return impl_->init();
+	return impl_->start();
 }
 
-void service::fini()
+void service::finish()
 {
-	impl_->fini();
+	impl_->finish();
 
 	impl_.reset();
 }
@@ -58,6 +58,16 @@ service::result service::connect(const std::string& addr, const std::string& pro
 session::ref service::acquire(const session::id& id)
 {
 	return impl_->acquire(id);
+}
+
+uint16_t service::get_acceptor_count() const
+{
+	return impl_->get_acceptor_count();
+}
+
+uint16_t service::get_connector_count() const
+{
+	return impl_->get_connector_count();
 }
 
 std::size_t service::get_session_count() const

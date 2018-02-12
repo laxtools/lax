@@ -22,9 +22,9 @@ TEST_CASE("service")
 		// svc is a singleton, but it can be re-initialized after fini
 		// 단위 테스트에 필요한 기능. 안정성 확보에 중요. 
 
-		svc.init();
+		svc.start();
 
-		svc.fini();
+		svc.finish();
 
 		// impl이 디버그에서 잘 안 보이는데 릴리스에서는 오히려 잘 보인다. 
 		// - VS 포럼에 올라와 있다. 장비마다 다른 경우가 있다고 한다. 
@@ -35,7 +35,7 @@ TEST_CASE("service")
 	{
 		auto& svc = service::inst();
 
-		svc.init();
+		svc.start();
 
 		svc.listen("127.0.0.1:7777", "bits");
 
@@ -45,7 +45,7 @@ TEST_CASE("service")
 
 		REQUIRE(svc.get_session_count() == 2);
 
-		svc.fini();
+		svc.finish();
 	}
 
 	SECTION("close subs")
@@ -78,14 +78,14 @@ TEST_CASE("service")
 			// lock이 있으므로 자주 호출은 안 된다. 테스트에서는 가능
 			spdlog::set_level(spdlog::level::trace);
 
-			svc.init();
+			svc.start();
 
 			// ref 참조 등 먼저 지워져야 함
 			{
 				std::vector<packet::sid_t> sids;
 
 				// session_ready sub
-				session::sub(
+				auto skey = session::sub(
 					sys_session_ready::get_topic(),
 					[&sids](message::ptr m) {
 					auto pp = std::static_pointer_cast<packet>(m);
@@ -122,11 +122,14 @@ TEST_CASE("service")
 
 				svc.wait(2000);
 
+				// dont' forget. what is a safe way?
+				session::unsub(skey);
+
 				// check close callback 
 				//REQUIRE(close_count == 1);
 			}
 
-			svc.fini();
+			svc.finish();
 
 			svc.wait(1000);
 

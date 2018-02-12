@@ -41,6 +41,8 @@ service::result service_impl::listen(const std::string& addr, const std::string&
 	if (rc)
 	{
 		acceptors_[id] = ptr;
+
+		++acceptor_count_;
 	}
 
 	return rc;
@@ -66,6 +68,8 @@ service::result service_impl::connect(const std::string& addr, const std::string
 	if (rc)
 	{
 		connectors_[id] = ptr;
+
+		++connector_count_;
 	}
 
 	return rc;
@@ -163,6 +167,8 @@ void service_impl::on_connected(key k, tcp::socket&& soc)
 	on_new_socket(iter->second->get_protocol(), std::move(soc), false);
 
 	connectors_.erase(iter);
+
+	--connector_count_;
 }
 
 void service_impl::on_connect_failed(key k, const asio::error_code& ec)
@@ -185,6 +191,8 @@ void service_impl::on_connect_failed(key k, const asio::error_code& ec)
 		std::unique_lock<std::shared_timed_mutex> lock(mutex_);
 
 		connectors_.erase(k);
+
+		--connector_count_;
 	}
 
 	if (cnt)
@@ -197,7 +205,17 @@ void service_impl::on_connect_failed(key k, const asio::error_code& ec)
 	}
 }
 
-bool service_impl::init()
+uint16_t service_impl::get_acceptor_count() const
+{
+	return acceptor_count_;
+}
+
+uint16_t service_impl::get_connector_count() const
+{
+	return connector_count_;
+}
+
+bool service_impl::start()
 {
 	std::unique_lock<std::shared_timed_mutex> lock(mutex_);
 
@@ -242,7 +260,7 @@ void service_impl::run()
 	}
 }
 
-void service_impl::fini()
+void service_impl::finish()
 {
 	RETURN_IF(stop_);
 	stop_ = true;
