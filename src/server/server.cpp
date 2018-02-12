@@ -22,16 +22,22 @@ server::~server()
 
 bool server::start()
 {
-	auto rc = net::service::inst().start();
-
-	if (!rc)
-	{
-		util::log()->error("failed to init net::service");
-		return false;
-	}
-
-	rc = start_scheduler();
+	auto rc = start_scheduler();
 	RETURN_IF(!rc, false);
+
+	if (!net::service::inst().is_running())
+	{
+		// service is a singleton for convenience. 
+		// this check is required to simulate multiple serers in a unit test.
+
+		rc = net::service::inst().start();
+
+		if (!rc)
+		{
+			util::log()->error("failed to init net::service");
+			return false;
+		}
+	}
 
 	rc = start_listeners();
 	RETURN_IF(!rc, false);
@@ -124,7 +130,7 @@ bool server::start_listeners()
 {
 	int listener_count = 0;
 
-	auto iter = config_["peers"];
+	auto iter = config_["listens"];
 
 	for (auto& peer : iter)
 	{
@@ -144,16 +150,12 @@ bool server::start_listeners()
 
 void server::load_config()
 {
-	util::log()->info("loading server...");
-
-	auto sconfig = config_.dump(4);
-
-	util::log()->info(sconfig);
-
-	// load id
 	auto jid = config_["id"];
 	id_ = jid.get<id_t>();
-	desc_ = fmt::format("{}/id{}", name_, id_);
+	desc_ = fmt::format("name:{}/id:{}", name_, id_);
+
+	auto sconfig = config_.dump(4);
+	util::log()->info("loading {} with {}", desc_, sconfig);
 
 	util::log()->info("loaded."); 
 }

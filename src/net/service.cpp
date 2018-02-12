@@ -60,6 +60,11 @@ session::ref service::acquire(const session::id& id)
 	return impl_->acquire(id);
 }
 
+bool service::is_running() const
+{
+	return impl_->is_running();
+}
+
 uint16_t service::get_acceptor_count() const
 {
 	return impl_->get_acceptor_count();

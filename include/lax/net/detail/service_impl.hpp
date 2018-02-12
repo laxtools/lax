@@ -37,6 +37,9 @@ public:
 	/// acquire ref to a session
 	session::ref acquire(const session::id& id);
 
+	/// check whether serivce is started
+	bool is_running() const;
+
 	/// session에서 에러 발생 시 호출
 	void error(const session::id& id);
 

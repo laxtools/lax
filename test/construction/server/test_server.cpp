@@ -15,7 +15,7 @@ TEST_CASE("test server")
     "listens": [
       {
         "protocol": "bits",
-        "port": 7777
+        "address": "0.0.0.0:7777"
       }
     ],
     "scheduler": {
@@ -30,13 +30,18 @@ TEST_CASE("test server")
         "address": "127.0.0.1:7778"
       }
     ], 
-    "services": [
-      {
-        "name": "dummy",
+    "services": {
+      "dummy_1" : {
+        "type": "dummy",
+		"config" : {
+	    }
+      }, 
+      "dummy_2" : { 
+        "type": "dummy",
 		"config" : {
 	    }
       }
-    ]
+	}
   },
   "local": { "name": "server_1" }
 })";
@@ -51,7 +56,7 @@ TEST_CASE("test server")
 
 			CHECK(jserver["id"] == 77);
 
-			lax::server::server server("name", jserver);
+			lax::server::server server(jname.get<std::string>(), jserver);
 
 			CHECK(server.get_id() == 77);
 
@@ -80,20 +85,24 @@ TEST_CASE("test server")
 		// timer callback required
 		// channel is the best place
 		// callback with a message 
-		// efficient timer management per channel
 		//
+
+		// start option: use existing net::service  
+		// 
 	}
 
-	SECTION("test service announcement")
+	SECTION("test loading services")
 	{
 
 	}
 
-	SECTION("source monitor")
+	SECTION("test service usage")
 	{
-		// a very nice tool to analyze source complexity.
-		// - aournd 20,000 lines added.
-		// - string_util is complex.
-		// - watch more complex files and add more tests to cover more codes.
+		// announce and service directory
+
+		// remote and local reference
+
+		// close / state change 
+
 	}
 }

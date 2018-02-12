@@ -86,6 +86,11 @@ session::ref service_impl::acquire(const session::id& id)
 	return session::ref(sp.session);
 }
 
+bool service_impl::is_running() const
+{
+	return !stop_;
+}
+
 void service_impl::error(const session::id& id)
 {
 	util::log()->info(
@@ -262,8 +267,12 @@ void service_impl::run()
 
 void service_impl::finish()
 {
-	RETURN_IF(stop_);
-	stop_ = true;
+	// thread safety is required
+	{
+		std::unique_lock<std::shared_timed_mutex> lock(mutex_);
+		RETURN_IF(stop_);
+		stop_ = true;
+	}
 
 	// post to all threads
 	for (auto& t : threads_)

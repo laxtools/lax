@@ -64,6 +64,9 @@ public:
 	/// get a ref to send and subscribe for close / error
 	session::ref acquire(const session::id& id);
 
+	/// check whether serivce is started
+	bool is_running() const;
+
 	/// get acceptor count. 
 	uint16_t get_acceptor_count() const;
 
