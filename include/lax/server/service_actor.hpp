@@ -45,6 +45,10 @@ public:
 		id_t id;				// actor id
 		role_t role;			// actor role
 		net::session::ref sref; // session ref (for remote)
+
+		// TODO:
+		// ==, <, >
+		// hash 
 	};
 
 public:

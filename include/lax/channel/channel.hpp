@@ -51,6 +51,7 @@ public:
 	using key_t = sub::channel_key_t;
 	using cond_t = sub::cond_t;
 	using cb_t = sub::cb_t;
+	using mq_t = util::concurrent_queue<message::ptr>;
 
 	/// config 
 	struct config
@@ -206,13 +207,13 @@ public:
 	}
 
 private:
-	using mq = util::concurrent_queue<message::ptr>;
+
 
 	void enqueue_checked(const message::topic_t& topic, message::ptr m);
 
 private:
 	key_t   key_;
-	mq		q_;
+	mq_t	q_;
 	sub_map map_;
 	config  config_;
 	stat	stat_;

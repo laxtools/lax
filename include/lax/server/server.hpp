@@ -1,6 +1,7 @@
 #pragma once
 #include <lax/server/service_actor.hpp>
 #include <lax/task/task_scheduler.hpp>
+#include <lax/server/service/peer_service.hpp>
 
 namespace lax
 {
@@ -76,10 +77,10 @@ private:
 	std::string name_;
 	nlm::json config_;
 	id_t id_ = 0;
+	std::string desc_;
 	state state_ = state::init;
 
 	task::task_scheduler scheduler_;
-	std::string desc_;
 };
 
 } // server 

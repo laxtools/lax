@@ -16,10 +16,15 @@ namespace channel
  *
  * 그룹 포스팅은 없음
  */
-class dispatcher
+class dispatcher final
 {
 public: 
 	dispatcher() = default;
+
+	~dispatcher()
+	{
+		clear();
+	}
 
 	/// subscribe. unsubscribe는 없음
 	bool subscribe(const message::topic_t& topic, sub::cb_t cb)
@@ -69,6 +74,11 @@ public:
 		}
 
 		return count;
+	}
+
+	void clear()
+	{
+		subs_.clear();
 	}
 
 private:

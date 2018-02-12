@@ -68,9 +68,6 @@
     <Filter Include="actor\detail">
       <UniqueIdentifier>{c75cec8c-3c18-4909-bda9-e20da1dd1224}</UniqueIdentifier>
     </Filter>
-    <Filter Include="server\detail">
-      <UniqueIdentifier>{c18b42b2-1067-4e61-ae4e-d99a8b8d7780}</UniqueIdentifier>
-    </Filter>
     <Filter Include="template">
       <UniqueIdentifier>{5ee8b57f-60cf-4cd1-9333-dc3736a9d63e}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,9 @@
     </Filter>
     <Filter Include="grinder">
       <UniqueIdentifier>{337a8a3d-7c5a-4e52-aa21-e2384f884c3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server\service">
+      <UniqueIdentifier>{c18b42b2-1067-4e61-ae4e-d99a8b8d7780}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -328,8 +328,14 @@
     <ClInclude Include="..\..\include\lax\channel\timer.hpp">
       <Filter>channel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\server\detail\peer_session_manager.hpp">
-      <Filter>server\detail</Filter>
+    <ClInclude Include="..\..\include\lax\server\service\peer_service.hpp">
+      <Filter>server\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\service_directory.hpp">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\service\lobby_service.hpp">
+      <Filter>server\service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -450,8 +456,14 @@
     <ClCompile Include="..\..\src\channel\timer.cpp">
       <Filter>channel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\server\detail\peer_session_manager.cpp">
-      <Filter>server\detail</Filter>
+    <ClCompile Include="..\..\src\server\service\peer_service.cpp">
+      <Filter>server\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\service_directory.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\service\lobby_service.cpp">
+      <Filter>server\service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

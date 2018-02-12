@@ -378,9 +378,6 @@ void session::on_send_completed(asio::error_code& ec, std::size_t len)
 
 	if (!ec)
 	{
-		// TODO: protocol에서 메세지를 끌어와서 쓸 것인가? 
-		// 
-
 		request_send();
 	}
 	else

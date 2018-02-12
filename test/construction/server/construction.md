@@ -44,6 +44,24 @@ considering its context and state.
 - that's all
 
 
+
+
+### session services
+
+when a server starts, it needs to connect to other servers to establish connections.  when disconnected, then it needs to try connect again. broadcasting to other servers is required to announce services to other servers to work together. peer_service takes this role. 
+
+when a user connects to server, then server needs to know the client identified as a user. this usually needs to have timeout management to decrease server overhead. lobby_service takes this role. 
+
+- peer_service 
+  - manages server peer to keep connections established
+  - server level service
+- lobby_service
+  - manages users to authenticate and map a session with user provided data, usually a key for the user.  
+  - per application service
+  - skeleton provided from server level
+
+
+
 ### Using local and remote service
 
 - service::ref
