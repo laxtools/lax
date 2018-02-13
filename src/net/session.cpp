@@ -188,7 +188,7 @@ void session::destroy(const asio::error_code& ec)
 	// - recv_comp -> error -> close -> destroy 또는 
 	// - send_comp -> error -> close -> destroy 이다
 
-	// VERIFY
+	// check 
 	{
 		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
 

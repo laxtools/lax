@@ -41,8 +41,9 @@ namespace channel
  *   cb - 콜백 
  * 
  * 전파 (post) 모드: 
- *   즉시(immediate) 모드는 push()할 때 전파. 
+ *   즉시(immediate) 모드는 publish()할 때 전파. 
  *   지연(delayed) 모드는 post() 호출 시 전파
+ *
  */
 class channel
 {
@@ -120,7 +121,7 @@ public:
 	/// 소멸자
 	~channel();
 
-	/// push 
+	/// publish 
 	/**
 	 * 메세지의 토픽으로도 포스팅. 
 	 * 큐에 먼저 넣고 포스팅을 진행.
@@ -128,9 +129,9 @@ public:
 	 *
 	 * @return number of dispatched count
 	 */
-	std::size_t push(message::ptr m);
+	std::size_t publish(message::ptr m);
 
-	/// push with a separate topic from message's topic
+	/// publish with a separate topic from message's topic
 	/**
 	 * 외부에서 제공하는 토픽으로 포스팅. 
 	 * 이후 메세지의 토픽으로도 포스팅. 
@@ -139,11 +140,11 @@ public:
 	 * @param topic - topic to dispatch first
 	 * @param m - message
 	 *
-	 * dispatch with a topic first. then, call push(m) inside.
+	 * dispatch with a topic first. then, call publish(m) inside.
 	 *
 	 * @return number of dispatched cont
 	 */
-	std::size_t push(const message::topic_t& topic, message::ptr m);
+	std::size_t publish(const message::topic_t& topic, message::ptr m);
 
 	/// subscribe to a topic with a condition 
 	/**
@@ -207,8 +208,6 @@ public:
 	}
 
 private:
-
-
 	void enqueue_checked(const message::topic_t& topic, message::ptr m);
 
 private:

@@ -40,7 +40,7 @@ channel::~channel()
 	}
 }
 
-std::size_t channel::push(message::ptr m)
+std::size_t channel::publish(message::ptr m)
 {
 	enqueue_checked(m->get_topic(), m);
 	
@@ -51,7 +51,7 @@ std::size_t channel::push(message::ptr m)
 	return count;
 }
 
-std::size_t channel::push(const message::topic_t& topic, message::ptr m)
+std::size_t channel::publish(const message::topic_t& topic, message::ptr m)
 {
 	enqueue_checked(topic, m);
 

@@ -153,7 +153,7 @@ TEST_CASE("test channel")
 			auto mp = std::make_shared<message>();
 			mp->set_topic(topic(1));
 
-			REQUIRE(cp->push(mp) == 0);
+			REQUIRE(cp->publish(mp) == 0);
 
 			// post
 			REQUIRE(cp->execute() == 1);
@@ -184,7 +184,7 @@ TEST_CASE("test channel")
 		auto mp = std::make_shared<message>();
 		mp->set_topic(topic(1, 1));
 
-		REQUIRE(cp->push(mp) == 0);
+		REQUIRE(cp->publish(mp) == 0);
 
 		// post
 		REQUIRE(cp->execute() == 1);
@@ -222,8 +222,8 @@ TEST_CASE("test channel")
 
 		for (int i = 0; i < TEST_COUNT; ++i)
 		{
-			// push 
-			REQUIRE(cp->push(mp) == 0);
+			// publish 
+			REQUIRE(cp->publish(mp) == 0);
 
 			// post
 			REQUIRE(cp->execute() == 1);
@@ -233,7 +233,7 @@ TEST_CASE("test channel")
 
 		REQUIRE(channel::destroy("test2"));
 
-		// 1백만번 push/post에 4초 정도. 
+		// 1백만번 publish/post에 4초 정도. 
 		// subscribe는 1천개 정도. 
 		// lock 사용 여부는 단일 쓰레드에서는 크게 영향 없다.
 
