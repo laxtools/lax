@@ -102,7 +102,18 @@
    - schema merge keeping existing data
      - keep backups
      - date based
-     - history logâ€
+     - history log
+
+- [ ] c# bitsery
+
+   - c# message generation from c++ code
+
+
+   - c++ spec serialization / deserialization for c# language
+     - reflection based code generation
+       - no runtime reflection
+   - utf8 string support
+   - c# client with async socket
 
 - [ ] documentation
       - doxygen documentation
