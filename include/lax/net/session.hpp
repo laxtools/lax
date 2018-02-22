@@ -43,11 +43,11 @@ public:
 	{
 		uint32_t value_ = 0;
 
-		struct
+		struct full
 		{
 			uint16_t seq_;
 			uint16_t index_;
-		};
+		} full_;
 
 		explicit id(uint32_t value = 0);
 		id(uint16_t seq, uint16_t index);

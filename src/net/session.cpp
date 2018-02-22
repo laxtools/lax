@@ -250,7 +250,7 @@ session::result session::request_send()
 
 	// VERIFY send
 	{
-		std::lock_guard<std::recursive_mutex> lock(session_mutex_);
+		std::lock_guard<std::recursive_mutex> session_lock(session_mutex_);
 
 		if (sending_)
 		{
@@ -259,7 +259,7 @@ session::result session::request_send()
 
 		// VERIFY data available
 		{
-			std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);
+			std::lock_guard<std::recursive_mutex> segs_lock(send_segs_mutex_);
 
 			if (send_buffer_.size() == 0)
 			{

@@ -81,7 +81,7 @@ session::ref service_impl::acquire(const session::id& id)
 
 	RETURN_IF(id.get_index() > sessions_.size(), session::ref());
 
-	auto& sp = sessions_[id.index_];
+	auto& sp = sessions_[id.get_index()];
 
 	return session::ref(sp.session);
 }
@@ -306,7 +306,7 @@ void service_impl::on_new_socket(const std::string& protocol, tcp::socket&& soc,
 	// called w/ a unique lock
 
 	uint16_t slot_idx = slot_idx = get_free_slot();
-	uint32_t seq = 0;
+	uint16_t seq = 0;
 
 	seq = sessions_[slot_idx].seq++;
 	seq = (seq == 0 ? sessions_[slot_idx].seq++ : seq);

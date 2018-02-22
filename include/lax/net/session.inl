@@ -19,16 +19,16 @@ session::id::id(uint32_t value)
 
 inline
 session::id::id(uint16_t seq, uint16_t index)
-	: seq_(seq)
-	, index_(index)
 {
+	full_.seq_ = seq; 
+	full_.index_ = index;
 	VERIFY(is_valid());
 }
 
 inline
 bool session::id::is_valid() const
 {
-	return seq_ > 0 && index_ >= 0;
+	return full_.seq_ > 0 && full_.index_ >= 0;
 }
 
 inline
@@ -40,13 +40,13 @@ const uint32_t session::id::get_value() const
 inline
 const uint16_t session::id::get_seq() const
 {
-	return seq_;
+	return full_.seq_;
 }
 
 inline
 const uint16_t session::id::get_index() const
 {
-	return index_;
+	return full_.index_;
 }
 
 inline

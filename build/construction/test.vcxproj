@@ -94,7 +94,7 @@
     <LibraryPath>$(SolutionDir)..\..\lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext\catch;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\flatbuffers\include;$(SolutionDir)..\..\ext\spdlog\include;$(SolutionDir)..\..\ext\yas\include;$(SolutionDir)..\..\ext\bitsery\include;$(SolutionDir)..\..\ext\boost_1_66_0\;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\..\bin\</OutDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(Platform)</TargetName>
@@ -132,7 +132,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
       <AdditionalDependencies>lax_$(Configuration)_$(Platform).lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -174,7 +174,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
       <AdditionalDependencies>lax_$(Configuration)_$(Platform).lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
