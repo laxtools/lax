@@ -31,7 +31,7 @@ public:
 	{
 		auto iter = subs_.find(topic);
 
-		entry& e = entry();
+		entry e;
 
 		if (iter != subs_.end())
 		{

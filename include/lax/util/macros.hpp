@@ -27,3 +27,5 @@ void check_(bool cond, const char* msg, const char* func, const char* file, int 
 #define RETURN_IF(c, v) if ((c)) return v
 #define BREAK_IF(c, v) if ((c)) break 
 #define CONTINUE_IF(c, v) if ((c)) continue 
+
+#define UNUSED(v) v

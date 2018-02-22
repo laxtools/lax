@@ -59,6 +59,8 @@ using namespace std::experimental::filesystem::v1;
 
 void log::create_log_folder(const char* path)
 {
+	UNUSED(path);
+
 	auto full_path = platform::get_current_dir() + "\\logs";
 
 	create_directory(full_path);

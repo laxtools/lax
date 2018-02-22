@@ -243,7 +243,8 @@ bool service_impl::start()
 
 	for (int i = 0; i < n; ++i)
 	{
-		threads_[i].swap(std::thread([this]() {this->run();}));
+		auto thread = std::thread([this]() {this->run();});
+		threads_[i].swap(thread);
 	}
 
 	return true;
@@ -277,6 +278,7 @@ void service_impl::finish()
 	// post to all threads
 	for (auto& t : threads_)
 	{
+		UNUSED(t);
 		ios_.stop(); 
 	}
 

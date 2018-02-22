@@ -181,8 +181,8 @@ void TEST_NONE_NANODBC()
 
 			for (int i = 0; result.next(); ++i)
 			{
-				auto c1 = result.get<std::wstring>(0);
-				auto c2 = result.get<std::wstring>(1);
+				auto cc1 = result.get<std::wstring>(0);
+				auto cc2 = result.get<std::wstring>(1);
 			}
 
 			// 한글 읽는데도 문제가 없다. 왜 동작하지?
@@ -214,8 +214,8 @@ void TEST_NONE_NANODBC()
 
 			for (int i = 0; result.next(); ++i)
 			{
-				auto c1 = result.get<std::wstring>(0);
-				auto c2 = result.get<std::wstring>(1);
+				auto cc1 = result.get<std::wstring>(0);
+				auto cc2 = result.get<std::wstring>(1);
 			}
 
 			// 한글 읽는데도 문제가 없다. 왜 동작하지?

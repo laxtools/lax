@@ -301,8 +301,6 @@ protocol::result bits_protocol::on_recv(
 
 		if (!res)
 		{
-			auto tp = bits_message::topic_t(topic);
-
 			util::log()->error(
 				"bits_message w/ topic[{}:{}] unpack error. {}",
 				tp.get_group(), tp.get_type(),
