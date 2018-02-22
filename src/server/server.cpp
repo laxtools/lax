@@ -28,7 +28,7 @@ bool server::start()
 	if (!net::service::inst().is_running())
 	{
 		// service is a singleton for convenience. 
-		// this check is required to simulate multiple serers in a unit test.
+		// this check is required to simulate multiple servers in a unit test.
 
 		rc = net::service::inst().start();
 

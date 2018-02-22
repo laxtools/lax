@@ -9,7 +9,7 @@ namespace util
 
 class simple_timer
 {
-	using clock = std::chrono::system_clock; // use ticks
+	using clock = std::chrono::steady_clock;
 
 public: 
 	simple_timer()

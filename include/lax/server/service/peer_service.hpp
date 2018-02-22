@@ -30,8 +30,6 @@ public:
 			init,
 			connecting,
 			connected,
-			up,
-			down,
 			disconnected,
 		};
 

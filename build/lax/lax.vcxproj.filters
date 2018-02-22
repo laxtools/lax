@@ -334,7 +334,10 @@
     <ClInclude Include="..\..\include\lax\server\service_directory.hpp">
       <Filter>server</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\server\service\lobby_service.hpp">
+    <ClInclude Include="..\..\include\lax\util\fine_timer.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\service\db_service.hpp">
       <Filter>server\service</Filter>
     </ClInclude>
   </ItemGroup>
@@ -462,7 +465,7 @@
     <ClCompile Include="..\..\src\server\service_directory.cpp">
       <Filter>server</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\server\service\lobby_service.cpp">
+    <ClCompile Include="..\..\src\server\service\db_service.cpp">
       <Filter>server\service</Filter>
     </ClCompile>
   </ItemGroup>

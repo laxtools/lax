@@ -49,6 +49,8 @@ void peer_service::add_peer(
 
 bool peer_service::on_start()
 {
+	(void)service_actor::on_start();
+
 	timer_.reset();
 
 	// register dispatcher functions
@@ -58,6 +60,8 @@ bool peer_service::on_start()
 
 void peer_service::on_execute()
 {
+	(void)service_actor::on_execute();
+
 	if (timer_.elapsed() < check_interval)
 	{
 		return;
@@ -73,6 +77,8 @@ void peer_service::on_finish()
 {
 	peers_.clear();
 	disp_.clear();
+
+	(void)service_actor::on_finish();
 }
 
 void peer_service::process_messages()
