@@ -66,7 +66,7 @@ struct bm2 : public packet
 		return writer.writtenBytesCount();
 	}
 
-	bool unpack(resize_buffer& buf, resize_buffer::iterator& iter, std::size_t len)
+	bool unpack(resize_buffer& buf, resize_buffer::iterator iter, std::size_t len)
 	{
 		VERIFY(iter != buf.end());
 		VERIFY(len > 0);
@@ -77,6 +77,7 @@ struct bm2 : public packet
 
 		auto& reader = bitsery::AdapterAccess::getReader(deserializer);
 		auto error = reader.error();
+		UNUSED(error);
 		return reader.isCompletedSuccessfully();
 	}
 

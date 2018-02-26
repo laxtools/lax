@@ -82,6 +82,8 @@ TEST_CASE("bits protocol design")
 		auto res = std::make_shared<bm_flex>();
 		auto rc = res->unpack(buf, buf.begin(), size);
 
+		UNUSED(rc);
+
 		REQUIRE(res->name == mp->name);
 		REQUIRE(res->items[0].id == 1);
 	}
@@ -147,6 +149,8 @@ TEST_CASE("bits protocol design")
 
 			auto res = BITS_MSG_CREATE(topic);
 			auto rc = res->unpack(buf, buf.begin(), size);
+
+			UNUSED(rc);
 
 			auto mm = std::static_pointer_cast<bm_flex>(res);
 

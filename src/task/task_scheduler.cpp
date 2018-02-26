@@ -147,8 +147,6 @@ std::size_t task_scheduler::get_task_count() const
 
 uint32_t task_scheduler::get_target_runner_id() const
 {
-	bool schedule_policy_min_task_count = true;
-
 	uint32_t min_task_count = UINT32_MAX;
 	unsigned int cand_id = rand() % runners_.size();
 

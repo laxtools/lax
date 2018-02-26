@@ -200,7 +200,8 @@ namespace
 		using boost::locale::conv::utf_to_utf;
         out = utf_to_utf<char>(in.c_str(), in.c_str() + in.size());
      #elif defined(_MSC_VER)
-		
+		// TODO : implement this
+		in; out;
 	 #else 
 		using convert_type = std::codecvt_utf8<wchar_t>;
 		std::wstring_convert<convert_type, wchar_t> converter;
@@ -215,7 +216,8 @@ namespace
 		using boost::locale::conv::utf_to_utf;
 		out = utf_to_utf<wide_char_t>(in.c_str(), in.c_str() + in.size());
 	#elif defined(_MSC_VER)
-	
+		// TODO : implement this
+		in; out;
 	#else
 		using convert_type = std::codecvt_utf8<wchar_t>;
 		std::wstring_convert<convert_type, wchar_t> converter;

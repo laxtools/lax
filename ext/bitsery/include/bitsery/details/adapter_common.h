@@ -85,7 +85,10 @@ namespace bitsery {
         //add test data in separate struct, because some compilers only support constexpr functions with return-only body
         struct EndiannessTestData {
             static constexpr uint32_t _sample4Bytes = 0x01020304;
+#pragma warning(push)
+#pragma warning(disable: 4310)
             static constexpr uint8_t _sample1stByte = (const uint8_t &) _sample4Bytes;
+#pragma warning(pop)
         };
 
         constexpr EndiannessType getSystemEndianness() {

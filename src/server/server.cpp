@@ -13,6 +13,7 @@ server::server(const std::string& name, const nlm::json& config)
 	, config_(config)
 {
 	load_config();
+	load_peer_service();
 }
 
 server::~server()
@@ -25,22 +26,22 @@ bool server::start()
 	auto rc = start_scheduler();
 	RETURN_IF(!rc, false);
 
-	if (!net::service::inst().is_running())
+	rc = net::service::inst().start();
+
+	if (!rc)
 	{
-		// service is a singleton for convenience. 
-		// this check is required to simulate multiple servers in a unit test.
-
-		rc = net::service::inst().start();
-
-		if (!rc)
-		{
-			util::log()->error("failed to init net::service");
-			return false;
-		}
+		util::log()->error("failed to init net::service");
+		return false;
 	}
 
 	rc = start_listeners();
 	RETURN_IF(!rc, false);
+
+	if (peer_service_)
+	{
+		rc = peer_service_->start();
+		RETURN_IF(!rc, false);
+	}
 
 	rc = on_start();
 	RETURN_IF(!rc, false);
@@ -56,17 +57,27 @@ void server::execute()
 
 	scheduler_.execute();
 
+	if (peer_service_)
+	{
+		peer_service_->execute();
+	}
+
 	on_execute();
 }
 
 void server::finish()
 {
-	RETURN_IF(state_ == state::init);
+	RETURN_IF(state_ == state::constructed);
 	RETURN_IF(state_ == state::finished);
 
 	on_finish();
 
 	scheduler_.finish();
+
+	if (peer_service_)
+	{
+		peer_service_->finish();
+	}
 
 	net::service::inst().finish();
 
@@ -158,6 +169,17 @@ void server::load_config()
 	util::log()->info("loading {} with {}", desc_, sconfig);
 
 	util::log()->info("loaded."); 
+}
+
+void server::load_peer_service()
+{
+	auto jps = config_.find("peer_service");
+	if (jps == config_.end())
+	{
+		return;
+	}
+
+	peer_service_ = std::make_unique<peer_service>(*this, config_["peer_service"]);
 }
 
 } // server 

@@ -116,7 +116,7 @@ protected:
 private:
 	enum state
 	{
-		init, 
+		constructed, 
 		started, 
 		finished
 	};
@@ -127,7 +127,7 @@ private:
 
 	weak_ptr parent_;
 	uint32_t id_ = 0;
-	state state_ = state::init;
+	state state_ = state::constructed;
 	component_container comps_;
 };
 

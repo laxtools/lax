@@ -32,20 +32,23 @@ service::result service_impl::listen(const std::string& addr, const std::string&
 		return service::result(false, reason::fail_protocol_not_added);
 	}
 
-	std::unique_lock<std::shared_timed_mutex> lock(mutex_);
-
-	auto id = id_gen_.next();
-	auto ptr = std::make_shared<acceptor>(id, protocol, addr);
-	auto rc = ptr->listen();
-
-	if (rc)
+	// add acceptors
 	{
-		acceptors_[id] = ptr;
+		std::unique_lock<std::shared_timed_mutex> lock(mutex_);
 
-		++acceptor_count_;
+		auto id = id_gen_.next();
+		auto ptr = std::make_shared<acceptor>(id, protocol, addr);
+		auto rc = ptr->listen();
+
+		if (rc)
+		{
+			acceptors_[id] = ptr;
+
+			++acceptor_count_;
+		}
+
+		return rc;
 	}
-
-	return rc;
 }
 
 service::result service_impl::connect(const std::string& addr, const std::string& protocol)

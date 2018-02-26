@@ -71,7 +71,6 @@ inline
 session::ref::ref(session::ptr ss)
 	: session_(ss)
 {
-	VERIFY(session_);
 }
 
 inline

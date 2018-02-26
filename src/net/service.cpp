@@ -28,16 +28,25 @@ service::~service()
 
 bool service::start()
 {
-	impl_ = std::make_unique<service_impl>(*this);
+	// service is a singleton, but intialized once here
+	// - impl_ is shared like a singleton
+	// - start and finish finish can be called multiple times 
+	//   - not like a singleton
 
-	return impl_->start();
+	if (!impl_)
+	{
+		impl_ = std::make_unique<service_impl>(*this);
+
+		return impl_->start();
+	}
+
+	return impl_->is_running();
 }
 
 void service::finish()
 {
 	impl_->finish();
-
-	impl_.reset();
+	impl_.reset(); 
 }
 
 void service::wait(unsigned int ms)

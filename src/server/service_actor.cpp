@@ -12,7 +12,7 @@ service_actor::service_actor(server& _server, const nlm::json& _config)
 	: actor()
 	, server_(_server)
 	, config_(_config)
-	, desc_(config_["name"] + "." + std::to_string(get_id()))
+	, desc_(config_["name"].get<std::string>() + "." + std::to_string(get_id()))
 	, channel_(desc_)
 {
 	// change channel's configuration

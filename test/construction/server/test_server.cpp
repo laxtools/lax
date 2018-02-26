@@ -24,12 +24,17 @@ TEST_CASE("test server")
       "single_loop_run_limit": 0,
       "start_task_when_schedule_called": false
     },
-    "peers": [
-      {
-        "protocol": "bits",
-        "address": "127.0.0.1:7778"
-      }
-    ], 
+    "peer_service": {
+		"name" : "peer_service", 
+		"peers" : 
+		[
+			{
+				"protocol": "bits",
+				"address": "127.0.0.1:7778", 
+				"reconnect_interval": 10
+			}
+		]
+    }, 
     "services": {
       "dummy_1" : {
         "type": "dummy",
@@ -82,6 +87,13 @@ TEST_CASE("test server")
 	SECTION("test peer connections")
 	{
 		//
+		// 2 servers w/ configurations
+		// - test1.json 
+		// - test2.json
+		// 
+
+
+		// 
 		// timer callback required
 		// channel is the best place
 		// callback with a message 

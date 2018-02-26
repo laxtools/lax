@@ -4138,7 +4138,7 @@ namespace Botan {
 void Barrier::wait(size_t delta)
     {
     lock_guard_type<mutex_type> lock(m_mutex);
-    m_value += delta;
+    m_value += static_cast<int>(delta);
     }
 
 void Barrier::sync()
@@ -5558,7 +5558,9 @@ uint32_t to_u32bit(const std::string& str)
 
    const unsigned long int x = std::stoul(str);
 
-   if(sizeof(unsigned long int) > 4)
+   constexpr bool cond = sizeof(unsigned long int) > 4;
+
+   if (cond)
       {
       // x might be uint64
       if (x > std::numeric_limits<uint32_t>::max())

@@ -90,6 +90,11 @@ protected:
 	/// finish log
 	virtual void on_finish() override;
 
+	const nlm::json& get_config() const
+	{
+		return config_;
+	}
+
 private: 
 	service_actor(const service_actor& other) = delete;
 	service_actor& operator=(const service_actor& other) = delete;

@@ -16,7 +16,7 @@ addr::addr(const std::string& s)
 
 	auto sip = s.substr(0, pos);
 	auto sport = s.substr(pos+1);
-	auto port = ::atoi(sport.c_str());
+	auto port = static_cast<uint16_t>(::atoi(sport.c_str()));
 
 	RETURN_IF(port == 0);
 

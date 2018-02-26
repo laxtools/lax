@@ -62,6 +62,10 @@ TEST_CASE("service")
 
 			auto key1 = subs.subscribe(5, [](packet::ptr m) {});
 			auto key2 = subs.subscribe(5, [](packet::ptr m) {});
+
+			UNUSED(key1);
+			UNUSED(key2);
+
 			REQUIRE(subs.post(5) == 2); // multiple entry
 
 			REQUIRE(subs.post(5) == 0); // erased after post

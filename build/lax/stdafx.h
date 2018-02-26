@@ -6,3 +6,4 @@
 
 #include <asio.hpp>
 #include <lax/util/botan/botan_all.h>
+#include <lax/net/protocol/bits/bits_message.hpp>

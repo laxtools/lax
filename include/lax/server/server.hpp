@@ -59,7 +59,7 @@ protected:
 private: 
 	enum state
 	{
-		init,
+		constructed,
 		started,
 		finished
 	};
@@ -70,6 +70,8 @@ private:
 
 	void load_config();
 
+	void load_peer_service();
+
 	server(const server& other) = delete;
 	server& operator=(const server& other) = delete;
 
@@ -78,9 +80,10 @@ private:
 	nlm::json config_;
 	id_t id_ = 0;
 	std::string desc_;
-	state state_ = state::init;
+	state state_ = state::constructed;
 
 	task::task_scheduler scheduler_;
+	std::unique_ptr<peer_service> peer_service_;
 };
 
 } // server 

@@ -231,7 +231,6 @@
     <ClInclude Include="..\..\include\lax\util\json.hpp" />
     <ClInclude Include="..\..\include\lax\util\logger.hpp" />
     <ClInclude Include="..\..\include\lax\util\macros.hpp" />
-    <ClInclude Include="..\..\include\lax\util\multi_object_pool.hpp" />
     <ClInclude Include="..\..\include\lax\util\null_mutex.hpp" />
     <ClInclude Include="..\..\include\lax\util\object_pool.hpp" />
     <ClInclude Include="..\..\include\lax\util\platform.hpp" />

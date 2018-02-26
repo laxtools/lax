@@ -26,6 +26,7 @@ struct cipher_impl
 	cipher_impl(Botan::Cipher_Dir dir)
 		: hasher(Botan::HashFunction::create("SHA1"))
 	{
+		UNUSED(dir);
 	}
 
 	void update_hash(resize_buffer& buf, std::size_t msg_pos, std::size_t msg_len);

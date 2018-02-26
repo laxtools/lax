@@ -73,16 +73,4 @@ TEST_CASE("string util")
 		REQUIRE(vec.size() == 4);
 	}
 
-	SECTION("replace_all")
-	{
-		std::string sv = "a;b;c:d,e;f";
-
-		auto res = string_util::replace_all(sv, ";", "_");
-
-		// 긴 문자열로도 잘 바뀐다.
-
-		REQUIRE(res == "a_b_c:d,e_f");
-
-		// std::cout << res << std::endl;
-	}
 }

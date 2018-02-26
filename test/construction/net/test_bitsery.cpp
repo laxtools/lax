@@ -121,8 +121,6 @@ struct BufferAdapterTraits<lax::net::resize_buffer>
 
 //some helper types
 using Buffer = std::vector<uint8_t>;
-using OutputAdapter = OutputBufferAdapter<Buffer>;
-using InputAdapter = InputBufferAdapter<Buffer>;
 
 TEST_CASE("bitsery test")
 {
@@ -151,6 +149,9 @@ TEST_CASE("bitsery test")
 
 			Buffer buffer;
 
+			using OutputAdapter = OutputBufferAdapter<Buffer>;
+			using InputAdapter = InputBufferAdapter<Buffer>;
+
 			auto writtenSize = quickSerialization<OutputAdapter>(buffer, data);
 
 			auto state = quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, res);
@@ -174,6 +175,9 @@ TEST_CASE("bitsery test")
 
 			Buffer buffer;
 
+			using OutputAdapter = OutputBufferAdapter<Buffer>;
+			using InputAdapter = InputBufferAdapter<Buffer>;
+
 			auto writtenSize = quickSerialization<OutputAdapter>(buffer, data);
 
 			auto state = quickDeserialization<InputAdapter>({ buffer.begin(), writtenSize }, res);
@@ -187,6 +191,9 @@ TEST_CASE("bitsery test")
 			EmbedStruct res{};
 
 			Buffer buffer;
+
+			using OutputAdapter = OutputBufferAdapter<Buffer>;
+			using InputAdapter = InputBufferAdapter<Buffer>;
 
 			auto writtenSize = quickSerialization<OutputAdapter>(buffer, data);
 

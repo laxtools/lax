@@ -60,7 +60,7 @@ struct bits_message : public packet
 
 	virtual bool unpack(
 		resize_buffer& buf,
-		resize_buffer::iterator& iter,
+		resize_buffer::iterator iter,
 		std::size_t len
 	) = 0;
 
@@ -95,7 +95,7 @@ std::size_t pack(resize_buffer& buf) override \
 	return writer.writtenBytesCount(); \
 } \
 \
-bool unpack(resize_buffer& buf, resize_buffer::iterator& iter, \
+bool unpack(resize_buffer& buf, resize_buffer::iterator iter, \
 			std::size_t len) override \
 { \
 	VERIFY(iter != buf.end()); \

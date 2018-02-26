@@ -13,10 +13,10 @@ class server;
 
 /// keeps connections to peers.
 /** 
- * service_actors are used to communicate and construct a cluster. 
  * peer_service keeps connection to other servers. 
  * - initial connect 
  * - retry on close
+ * - server runs peer_service (not task_scheduler)
  */
 class peer_service final : public service_actor
 {
@@ -27,7 +27,7 @@ public:
 	{
 		enum state
 		{
-			init,
+			constructed,
 			connecting,
 			connected,
 			disconnected,
@@ -36,15 +36,15 @@ public:
 		std::string			remote_addr;
 		std::string			local_addr;
 		std::string			protocol;
-		state				state = state::init;
+		state				state = state::constructed;
 		std::size_t			fail_count = 0;
 		std::size_t			connect_count = 0;
 		float				reconnect_interval = 1.0f;
 		float				last_try_time = 0.f;
-		net::session::ref	sref;
 	};
 
 public: 
+	/// add peers form _config
 	peer_service(server& server, const nlm::json& _config);
 
 	~peer_service();
@@ -91,6 +91,8 @@ private:
 	{
 		mq_.push(m);
 	}
+
+	void add_peers();
 
 private:
 	channel::channel::mq_t mq_;		/// queue to put messages

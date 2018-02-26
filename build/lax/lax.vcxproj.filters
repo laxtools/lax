@@ -229,9 +229,6 @@
     <ClInclude Include="..\..\include\lax\actor\actor.hpp">
       <Filter>actor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\util\multi_object_pool.hpp">
-      <Filter>util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\buffer\segment_buffer.hpp">
       <Filter>net\detail\buffer</Filter>
     </ClInclude>

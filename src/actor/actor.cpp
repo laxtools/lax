@@ -47,7 +47,7 @@ void actor::execute()
 
 void actor::finish()
 {
-	RETURN_IF(state_ == state::init);
+	RETURN_IF(state_ == state::constructed);
 	RETURN_IF(state_ == state::finished);
 
 	on_finish();

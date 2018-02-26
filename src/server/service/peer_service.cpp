@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <lax/server/service/peer_service.hpp>
+#include <lax/net/service.hpp>
 #include <lax/util/logger.hpp>
 
 namespace lax
@@ -10,6 +11,7 @@ namespace server
 peer_service::peer_service(server& _server, const nlm::json& _config)
 	: service_actor(_server, _config)
 {
+	add_peers();
 }
 
 peer_service::~peer_service()
@@ -54,6 +56,8 @@ bool peer_service::on_start()
 	timer_.reset();
 
 	// register dispatcher functions
+
+	// connect to peers
 
 	return true;
 }
@@ -104,6 +108,21 @@ void peer_service::on_session_ready()
 void peer_service::on_session_closed()
 {
 
+}
+
+void peer_service::add_peers()
+{
+	auto& config = get_config();
+	auto iter = config["peers"];
+
+	for (auto& peer : iter)
+	{
+		std::string addr = peer["address"].get<std::string>();
+		std::string protocol = peer["protocol"].get<std::string>();
+		float reconnect_interval = peer["reconnect_interval"].get<float>();
+
+		add_peer(addr, protocol, reconnect_interval);
+	}
 }
 
 } // server
