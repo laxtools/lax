@@ -3,6 +3,7 @@
 #include <lax/util/logger.hpp>
 #include <lax/net/service.hpp>
 #include <catch.hpp>
+#include <fstream>
 
 TEST_CASE("test server")
 {
@@ -79,6 +80,27 @@ TEST_CASE("test server")
 			lax::util::log()->critical("exception: {}", ex.what());
 		}
 		catch (lax::util::exception& ex)
+		{
+			lax::util::log()->critical("exception: {}", ex.what());
+		}
+	}
+
+	SECTION("configuration json from file")
+	{
+		try
+		{
+			// default execution folder: build/construction 
+
+			std::ifstream ifs("json1.json");
+
+			auto jcfg = nlm::json::parse(ifs);
+			auto jlocal = jcfg["local"];
+			auto jname = jlocal["name"];
+			auto jserver = jcfg[jname.get<std::string>()];
+
+			CHECK(jserver["id"] == 77);
+		}
+		catch (nlm::json::exception& ex)
 		{
 			lax::util::log()->critical("exception: {}", ex.what());
 		}
