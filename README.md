@@ -5,7 +5,7 @@
 
  Game development must be a fun.  Lax tries to provide a little axe to game server programmers 
  with following features: 
- 
+
  - simple, fast, and clean networking code
  - task scheduler for efficient processing 
  - database usage model
@@ -17,7 +17,7 @@
    - type safe
  - remote debugging and monitoring 
 
- 
+
 ## Networking 
 
  - tcp only w/ asio 

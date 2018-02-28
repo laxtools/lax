@@ -49,13 +49,6 @@ public:
 
 	~peer_service();
 
-	/// add host to connect 
-	void add_peer(
-		const std::string& remote_addr, 
-		const std::string& protocol, 
-		float reconnect_interval 
-	);
-
 private: 
 	static constexpr float check_interval = 1.0f;
 
@@ -93,6 +86,13 @@ private:
 	}
 
 	void add_peers();
+
+	/// add host to connect 
+	void add_peer(
+		const std::string& remote_addr, 
+		const std::string& protocol, 
+		float reconnect_interval 
+	);
 
 private:
 	channel::channel::mq_t mq_;		/// queue to put messages

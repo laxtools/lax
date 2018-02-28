@@ -12,6 +12,7 @@ namespace lax
 void check_(bool cond, const char* msg, const char* func, const char* file, int line)
 {
 	assert(!cond);
+	UNUSED(cond);
 
 	std::ostringstream oss;
 	oss << " failed: " << msg << " [" << func << "]" << "[" << file << "@" << line << "]";

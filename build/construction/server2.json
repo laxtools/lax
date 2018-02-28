@@ -1,0 +1,77 @@
+{
+  "server_1": {
+    "id": 77,
+    "listens": [
+      {
+        "protocol": "bits",
+        "address": "0.0.0.0:7777"
+      }
+    ],
+    "scheduler": {
+      "runner_count": 1,
+      "idle_check_threshold_time": 0.001,
+      "single_loop_run_limit": 0,
+      "start_task_when_schedule_called": false
+    },
+    "peer_service": {
+      "name": "peer_service",
+      "peers": [
+        {
+          "protocol": "bits",
+          "address": "127.0.0.1:7778",
+          "reconnect_interval": 10
+        }
+      ]
+    },
+    "services": [
+      {
+        "type": "dummy",
+        "config": {
+        }
+      },
+      {
+        "type": "dummy",
+        "config": {
+        }
+      }
+    ]
+  },
+  "server_2": {
+    "id": 77,
+    "listens": [
+      {
+        "protocol": "bits",
+        "address": "0.0.0.0:7778"
+      }
+    ],
+    "scheduler": {
+      "runner_count": 1,
+      "idle_check_threshold_time": 0.001,
+      "single_loop_run_limit": 0,
+      "start_task_when_schedule_called": false
+    },
+    "peer_service": {
+      "name": "peer_service",
+      "peers": [
+        {
+          "protocol": "bits",
+          "address": "127.0.0.1:7777",
+          "reconnect_interval": 10
+        }
+      ]
+    },
+    "services": [
+      {
+        "type": "dummy",
+        "config": {
+        }
+      },
+      {
+        "type": "dummy",
+        "config": {
+        }
+      }
+    ]
+  },
+  "local": { "name": "server_2" }
+}

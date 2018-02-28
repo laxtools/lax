@@ -18,37 +18,6 @@ peer_service::~peer_service()
 {
 }
 
-void peer_service::add_peer(
-	const std::string& addr, 
-	const std::string& protocol, 
-	float reconnect_interval
-)
-{
-	auto iter = peers_.find(addr); 
-
-	if (iter != peers_.end())
-	{
-		util::log()->warn(
-			"peer w/ remote_addr: {} already exist. overriding...",
-			addr
-		);
-	}
-
-	reconnect_interval = std::max<float>(reconnect_interval, check_interval);
-
-	peer p; 
-
-	p.remote_addr = addr; 
-	p.protocol = protocol;
-	p.reconnect_interval = reconnect_interval;
-
-	peers_[addr] = p;
-
-	util::log()->info(
-		"peer: {}/{} added", p.remote_addr, p.protocol
-	);
-}
-
 bool peer_service::on_start()
 {
 	(void)service_actor::on_start();
@@ -123,6 +92,37 @@ void peer_service::add_peers()
 
 		add_peer(addr, protocol, reconnect_interval);
 	}
+}
+
+void peer_service::add_peer(
+	const std::string& addr, 
+	const std::string& protocol, 
+	float reconnect_interval
+)
+{
+	auto iter = peers_.find(addr); 
+
+	if (iter != peers_.end())
+	{
+		util::log()->warn(
+			"peer w/ remote_addr: {} already exist. overriding...",
+			addr
+		);
+	}
+
+	reconnect_interval = std::max<float>(reconnect_interval, check_interval);
+
+	peer p; 
+
+	p.remote_addr = addr; 
+	p.protocol = protocol;
+	p.reconnect_interval = reconnect_interval;
+
+	peers_[addr] = p;
+
+	util::log()->info(
+		"peer: {}/{} added", p.remote_addr, p.protocol
+	);
 }
 
 } // server

@@ -13,9 +13,9 @@ void check_(bool cond, const char* msg, const char* func, const char* file, int 
 	#define VERIFY(c) (void)(!!(c) || (lax::check_(!!(c), #c, __FUNCTION__, __FILE__, __LINE__), 0)); assert(c);
 #else 
 	#if LAX_ENABLE_RELEASE_CHECK  == 0
-		#define check(c) 
+		#define VERIFY(c) 
 	#else 
-		#define check(c) (void)(!!(c) || (lax::check_(!!(c), #c, __FUNCTION__, __FILE__, __LINE__), 0))
+		#define VERIFY(c) (void)(!!(c) || (lax::check_(!!(c), #c, __FUNCTION__, __FILE__, __LINE__), 0))
 	#endif
 #endif 
 

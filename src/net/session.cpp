@@ -353,6 +353,8 @@ void session::on_recv_completed(asio::error_code& ec, std::size_t len)
 
 void session::on_send_completed(asio::error_code& ec, std::size_t len)
 {
+	UNUSED(len);
+
 	// release segs before try sending again
 	{
 		std::lock_guard<std::recursive_mutex> lock(send_segs_mutex_);

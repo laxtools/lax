@@ -86,6 +86,7 @@ private:
 	service();
 
 private: 
+	std::recursive_mutex  mutex_;		// to protect start, finish
 	std::unique_ptr<service_impl>	impl_;
 };
 

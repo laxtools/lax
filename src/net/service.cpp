@@ -30,8 +30,11 @@ bool service::start()
 {
 	// service is a singleton, but intialized once here
 	// - impl_ is shared like a singleton
-	// - start and finish finish can be called multiple times 
+	// - start and finish can be called multiple times 
 	//   - not like a singleton
+	//
+
+	std::lock_guard<std::recursive_mutex> lock(mutex_);
 
 	if (!impl_)
 	{
@@ -45,6 +48,8 @@ bool service::start()
 
 void service::finish()
 {
+	std::lock_guard<std::recursive_mutex> lock(mutex_);
+
 	impl_->finish();
 	impl_.reset(); 
 }
