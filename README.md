@@ -26,7 +26,7 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
  - actors with components for game objects
 
 
-** lax is under construction ** with following todos.
+**lax is under construction** with following todos.
 
 #  TODOs
 
