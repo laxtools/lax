@@ -141,11 +141,11 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
    - c# client with async socket
 
 - [ ] documentation
-      - doxygen documentation
-      - wiki
-        - concepts
-          - tutorial
-        - samples
+   - doxygen documentation
+   - wiki
+     - concepts
+       - tutorial
+     - samples
 
 - [ ] live maintenance
   - maintenance cycle management
