@@ -214,9 +214,9 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
    ```
 
 - [x] spdlog wchar to utf8 support 
-      - test functionality 
-      - define usage 
-        - log()->info( L"fmt...", L"character")
-        - works with log file.
+  - test functionality 
+  - define usage 
+    - log()->info( L"fmt...", L"character")
+    - works with log file.
 
 
