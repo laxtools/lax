@@ -64,32 +64,29 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
     - MPL, macros, compiler
 
 - [ ] convention cleanup 
-      - all struct types are named *_t 
-        - ?? 
-      - configuration
-      - [ ] debug and trace log added
+  - struct types 
+  - configuration
 
 - [ ] change project configuration 
-      - net
-        - util, channel, net
-      - server
-        - net, actor, service
-      - template  
-        - instance, matcher, guild, 
-        - detour / bullet / octree
-        - item, inventory
-        - character, pc, npc
+  - net
+    - util, channel, net
+  - server
+    - net, actor, service
+  - template  
+    - instance, matcher, guild, 
+    - detour / bullet / octree
+    - item, inventory
+    - character, pc, npc
 
 - [ ] code template login_service 
   - database based
 
 - [ ] grinder 
-      - action flow based
-      - functional test
-      - stress test
+  - action flow based
+  - functional test
+  - stress test
 
 - [ ] argos
-
    - shell 
      - command line interface
      - authentication with hash key and password per user
@@ -137,8 +134,6 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
 - [ ] c# bitsery
 
    - c# message generation from c++ code
-
-
    - c++ spec serialization / deserialization for c# language
      - reflection based code generation
        - no runtime reflection
@@ -164,15 +159,15 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
   - service restart 
 
 - [ ] game model 
-      - demos of game model
-        - board, strategic rpg, morpg
-      - support module 
-           - detour / bullet / octree
-           - 1 bit voxel map : possible? 
-      - content coding convention 
-        - making abstract concepts
-        - using higher level concepts
-        - avoid script coding (long scenario based code manipulation)
+  - demos of game model
+    - board, strategic rpg, morpg
+  - support module 
+    - detour / bullet / octree
+    - 1 bit voxel map : possible? 
+  - content coding convention 
+    - making abstract concepts
+    - using higher level concepts
+    - avoid script coding (long scenario based code manipulation)
 
 - [ ] version and configuration management 
 
@@ -217,7 +212,6 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
     	[*** LOG ERROR ***][system] [bad allocation][2018-01-30 12:56:20]
     	spdlog::logger::_default_err_handler(const std::string &msg)
    ```
-
 
 - [x] spdlog wchar to utf8 support 
       - test functionality 
