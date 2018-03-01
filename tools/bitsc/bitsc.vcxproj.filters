@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="idl">
+      <UniqueIdentifier>{5f34e822-18e7-45f4-9dde-3b752c00ce0f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="idl\idl.h">
+      <Filter>idl</Filter>
+    </ClInclude>
+    <ClInclude Include="idl\util.h">
+      <Filter>idl</Filter>
+    </ClInclude>
+    <ClInclude Include="idl\base.h">
+      <Filter>idl</Filter>
+    </ClInclude>
+    <ClInclude Include="idl\code_generators.h">
+      <Filter>idl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="bitsc.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="idl\idl_parser.cpp">
+      <Filter>idl</Filter>
+    </ClCompile>
+    <ClCompile Include="idl\idl_gen_cpp.cpp">
+      <Filter>idl</Filter>
+    </ClCompile>
+    <ClCompile Include="idl\util.cpp">
+      <Filter>idl</Filter>
+    </ClCompile>
+    <ClCompile Include="idl\idl_gen_general.cpp">
+      <Filter>idl</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

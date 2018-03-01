@@ -41,9 +41,6 @@
     <Filter Include="actor">
       <UniqueIdentifier>{6fd46d83-d3d5-4a3b-a0ff-c40ec61e406a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net\util">
-      <UniqueIdentifier>{37172915-18c0-4ffc-a75a-a87d5b6362bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="net\protocol\bits">
       <UniqueIdentifier>{4fd52aad-3866-4b13-93f0-65cf91c98136}</UniqueIdentifier>
     </Filter>
