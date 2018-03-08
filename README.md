@@ -43,6 +43,12 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
   - broadcast / multicast handling 
     - efficiency / easiness
 
+- [ ] bitsery.idl 
+
+   - json schema
+   - c++ generator 
+     - c#, dart later
+
 - [ ] db_service
 
   - configure with json
@@ -88,19 +94,16 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
 
 - [ ] argos
    - shell 
-     - command line interface
+     - flutter gui
      - authentication with hash key and password per user
        - change key every version
      - encrypted communication
-     - string based (json?)
+     - string based (json)
      - cheat console
    - performance counter 
      - macro based recording 
      - realtime report to shell(s)
    - monitor server 
-     - embed boost.beast w/ openssl to support web interface 
-       - pause / resume with shell commands
-     - web monitoring / management console
    - game operations
      - user monitoring
      - game play monitoring
@@ -108,6 +111,7 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
        - player characters
        - money
        - items
+     - event handling
 
 - [ ] network tests
 
@@ -120,6 +124,12 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
    - chatting
    - measure the limit of a single server on 8 core x64 windows
 
+- [ ] container
+
+   - distribute files
+   - start / pause / resume / stop server
+   - argos embedded
+
 - [ ] meta
    - json, excel, csv
      - nlohmann's json library is great
@@ -130,15 +140,6 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
      - keep backups
      - date based
      - history log
-
-- [ ] c# bitsery
-
-   - c# message generation from c++ code
-   - c++ spec serialization / deserialization for c# language
-     - reflection based code generation
-       - no runtime reflection
-   - utf8 string support
-   - c# client with async socket
 
 - [ ] documentation
    - doxygen documentation
