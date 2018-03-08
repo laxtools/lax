@@ -12,68 +12,84 @@
 
 This makes bitsery perfect for all languages. Traditional approach is fast enough or fastest. This makes the ground for future enhancements. 
 
-## IDL spec. 
+## Schema 
 
-EBNF based definition for top down LL(1) parser.  message is the bitsery message. struct is a structure type to be used. key type in message field is used to construct domain / type pairs. 
+Instead of writing a parser, json can be used to define message. This direction change is decided since the same approach can cover game data schema, db schema and other schemas required. 
 
+A simple pair can be used to define name: type sequence making the unique variable name as a key in JSON. 
 
+```json
+{
 
-schema = include* ( namespace_decl | type_decl | enum_decl  )*
+ "include": [ "file1", "file2", ... ], // #include "file1.hpp" ... 
 
-include = `include` string_constant `;`
+ "namespace" : "game.play",  // namespace game { namespace play { } }
 
-namespace_decl = `namespace` ident ( `.` ident )* `;`
+ "update_type" : {
 
-type_decl = ( `message` | `struct` ) ident  `{` field_decl+ `}`
+ "type" : "enum", 
+ "values" : 
+           [
+              "type1", 
+           	  "type2", 
+              "type3=4", 
+              "type5", ...  
+           ]
 
-enum_decl = ( `enum` ident [ `:` type ] ) `{` commasep( enumval_decl ) `}`
+ }, // enum update_type { type1, type2, type3 = 4, type5 };
 
-field_decl = ident `:` type [ `=` scalar ] `;`
+  "position" : { 
 
-type = `bool` | `byte` | `ubyte` | `short` | `ushort` | `int` | `uint` | `float` | `long` | `ulong` | `double` | `int8` | `uint8` | `int16` | `uint16` | `int32` | `uint32`| `int64` | `uint64` | `float32` | `float64` | `string` | `[` type `]` | ident
+    "type": "struct",  
 
-enumval_decl = ident [ `=` integer_constant ]
+    "fields": { "x=0" : "float", "y=0" : "float", "z=0" : "float" }
+   }, // struct position { float x = 0; float y = 0; float z = 0; }
 
-scalar = integer_constant | float_constant | key_constant
+   "req_move" : {
 
-single_value = scalar | string_constant
+    "type" : "message",
+       
+    "base" : "game.play.msg_instance_base", 
 
-value = single_value | `[` commasep( value ) `]`
+    "topic" :  "game.req_move", 
+    
+    "options" : { "bind_user_id_from_session" : true, ... }
 
-commasep(x) = [ x ( `,` x )* ]
+    "fields" : {  
+        "to" : "game.play.position", 
+        "id=0" : "int32", 
+        ...   
+    } 
+  } // struct msg_req_move : public game::play::msg_instance_base { 
+    //    game::play::position to; 
+	//    int32 id = 0;  
+    // }
+}
+```
 
-integer_constant = `-?[0-9]+` | `true` | `false`
-
-float_constant = `-?[0-9]+.[0-9]+((e|E)(+|-)?[0-9]+)?`
-
-string_constant = `\".*?\\"`
-
-ident = `[a-zA-Z_][a-zA-Z0-9_]*`
-
-## Parser 
-
-- understand flatbuffers idl_parser.cpp
-- write a parser for new idl 
-
-
-
-
-
-## Generator
-
-- understand flatbuffers idl_gen_general.cpp 
-- write a generator for new idl 
-
-
-
-
-
-## Automation
-
-- group / type management 
-- message factory registration 
-
-
+- array 
+  - [ Type, length(5) ]
+- type options
+  - slot : "uint8, range(0, 32)"
+  - option(value1, value2, ... ) format
 
 
+
+## Generation 
+
+Now we can focus on generation of target language code.  Here we focus on c++ code generation first and then extend to other languages. 
+
+- process included files 
+  - generate .hpp and .cpp if .bits file is newer than target files 
+  - keep type information from the included files
+- process each keys 
+  - validate type references 
+  - validate c++ syntax (avoid c++ keywords)
+  - validate default values
+- for messages
+  - register messages 
+  - create topic enums 
+  - increase version number
+
+generation adds reflection information to each class guarded with LAX_ENABLE_MESSAGE_REFLECTION. 
 
