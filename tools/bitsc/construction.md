@@ -10,13 +10,18 @@
   - c# networking code 
     - Async Socket 
 
-This makes bitsery perfect for all languages. Traditional approach is fast enough or fastest. This makes the ground for future enhancements. 
+This makes bitsery perfect for all languages. 
+Traditional approach is fast enough or fastest. 
+This makes the ground for future enhancements. 
 
 ## Schema 
 
-Instead of writing a parser, json can be used to define message. This direction change is decided since the same approach can cover game data schema, db schema and other schemas required. 
+Instead of writing a parser, json can be used to define message. 
+This direction change is decided since the same approach can cover 
+game data schema, db schema and other schemas required. 
 
-A simple pair can be used to define name: type sequence making the unique variable name as a key in JSON. 
+A simple pair can be used to define name: type sequence making 
+the unique variable name as a key in JSON. 
 
 ```json
 {
@@ -77,7 +82,8 @@ A simple pair can be used to define name: type sequence making the unique variab
 
 ## Generation 
 
-Now we can focus on generation of target language code.  Here we focus on c++ code generation first and then extend to other languages. 
+Now we can focus on generation of target language code.  
+Here we focus on c++ code generation first and then extend to other languages. 
 
 - process included files 
   - generate .hpp and .cpp if .bits file is newer than target files 
@@ -91,5 +97,43 @@ Now we can focus on generation of target language code.  Here we focus on c++ co
   - create topic enums 
   - increase version number
 
-generation adds reflection information to each class guarded with LAX_ENABLE_MESSAGE_REFLECTION. 
+generation adds reflection information to each class guarded 
+with LAX_ENABLE_MESSAGE_REFLECTION. 
+
+# Implementation 
+
+- parser 
+  - parser tree
+- generator
+
+generation of target code can be executed during parsing even with parse error.  The other way is to parse the whole IDL and then generate target language file. 
+
+
+
+To drive design, test with test code. 
+
+
+
+## Test Code 
+
+- load json file 
+- parse json
+  - build a parser tree 
+    - it is a sequence of type objects 
+  - add types as required 
+  - validate when possible 
+- try c++ generator
+  - iterate over type objects 
+
+
+
+
+While writing test code, objects to parse entity are added. For generation, a generator interface for each parse entity are required. 
+
+In each language, we have terminal and non-terminal nodes with production rules. Each term is the parse entity. Top-down parsing forces each term become a class to parse itself. 
+
+
+
+
+
 

@@ -72,15 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir);$(SolutionDir)..\..\include;$(SolutionDir)..\..\ext;$(SolutionDir)..\..\ext\msgpack-c\include;$(SolutionDir)..\..\ext\asio\include;$(SolutionDir)..\..\ext\spdlog\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,25 +151,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="idl\base.h" />
-    <ClInclude Include="idl\code_generators.h" />
-    <ClInclude Include="idl\idl.h" />
-    <ClInclude Include="idl\util.h" />
+    <ClInclude Include="..\..\include\lax\util\json.hpp" />
+    <ClInclude Include="..\..\include\lax\util\logger.hpp" />
+    <ClInclude Include="idl\idl_generator.hpp" />
+    <ClInclude Include="idl\idl_parser.hpp" />
+    <ClInclude Include="idl\idl_result.hpp" />
+    <ClInclude Include="idl\idl_type_objects.hpp" />
+    <ClInclude Include="idl\idl_unit.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\util\logger.cpp" />
+    <ClCompile Include="..\..\src\util\platform.cpp" />
     <ClCompile Include="bitsc.cpp" />
-    <ClCompile Include="idl\idl_gen_cpp.cpp" />
-    <ClCompile Include="idl\idl_gen_general.cpp" />
     <ClCompile Include="idl\idl_parser.cpp" />
-    <ClCompile Include="idl\util.cpp" />
+    <ClCompile Include="idl\idl_type_objects.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="idl_test_1.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,70 @@
+{
+  "update_type": {
+
+    "type": "enum",
+
+    "values": [
+      {
+        "name": "type1" 
+      },
+      {
+        "name": "type2" 
+      },
+      {
+        "name": "type3",
+        "value": 4
+      },
+      {
+        "name": "type4" 
+      }
+    ]
+  }, 
+
+  "position": {
+
+    "type": "struct",
+
+    "fields": [
+      {
+        "name": "x",
+        "default": 0.0,
+        "type": "float"
+      },
+
+      {
+        "name": "y",
+        "default": 0.0,
+        "type": "float"
+      },
+
+      {
+        "name": "z",
+        "default": 0.0,
+        "type": "float"
+      }
+    ] 
+  }, 
+
+  "req_move": {
+
+    "type": "message",
+
+    "base": "msg_instance_base",
+
+    "topic": "game.req_move",
+
+    "fields": [
+
+      {
+        "name": "to", 
+        "type": "position"
+      },
+
+      {
+        "name": "id", 
+        "type": "int32",
+        "default": 0
+      }
+    ] 
+  } 
+}

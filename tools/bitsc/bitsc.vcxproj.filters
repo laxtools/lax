@@ -8,6 +8,9 @@
     <Filter Include="idl">
       <UniqueIdentifier>{5f34e822-18e7-45f4-9dde-3b752c00ce0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{a855e6a1-0fb8-4373-8c12-8868b59ce612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -16,16 +19,25 @@
     <ClInclude Include="targetver.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="idl\idl.h">
+    <ClInclude Include="idl\idl_parser.hpp">
       <Filter>idl</Filter>
     </ClInclude>
-    <ClInclude Include="idl\util.h">
+    <ClInclude Include="idl\idl_type_objects.hpp">
       <Filter>idl</Filter>
     </ClInclude>
-    <ClInclude Include="idl\base.h">
+    <ClInclude Include="idl\idl_unit.hpp">
       <Filter>idl</Filter>
     </ClInclude>
-    <ClInclude Include="idl\code_generators.h">
+    <ClInclude Include="..\..\include\lax\util\json.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\util\logger.hpp">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="idl\idl_result.hpp">
+      <Filter>idl</Filter>
+    </ClInclude>
+    <ClInclude Include="idl\idl_generator.hpp">
       <Filter>idl</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,14 +51,19 @@
     <ClCompile Include="idl\idl_parser.cpp">
       <Filter>idl</Filter>
     </ClCompile>
-    <ClCompile Include="idl\idl_gen_cpp.cpp">
+    <ClCompile Include="..\..\src\util\logger.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\util\platform.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="idl\idl_type_objects.cpp">
       <Filter>idl</Filter>
     </ClCompile>
-    <ClCompile Include="idl\util.cpp">
-      <Filter>idl</Filter>
-    </ClCompile>
-    <ClCompile Include="idl\idl_gen_general.cpp">
-      <Filter>idl</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="idl_test_1.json">
+      <Filter>main</Filter>
+    </None>
   </ItemGroup>
 </Project>
