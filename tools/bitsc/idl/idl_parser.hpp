@@ -17,6 +17,9 @@ public:
 	/// test implementation
 	void test_parse(const std::string& file);
 
+// internal
+	bool complete_current_type();
+
 private: 
 	// type object table
 	// units 
@@ -39,6 +42,7 @@ private:
 
 private: 
 	idl_unit::ptr main_unit_;
+	idl_unit::ptr current_unit_;
 	type_object::ptr current_type_;
 };
 

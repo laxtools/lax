@@ -35,6 +35,7 @@ void idl_parser::test_parse(const std::string& file)
 	main_unit_ = std::make_shared<idl_unit>();
 	main_unit_->input_file = file;
 
+	current_unit_ = main_unit_;
 
 	for (json::const_iterator it = js.cbegin(); it != js.cend(); ++it) 
 	{
@@ -54,6 +55,22 @@ void idl_parser::test_parse(const std::string& file)
 	// namespace 
 
 	// handling errors
+}
+
+bool idl_parser::complete_current_type()
+{
+	VERIFY(current_type_);
+	VERIFY(current_unit_);
+	RETURN_IF(!current_type_, false);
+	RETURN_IF(!current_unit_, false);
+
+	// 현재 unit에 현재 타잎 등록
+	auto& types = current_unit_->table.types;
+
+	auto iter = types.find(current_type_->name);
+	RETURN_IF(iter != types.end(), false);			// 
+
+	types[current_type_->name] = current_type_;
 }
 
 result idl_parser::parse(json::const_iterator& it)
@@ -109,7 +126,7 @@ bool idl_parser::create_current_type(
 	const std::string& name
 )
 {
-	// TODO: remove typing repetition with a prototype function map
+	// TODO: remove repetitions with a prototype function map
 
 	if (type == "enum")
 	{

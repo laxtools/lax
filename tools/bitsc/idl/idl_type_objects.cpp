@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "idl_type_objects.hpp"
 #include "idl_parser.hpp"
+#include <lax/util/macros.hpp>
 
 using namespace nlohmann;
 
@@ -15,6 +16,8 @@ result value::parse(idl_parser& parser, const json& js)
 
 result values::parse(idl_parser& parser, const json& js)
 {
+
+
 	return result{ "", "", result::error::success };
 }
 
@@ -30,7 +33,10 @@ result fields::parse(idl_parser& parser, const json& js)
 
 result enum_type::parse(idl_parser& parser, const json& js)
 {
-	return vals.parse(parser, js);
+	auto rc = vals.parse(parser, js);
+	RETURN_IF(!rc, rc);
+
+	parser.complete_current_type();
 }
 
 result struct_type::parse(idl_parser& parser, const json& js)

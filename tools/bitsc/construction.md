@@ -16,67 +16,35 @@ This makes the ground for future enhancements.
 
 ## Schema 
 
-Instead of writing a parser, json can be used to define message. 
-This direction change is decided since the same approach can cover 
-game data schema, db schema and other schemas required. 
-
-A simple pair can be used to define name: type sequence making 
-the unique variable name as a key in JSON. 
+boost.spirit is a tool to write a parser fairly easily. It is used to develop a IDL parser.
 
 ```json
+include "path.to.inc.idl"
+
+namespace game.play
+
+enum sample_1 {
+    value1 = sample_2.value,
+    value2, 
+    value3
+}
+
+struct position 
 {
+    float x; 
+    float y; 
+    float z = 0.0f;
+}
 
- "include": [ "file1", "file2", ... ], // #include "file1.hpp" ... 
-
- "namespace" : "game.play",  // namespace game { namespace play { } }
-
- "update_type" : {
-
- "type" : "enum", 
- "values" : 
-           [
-              "type1", 
-           	  "type2", 
-              "type3=4", 
-              "type5", ...  
-           ]
-
- }, // enum update_type { type1, type2, type3 = 4, type5 };
-
-  "position" : { 
-
-    "type": "struct",  
-
-    "fields": { "x=0" : "float", "y=0" : "float", "z=0" : "float" }
-   }, // struct position { float x = 0; float y = 0; float z = 0; }
-
-   "req_move" : {
-
-    "type" : "message",
-       
-    "base" : "game.play.msg_instance_base", 
-
-    "topic" :  "game.req_move", 
-    
-    "options" : { "bind_user_id_from_session" : true, ... }
-
-    "fields" : {  
-        "to" : "game.play.position", 
-        "id=0" : "int32", 
-        ...   
-    } 
-  } // struct msg_req_move : public game::play::msg_instance_base { 
-    //    game::play::position to; 
-	//    int32 id = 0;  
-    // }
+message req_move 
+{
+    topic game.play.move;
+    game.play.position dest; 
+    int32 array[5];  		// max length 5
+    string name[10];	// string length 10
+    string vec[];  		// max string size
 }
 ```
-
-- array 
-  - [ Type, length(5) ]
-- type options
-  - slot : "uint8, range(0, 32)"
-  - option(value1, value2, ... ) format
 
 
 
@@ -108,21 +76,18 @@ with LAX_ENABLE_MESSAGE_REFLECTION.
 
 generation of target code can be executed during parsing even with parse error.  The other way is to parse the whole IDL and then generate target language file. 
 
-
-
 To drive design, test with test code. 
 
 
 
 ## Test Code 
 
-- load json file 
-- parse json
+- parse idl
   - build a parser tree 
     - it is a sequence of type objects 
   - add types as required 
   - validate when possible 
-- try c++ generator
+- c++ generator
   - iterate over type objects 
 
 
