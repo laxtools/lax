@@ -19,31 +19,32 @@ This makes the ground for future enhancements.
 boost.spirit is a tool to write a parser fairly easily. It is used to develop a IDL parser.
 
 ```json
-include "path.to.inc.idl"
+include "path.to.inc.idl";
 
-namespace game.play
+namespace game.play;
+using game.item;	// using namespace
 
 enum sample_1 {
     value1 = sample_2.value,
     value2, 
     value3
-}
+};
 
 struct position 
 {
     float x; 
     float y; 
     float z = 0.0f;
-}
+};
 
 message req_move 
 {
     topic game.play.move;
-    game.play.position dest; 
-    int32 array[5];  		// max length 5
+    position dest; 
+    int32 array[5];  	// max length 5
     string name[10];	// string length 10
     string vec[];  		// max string size
-}
+};
 ```
 
 

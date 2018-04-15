@@ -38,9 +38,6 @@
     <Filter Include="net\protocol">
       <UniqueIdentifier>{cfb91204-5ff0-44ae-b71f-4549c241abd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="actor">
-      <UniqueIdentifier>{6fd46d83-d3d5-4a3b-a0ff-c40ec61e406a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="net\protocol\bits">
       <UniqueIdentifier>{4fd52aad-3866-4b13-93f0-65cf91c98136}</UniqueIdentifier>
     </Filter>
@@ -61,18 +58,6 @@
     </Filter>
     <Filter Include="server\beast">
       <UniqueIdentifier>{f8520fa3-6955-42d7-b533-fe021f1a676e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="actor\detail">
-      <UniqueIdentifier>{c75cec8c-3c18-4909-bda9-e20da1dd1224}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="template">
-      <UniqueIdentifier>{5ee8b57f-60cf-4cd1-9333-dc3736a9d63e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="template\sample">
-      <UniqueIdentifier>{bebe32f5-92d3-4932-86ba-17ae84ba44f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="template\instance">
-      <UniqueIdentifier>{8b102bea-7ff3-4d79-8117-345ae2da327b}</UniqueIdentifier>
     </Filter>
     <Filter Include="grinder">
       <UniqueIdentifier>{337a8a3d-7c5a-4e52-aa21-e2384f884c3c}</UniqueIdentifier>
@@ -220,12 +205,6 @@
     <ClInclude Include="..\..\include\lax\net\protocol\protocol.hpp">
       <Filter>net\protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\component.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\actor.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\net\detail\buffer\segment_buffer.hpp">
       <Filter>net\detail\buffer</Filter>
     </ClInclude>
@@ -301,21 +280,6 @@
     <ClInclude Include="..\..\include\lax\server\argos\argos_serivce.hpp">
       <Filter>server\argos</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\detail\type_object.hpp">
-      <Filter>actor\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\detail\type_object_container.hpp">
-      <Filter>actor\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\detail\type_info.hpp">
-      <Filter>actor\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\actor\task_adaptor.hpp">
-      <Filter>actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\lax\server\service_actor.hpp">
-      <Filter>server</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\lax\server\service_factory.hpp">
       <Filter>server</Filter>
     </ClInclude>
@@ -333,6 +297,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\lax\server\service\db_service.hpp">
       <Filter>server\service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\lax\server\service.hpp">
+      <Filter>server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -429,21 +396,6 @@
     <ClCompile Include="..\..\src\net\protocol\util\modifier.cpp">
       <Filter>net\protocol\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\actor\actor.cpp">
-      <Filter>actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\actor\component.cpp">
-      <Filter>actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\actor\detail\type_info.cpp">
-      <Filter>actor\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\actor\task_adaptor.cpp">
-      <Filter>actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\server\service_actor.cpp">
-      <Filter>server</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\server\server.cpp">
       <Filter>server</Filter>
     </ClCompile>
@@ -461,6 +413,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\server\service\db_service.cpp">
       <Filter>server\service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\service.cpp">
+      <Filter>server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

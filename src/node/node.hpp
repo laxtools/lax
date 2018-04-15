@@ -1,5 +1,5 @@
 #pragma once
-#include <lax/server/service_actor.hpp>
+#include <lax/server/service.hpp>
 #include <lax/task/task_scheduler.hpp>
 #include <lax/server/service/peer_service.hpp>
 
