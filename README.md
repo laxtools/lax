@@ -30,6 +30,21 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
 
 #  TODOs
 
+- [ ] gom (game oriented message) protocol
+
+   - idl based message generator
+   - c++ and c# generator 
+   - topic extended and generated as enums
+     - category.base.type
+   - reflection added
+     - str() for debugging
+
+- [ ] network tests
+
+   - stress tests
+   - performance
+   - thread scalability
+
 - [ ] server / service 
   - channel timer subscribe and callback
   - service clustering
@@ -43,11 +58,15 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
   - broadcast / multicast handling 
     - efficiency / easiness
 
-- [ ] bitsery.idl 
+- [ ] loadstar
+  - action flow based
+  - functional test
+  - stress test
 
-   - json schema
-   - c++ generator 
-     - c#, dart later
+- [ ] 30,000 session broadcasting
+
+   - chatting
+   - measure the limit of a single server on 8 core x64 windows
 
 - [ ] db_service
 
@@ -67,30 +86,10 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
       - rather big (16 bytes)
   - performance testing
   - code generation in c++
-    - MPL, macros, compiler
-
-- [ ] convention cleanup 
-  - struct types 
-  - configuration
-
-- [ ] change project configuration 
-  - net
-    - util, channel, net
-  - server
-    - net, actor, service
-  - template  
-    - instance, matcher, guild, 
-    - detour / bullet / octree
-    - item, inventory
-    - character, pc, npc
+    - flex/bison compiler
 
 - [ ] code template login_service 
-  - database based
-
-- [ ] grinder 
-  - action flow based
-  - functional test
-  - stress test
+  - database based (serverless)
 
 - [ ] argos
    - shell 
@@ -113,33 +112,29 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
        - items
      - event handling
 
-- [ ] network tests
+- [ ] meta
+   - hierarchical csv (hcsv)
+     - schema based
+	 - excel file generation
+   - conversion flow
+     - schema -> excel -> hcsv / binary format
+   - schema change
+     - keep existing data 
+     - backups
+     - date based
+     - history log
 
-   - stress tests
-   - performance
-   - thread scalability
-
-- [ ] 30,000 session broadcasting
-
-   - chatting
-   - measure the limit of a single server on 8 core x64 windows
+- [ ] a sample game
+  
+   - rock / scissors / paper 
+   - real time 
+   - match maker
 
 - [ ] container
 
    - distribute files
    - start / pause / resume / stop server
    - argos embedded
-
-- [ ] meta
-   - json, excel, csv
-     - nlohmann's json library is great
-     - excel editing interface is the core
-   - conversion flow
-     - json -> excel -> binary / text json format
-   - schema merge keeping existing data
-     - keep backups
-     - date based
-     - history log
 
 - [ ] documentation
    - doxygen documentation
@@ -177,18 +172,6 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
    - code change
    - development model 
    - tools to support
-
-- [ ] cache_service
-
-   - distributed with hash
-   - algorithm 
-     - TTL
-     - check before loading 
-     - update on change (loading, modification)
-   - rocksdb?
-     - embedded storage
-   - still useful??? 
-     - not sure... it can be. but cons are very strong.
 
 - [x] json 
    - nlohmann's json 
