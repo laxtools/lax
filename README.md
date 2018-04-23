@@ -30,15 +30,6 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
 
 #  TODOs
 
-- [ ] change project configuration 
-  - core 
-    - utilities 
-  - channel 
-  - net
-  - task
-  - node
-  - 
-
 - [ ] server / service 
   - channel timer subscribe and callback
   - service clustering
@@ -52,24 +43,11 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
   - broadcast / multicast handling 
     - efficiency / easiness
 
-- [ ] protocol_gen
+- [ ] bitsery.idl 
 
-   - idl parser 
+   - json schema
    - c++ generator 
-   - c# generator
-     - c# network code
-
-
-- [ ] network tests
-
-   - stress tests
-   - performance
-   - thread scalability
-
-- [ ] 30,000 session broadcasting
-
-   - chatting
-   - measure the limit of a single server on 8 core x64 windows
+     - c#, dart later
 
 - [ ] db_service
 
@@ -95,11 +73,21 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
   - struct types 
   - configuration
 
+- [ ] change project configuration 
+  - net
+    - util, channel, net
+  - server
+    - net, actor, service
+  - template  
+    - instance, matcher, guild, 
+    - detour / bullet / octree
+    - item, inventory
+    - character, pc, npc
 
 - [ ] code template login_service 
   - database based
 
-- [ ] load\*
+- [ ] grinder 
   - action flow based
   - functional test
   - stress test
@@ -124,6 +112,17 @@ Game development must be a fun.  Lax tries to provide a little axe to game serve
        - money
        - items
      - event handling
+
+- [ ] network tests
+
+   - stress tests
+   - performance
+   - thread scalability
+
+- [ ] 30,000 session broadcasting
+
+   - chatting
+   - measure the limit of a single server on 8 core x64 windows
 
 - [ ] container
 

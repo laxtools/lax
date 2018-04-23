@@ -25,20 +25,20 @@ class server;
  *   - unsub in on_finish() 
  *   - write handlers for topics
  */
-class service : // task
+class service_actor : public actor::actor
 {
 public:
-	using ptr = std::shared_ptr<service>;
+	using ptr = std::shared_ptr<service_actor>;
 
 	/// config 
 	struct config
 	{
-		std::string name = "service";
+		std::string name = "service_actor";
 
 		channel::channel::config channel;
 	};
 
-	/// reference to service 
+	/// reference to service_actor 
 	struct ref
 	{
 		id_t node;				// server id  
@@ -53,10 +53,10 @@ public:
 
 public:
 	/// constructor
-	service(server& _server, const nlm::json& _config);
+	service_actor(server& _server, const nlm::json& _config);
 
 	/// destructor
-	virtual ~service();
+	virtual ~service_actor();
 
 	server& get_server()
 	{
@@ -68,13 +68,13 @@ public:
 		return server_;
 	}
 	
-	/// get underlying service channel
+	/// get underlying service_actor channel
 	channel::channel& get_channel()
 	{
 		return channel_;
 	}
 
-	/// unique per service instance
+	/// unique per service_actor instance
 	const std::string& get_desc() const
 	{
 		return desc_;
@@ -96,8 +96,8 @@ protected:
 	}
 
 private: 
-	service(const service& other) = delete;
-	service& operator=(const service& other) = delete;
+	service_actor(const service_actor& other) = delete;
+	service_actor& operator=(const service_actor& other) = delete;
 
 private:
 	server& server_;

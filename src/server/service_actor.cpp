@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include <lax/server/service.hpp>
+#include <lax/server/service_actor.hpp>
 #include <lax/server/server.hpp>
 #include <lax/util/logger.hpp>
 
@@ -8,7 +8,7 @@ namespace lax
 namespace server
 {
 
-service::service(server& _server, const nlm::json& _config)
+service_actor::service_actor(server& _server, const nlm::json& _config)
 	: actor()
 	, server_(_server)
 	, config_(_config)
@@ -18,23 +18,23 @@ service::service(server& _server, const nlm::json& _config)
 	// change channel's configuration
 }
 
-service::~service()
+service_actor::~service_actor()
 {
 }
 
-bool service::on_start()
+bool service_actor::on_start()
 {
 	util::log()->info("{} started", get_desc());
 
 	return true;
 }
 
-void service::on_execute()
+void service_actor::on_execute()
 {
 	get_channel().execute();
 }
 
-void service::on_finish()
+void service_actor::on_finish()
 {
 	util::log()->info("{} finished", get_desc());
 }
